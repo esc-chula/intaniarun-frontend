@@ -14,10 +14,15 @@ type TRegisterBodyState = {
     emergencyName: string;
     emergencyPhone: string;
     relationship: string;
+    gmail: string;
     type: TRegisterRunnerType | '';
     runnerNo: string;
     selectedPackage: TRegisterPackageType | '';
     paymentId: string;
+    receiverName?: string;
+    receiverPhone?: string;
+    receiverAddress?: string;
+    receiverPostalCode?: string;
 };
 
 type TRegisterBody = TRegisterBodyState & {
@@ -30,7 +35,16 @@ type TRegisterBody = TRegisterBodyState & {
 
 type TRegisterGender = 'MALE' | 'FEMALE' | 'OTHER';
 
-type TRegisterShirtSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+type TRegisterShirtSize =
+    | 'XS'
+    | 'S'
+    | 'M'
+    | 'L'
+    | 'XL'
+    | '2L'
+    | '3L'
+    | '5L'
+    | '7L';
 
 type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
 
