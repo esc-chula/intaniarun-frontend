@@ -1,6 +1,6 @@
 import { RegisterProvider } from '@/contexts/register';
 
-import Header from './components/header';
+import Header from '../components/header';
 
 export default function RootLayout({
     children,
