@@ -2,11 +2,16 @@ import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
 import { IBM_Plex_Sans_Thai } from 'next/font/google';
+import { Jockey_One } from 'next/font/google'
+import { Inter } from 'next/font/google';
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
     subsets: ['latin', 'thai'],
     weight: ['100', '200', '300', '400', '500', '600', '700'],
 });
+
+const jockeyone = Jockey_One({ subsets: ['latin'] , weight: ['400']})
+const inter = Inter({ subsets: ['latin']})
 
 export const metadata: Metadata = {
     title: 'Intania Run 2023',
@@ -20,7 +25,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
-            <body className={ibmPlexSansThai.className}>{children}</body>
+            <body className={inter.classname}>{children}</body>
         </html>
     );
 }

@@ -16,7 +16,7 @@ export default function RegisterPage() {
                         <input type="checkbox" className="form-checkbox h-5 w-5 text-blue-600" checked />
                         <label className="ml-2 text-gray-700">ฉันยอมรับเงื่อนไขการสมัครของผู้จัดงาน</label>
                     </div>
-                    <Link href="/pdpa" passHref>
+                    <Link href="/status" passHref>
                         <button className="w-[350px] h-[48px] bg-[#941214] text-white rounded-[32px] shadow-2xl">รับทราบและยินยอม</button>
                     </Link>
                 </div>

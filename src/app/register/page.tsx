@@ -6,7 +6,7 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen bg-[#F998B926]">
             <Header/>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center justify-center text-[#941214]">
                 <h1 className="text-[50px] mt-[65px]">INTANIA RUN 2024</h1>
                 <h2 className="text-[24px] mt-[20px]">XX NOVEMBER 2023</h2>
                 <Link href="/pdpa" passHref>
