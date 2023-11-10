@@ -1,3 +1,7 @@
+import Image from "next/image"
+
 export default function Status() {
-    return <div>Register Status</div>;
+    return(
+        <Image src="/status-bar.svg" alt="status" width={222} height={40} /> 
+    )
 }

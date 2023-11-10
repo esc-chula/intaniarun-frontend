@@ -1,10 +1,13 @@
 import Header from "../components/header";
 import Link from 'next/link';
+import { Jockey_One } from 'next/font/google';
+
+const jockeyOne = Jockey_One({ subsets: ['latin'], weight: '400' });
 
 
 export default function RegisterPage() {
     return (
-        <div className="min-h-screen bg-[#F998B926]">
+        <div className={`min-h-screen bg-[#F998B926] ${jockeyOne.className}`}>
             <Header/>
             <div className="flex flex-col items-center justify-center text-[#941214]">
                 <h1 className="text-[50px] mt-[65px]">INTANIA RUN 2024</h1>
