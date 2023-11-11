@@ -2,7 +2,6 @@ import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
 
-import { RegisterProvider } from '@/contexts/register';
 import { ibmPlexSansThai } from '@/utils/fonts';
 
 export const metadata: Metadata = {
@@ -16,12 +15,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <RegisterProvider>
-            <html lang='th'>
-                <body className={`${ibmPlexSansThai.className} bg-primary-400`}>
-                    {children}
-                </body>
-            </html>
-        </RegisterProvider>
+        <html lang='th'>
+            <body className={`${ibmPlexSansThai.className} bg-primary-400`}>
+                {children}
+            </body>
+        </html>
     );
 }
