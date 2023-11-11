@@ -8,11 +8,11 @@ export default function ChooseDistancePage() {
         <div className={`min-h-screen bg-[#F998B926]`}>
             <Header/>
             <div>
-                <h1 className="text-[24px] font-bold items-center flex justify-center my-[35px]">เลือกระยะทาง</h1>
+                <h1 className="text-[24px] font-bold items-center flex justify-center my-[35px]">ยืนยันข้อมูลผู้สมัคร</h1>
             </div>
             <div className="flex flex-col justify-center items-center gap-[35px]">
                 <ReviewCard/>
-                <button className="bg-white w-[375px] h-[64px] border-2 border-black rounded-[16px] font-bold">
+                <button className="bg-white w-[375px] h-[64px] border-2 border-black rounded-[16px] font-bold shadow-lg">
                     + เพิ่มผู้สมัคร
                 </button>
                 <SubmitButton/>
