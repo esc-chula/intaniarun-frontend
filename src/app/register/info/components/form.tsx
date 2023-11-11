@@ -1,45 +1,45 @@
-import Image from "next/image";
+import Image from 'next/image';
 
-export default function FormComponent  ({
+export default function FormComponent({
     label,
     id,
     placeholder,
     type = 'text', // default type is text
     required = false,
-    className,
     options,
     onChange,
     name,
     value,
-}:{
+}: {
     label: string;
     id: string;
     placeholder: string;
     type?: string;
     required?: boolean;
     className?: string;
-    options?: {value: string,label: string}[];
-    onChange?: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
+    options?: { value: string; label: string }[];
+    onChange?: (
+        e:
+            | React.ChangeEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLSelectElement>
+    ) => void;
     name: string;
     value: string | number;
 }) {
-    const baseClass = `mb-6 rounded-[10px] px-2 w-[350px] h-[48px] text-[13px] px-4 py-2 ${className}`;
-
     return (
-        <div className="flex flex-col">
-            <label htmlFor={id} className="mb-2 text-[16px] font-bold">
+        <div className='grid gap-2 text-left'>
+            <label htmlFor={id} className='font-bold'>
                 {label}
             </label>
             {options ? (
-                <div className="relative rounded-lg w-full">
+                <div className='relative w-full rounded-lg'>
                     <select
                         id={id}
                         required={required}
-                        className={`appearance-none rounded-lg w-full text-sm bg-white placeholder-[#B3B3B3] ${baseClass}`}
-                        defaultValue=""
-
+                        className={`h-[48px] w-full appearance-none rounded-lg bg-white px-4 py-2 text-sm accent-primary-100`}
+                        defaultValue=''
                     >
-                        <option disabled value="">
+                        <option disabled value=''>
                             {placeholder}
                         </option>
                         {options.map((option) => (
@@ -48,8 +48,13 @@ export default function FormComponent  ({
                             </option>
                         ))}
                     </select>
-                    <div className="flex items-center absolute right-3 h-full top-[-8px]">
-                        <Image src="/dropdown-arrow.svg" width={19} height={19}></Image>
+                    <div className='absolute bottom-0 right-5 flex h-full items-center'>
+                        <Image
+                            src='/dropdown-arrow.svg'
+                            alt='dropdown-arrow'
+                            width={16}
+                            height={16}
+                        ></Image>
                     </div>
                 </div>
             ) : (
@@ -58,11 +63,9 @@ export default function FormComponent  ({
                     type={type}
                     placeholder={placeholder}
                     required={required}
-                    className={baseClass}
+                    className={`h-[48px] w-full rounded-[10px] px-4 py-2 accent-primary-100`}
                 />
             )}
         </div>
     );
-};
-  
-  
+}

@@ -1,21 +1,64 @@
-import Header from "../components/header";
-import Link from 'next/link';
-import { Jockey_One } from 'next/font/google';
+'use client';
 
-const jockeyOne = Jockey_One({ subsets: ['latin'], weight: '400' });
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
+import Button from '@/components/button';
 
 export default function RegisterPage() {
+    const router = useRouter();
+
+    const [isChecked, setIsChecked] = useState(false);
+
     return (
-        <div className={`min-h-screen bg-[#F998B926] ${jockeyOne.className}`}>
-            <Header/>
-            <div className="flex flex-col items-center justify-center text-[#941214]">
-                <h1 className="text-[50px] mt-[65px]">INTANIA RUN 2024</h1>
-                <h2 className="text-[24px] mt-[20px]">XX NOVEMBER 2023</h2>
-                <Link href="/pdpa" passHref>
-                    <button className="w-[350px] h-[48px] bg-[#941214] text-white mt-[350px] rounded-[32px] shadow-2xl">ลงทะเบียน</button>
-                </Link>
+        <>
+            <h1 className='text-2xl font-bold'>นโยบายการใช้ข้อมูลส่วนบุคคล</h1>
+            <div className='h-[524px] overflow-hidden rounded-xl bg-white p-4'>
+                <h2 className='text-gray-500'>นโยบายการใช้ข้อมูลส่วนบุคคล</h2>
+                <div className='h-full w-full overflow-y-auto px-4 pb-8 pt-4 text-left'>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Explicabo enim rerum adipisci dolore rem soluta molestiae
+                    possimus voluptatem, ullam maiores laborum asperiores
+                    officia eius at voluptas eos. Suscipit, quo voluptate.
+                </div>
             </div>
-        </div>
+            <div className='flex justify-center space-x-2'>
+                <div
+                    className={`relative h-5 w-5 ${
+                        isChecked ? 'bg-[#941214]' : 'bg-white'
+                    } rounded border border-gray-300`}
+                >
+                    <input
+                        id='accept'
+                        type='checkbox'
+                        className='absolute opacity-0'
+                        checked={isChecked}
+                        onChange={() => setIsChecked(!isChecked)}
+                    />
+                    {isChecked && (
+                        <svg
+                            className='pointer-events-none absolute inset-0 m-auto h-4 w-4 fill-current text-white'
+                            viewBox='0 0 20 20'
+                        >
+                            <path
+                                d='M16.7,5.3c-0.4-0.4-1-0.4-1.4,0L7.4,13.2L4.7,10.6c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l3.3,3.3c0.2,0.2,0.4,0.3,0.7,0.3
+                                            s0.5-0.1,0.7-0.3l8.7-8.7C17.1,6.3,17.1,5.7,16.7,5.3z'
+                            />
+                        </svg>
+                    )}
+                </div>
+                <label htmlFor='accept' className='text-gray-700'>
+                    ฉันยอมรับเงื่อนไขการสมัครของผู้จัดงาน
+                </label>
+            </div>
+            <Button
+                onClick={() => {
+                    router.push('/register/type');
+                }}
+                disabled={!isChecked}
+            >
+                รับทราบและยินยอม
+            </Button>
+        </>
     );
 }

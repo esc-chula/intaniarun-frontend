@@ -1,4 +1,4 @@
-type TRegisterBodyState = {
+export type TRegisterBodyState = {
     firstName: string;
     lastName: string;
     gender: TRegisterGender | '';
@@ -25,7 +25,7 @@ type TRegisterBodyState = {
     receiverPostalCode?: string;
 };
 
-type TRegisterBody = TRegisterBodyState & {
+export type TRegisterBody = TRegisterBodyState & {
     gender: TRegisterGender;
     shirtSize: TRegisterShirtSize;
     bloodType: TRegisterBloodType;
@@ -33,9 +33,9 @@ type TRegisterBody = TRegisterBodyState & {
     selectedPackage: TRegisterPackageType;
 };
 
-type TRegisterGender = 'MALE' | 'FEMALE' | 'OTHER';
+export type TRegisterGender = 'MALE' | 'FEMALE' | 'OTHER';
 
-type TRegisterShirtSize =
+export type TRegisterShirtSize =
     | 'XS'
     | 'S'
     | 'M'
@@ -46,8 +46,8 @@ type TRegisterShirtSize =
     | '5L'
     | '7L';
 
-type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
+export type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
 
-type TRegisterRunnerType = 'ALUMNI' | 'STUDENT' | 'PUBLIC';
+export type TRegisterRunnerType = 'ALUMNI' | 'STUDENT' | 'PUBLIC';
 
-type TRegisterPackageType = 'F' | 'T';
+export type TRegisterPackageType = 'F' | 'T';

@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useState } from 'react';
 
+import { TRegisterBodyState } from '@/types/register';
+
 interface ContextProps {
     registerBody: TRegisterBodyState;
     setRegisterBodyState: (key: string, value: string) => void;
