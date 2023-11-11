@@ -1,9 +1,9 @@
-import Header from "../components/header";
+import Header from "../../components/header";
 import Link from 'next/link';
 import FormComponent from "./components/form";
-import TRegisterBloodType from "../../types/register";
+import TRegisterBloodType from "../../../types/register";
 import { useState } from "react";
-import { useRegisterContext } from '../../contexts/register';
+import { useRegisterContext } from '@/contexts/register';
 
 const nameTitles = [
     "นาย","นาง","นางสาว"

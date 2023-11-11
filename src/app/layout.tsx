@@ -23,8 +23,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
+        <RegisterProvider>
         <html lang='th'>
             <body className={`${ibmPlexSansThai.className} bg-[#F998B926]`}>{children}</body>
         </html>
+        </RegisterProvider>
     );
 }
