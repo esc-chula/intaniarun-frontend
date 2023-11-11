@@ -1,10 +1,3 @@
-import RegisterPage from './register/page';
-
 export default function Home() {
-
-    return (
-        <main>
-            <RegisterPage />;
-        </main>
-    );
+    return <main>intania run 2024</main>;
 }

@@ -1,6 +1,5 @@
 import Header from '@/components/header';
 import { RegisterProvider } from '@/contexts/register';
-import { ibmPlexSansThai } from '@/utils/fonts';
 
 export default function RootLayout({
     children,

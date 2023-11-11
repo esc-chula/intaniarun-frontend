@@ -2,7 +2,6 @@ import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
 
-import Header from '@/components/header';
 import { RegisterProvider } from '@/contexts/register';
 import { ibmPlexSansThai } from '@/utils/fonts';
 
