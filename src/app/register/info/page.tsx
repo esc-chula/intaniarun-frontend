@@ -42,7 +42,7 @@ export default function PersonalInformationPage() {
             <div className='flex w-full flex-col items-center justify-center'>
                 <form
                     // onSubmit={formHandler}
-                    className='grid w-full gap-5 px-2'
+                    className='grid w-full gap-7 px-2'
                 >
                     <FormComponent
                         id='name'
