@@ -1,23 +1,23 @@
 export type TRegisterBodyState = {
     firstName: string;
     lastName: string;
-    gender: TRegisterGender | '';
+    gender: TRegisterGender | string;
     birthDate: string;
     citizenId: string;
     nationality: string;
-    shirtSize: TRegisterShirtSize | '';
+    shirtSize: TRegisterShirtSize | string;
     province: string;
     email: string;
     phone: string;
     disease: string;
-    bloodType: TRegisterBloodType | '';
+    bloodType: TRegisterBloodType | string;
     emergencyName: string;
     emergencyPhone: string;
     relationship: string;
     gmail: string;
-    type: TRegisterRunnerType | '';
+    type: TRegisterRunnerType | string;
     runnerNo: string;
-    selectedPackage: TRegisterPackageType | '';
+    selectedPackage: TRegisterPackageType | string;
     paymentId: string;
     receiverName?: string;
     receiverPhone?: string;
