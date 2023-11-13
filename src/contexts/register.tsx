@@ -6,11 +6,7 @@ import { TRegisterBodyState } from '@/types/register';
 
 interface ContextProps {
     registerBody: TRegisterBodyState[];
-    setRegisterBodyState: (
-        index: number,
-        key: keyof TRegisterBodyState,
-        value: string
-    ) => void;
+    setRegisterBodyState: (index: number, key: string, value: string) => void;
 }
 
 const Context = createContext<ContextProps>({
@@ -69,11 +65,11 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
 
     const setRegisterBodyState = (
         index: number,
-        key: keyof TRegisterBodyState,
+        key: string,
         value: string
     ) => {
         const newRegisterBody = [...registerBody];
-        newRegisterBody[index][key] = value;
+        newRegisterBody[index][key as keyof TRegisterBodyState] = value;
         setRegisterBody(newRegisterBody);
     };
 

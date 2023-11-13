@@ -33,7 +33,7 @@ export default function PersonalInformationPage() {
             | React.ChangeEvent<HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        setRegisterBodyState(name, value);
+        setRegisterBodyState(0, name, value);
     };
 
     return (
@@ -49,7 +49,7 @@ export default function PersonalInformationPage() {
                         label='ชื่อ'
                         placeholder='ชื่อ'
                         name='firstName'
-                        value={registerBody.firstName}
+                        value={registerBody[0].firstName}
                         required={true}
                         onChange={handleChange}
                     />
@@ -59,7 +59,7 @@ export default function PersonalInformationPage() {
                         label='นามสกุล'
                         placeholder='นามสกุล'
                         name='lastName'
-                        value={registerBody.lastName}
+                        value={registerBody[0].lastName}
                         required={true}
                         onChange={handleChange}
                     />
@@ -69,7 +69,7 @@ export default function PersonalInformationPage() {
                         label='เพศ (ตามบัตรประชาชน)'
                         placeholder='-- เลือกรายการ --'
                         name='gender'
-                        value={registerBody.gender}
+                        value={registerBody[0].gender}
                         required={true}
                         options={genders.map((gender) => ({
                             value: gender,
@@ -83,7 +83,7 @@ export default function PersonalInformationPage() {
                         label='อีเมล'
                         placeholder='อีเมล'
                         name='email'
-                        value={registerBody.email}
+                        value={registerBody[0].email}
                         required={true}
                         type='email'
                         onChange={handleChange}
@@ -94,7 +94,7 @@ export default function PersonalInformationPage() {
                         label='โทรศัพท์'
                         placeholder='0XX-XXX-XXXX'
                         name='phone'
-                        value={registerBody.phone}
+                        value={registerBody[0].phone}
                         required={true}
                         type='tel'
                         onChange={handleChange}
@@ -105,7 +105,7 @@ export default function PersonalInformationPage() {
                         label='เลขบัตรประชาชน'
                         placeholder='X-XXXX-XXXXX-XX-X'
                         name='citizenId'
-                        value={registerBody.citizenId}
+                        value={registerBody[0].citizenId}
                         required={true}
                         onChange={handleChange}
                     />
@@ -115,7 +115,7 @@ export default function PersonalInformationPage() {
                         label='จังหวัดที่พักอาศัย'
                         placeholder='---- เลือกรายการ ----'
                         name='province'
-                        value={registerBody.province}
+                        value={registerBody[0].province}
                         required={true}
                         //options
                         onChange={handleChange}
@@ -126,7 +126,7 @@ export default function PersonalInformationPage() {
                         label='ปัญหาสุขภาพ'
                         placeholder='ปัญหาสุขภาพ'
                         name='disease'
-                        value={registerBody.disease}
+                        value={registerBody[0].disease}
                         required={true}
                         onChange={handleChange}
                     />
@@ -136,7 +136,7 @@ export default function PersonalInformationPage() {
                         label='หมู่เลือด'
                         placeholder='---- เลือกรายการ ----'
                         name='bloodType'
-                        value={registerBody.bloodType}
+                        value={registerBody[0].bloodType}
                         required={true}
                         options={bloodtypes.map((bloodtype) => ({
                             value: bloodtype,
@@ -150,7 +150,7 @@ export default function PersonalInformationPage() {
                         label='ชื่อผู้ติดต่อกรณีฉุกเฉิน'
                         placeholder='ชื่อ - นามสกุล'
                         name='emergencyName'
-                        value={registerBody.emergencyName}
+                        value={registerBody[0].emergencyName}
                         required={true}
                         onChange={handleChange}
                     />
@@ -159,7 +159,7 @@ export default function PersonalInformationPage() {
                         label='เกี่ยวข้องเป็น'
                         placeholder='ความสัมพันธ์'
                         name='relationship'
-                        value={registerBody.relationship}
+                        value={registerBody[0].relationship}
                         required={true}
                         onChange={handleChange}
                     />
@@ -168,7 +168,7 @@ export default function PersonalInformationPage() {
                         label='เบอร์โทรศัพท์กรณีฉุกเฉิน'
                         placeholder='0XX-XXX-XXXX'
                         name='emergencyPhone'
-                        value={registerBody.emergencyPhone}
+                        value={registerBody[0].emergencyPhone}
                         required={true}
                         onChange={handleChange}
                     />
@@ -177,7 +177,7 @@ export default function PersonalInformationPage() {
                         label='ไซซ์เสื้อ'
                         placeholder='---- เลือกรายการ ----'
                         name='shirtSize'
-                        value={registerBody.shirtSize}
+                        value={registerBody[0].shirtSize}
                         required={true}
                         // type={TRegisterShirtSize}
                         options={shirtSizes.map((shirtSize) => ({
