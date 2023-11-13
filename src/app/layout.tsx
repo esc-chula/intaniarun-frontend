@@ -5,8 +5,9 @@ import type { Metadata } from 'next';
 import { ibmPlexSansThai } from '@/utils/fonts';
 
 export const metadata: Metadata = {
-    title: 'Intania Run 2023',
-    description: 'วิ่ง วิ่ง อยู่อย่างนี้ วิ่ง วิ่ง อยู่กับที่ ไม่ไปไหน',
+    title: 'Intania Run 2024',
+    description:
+        'เตรียมพบกับงานวิ่งสุดมันส์แห่งปีที่รวมตัวตึงวิศวจุฬาฯ และผองเพื่อนไว้มากที่สุด',
 };
 
 export default function RootLayout({
