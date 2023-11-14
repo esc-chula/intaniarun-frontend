@@ -2,17 +2,19 @@ import moment from 'moment';
 
 import Header from '@/components/header';
 import { RegisterProvider } from '@/contexts/register';
+import RegisterConfig from '@/configs/register';
 
 export default function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const todayDate = moment();
-    const openDate = moment('2023-11-17');
-    const endDate = moment('2023-11-27');
-
-    const IS_OPEN = todayDate.isBetween(openDate, endDate, 'day', '[]');
+    const IS_OPEN = moment().isBetween(
+        RegisterConfig.OPEN_DATE,
+        RegisterConfig.END_DATE,
+        'day',
+        '[]'
+    );
 
     if (!IS_OPEN && process.env.NODE_ENV === 'production') {
         return null; // TODO: add close page
