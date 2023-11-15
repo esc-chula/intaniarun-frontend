@@ -45,7 +45,7 @@ export default function PersonalInformationPage() {
             | React.ChangeEvent<HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        console.log("Handle Change:", name, value);
+        // console.log("Handle Change:", name, value);
         setRegisterBodyState(0, name, value);
     };
 

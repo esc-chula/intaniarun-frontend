@@ -2,8 +2,14 @@ export default function InfoCard({
     distance = '10 KM',
     name = 'นายใจดี ดีใจ',
     citizenId = '0 1234 56789 10 1',
-    phoneNumber = '011-111-1111',
-    size = 'XL',
+    phone = '011-111-1111',
+    shirtSize = 'XL',
+}:{
+    distance?: string,
+    name?: string,
+    citizenId?: string,
+    phone?: string,
+    shirtSize?: string,
 }) {
     return (
         <div className="relative bg-white rounded-[12px] shadow-lg overflow-hidden w-full">
@@ -19,8 +25,8 @@ export default function InfoCard({
                     </div>
                     <div className="text-sm text-gray-800">
                         <p>{citizenId}</p>
-                        <p>{phoneNumber}</p>
-                        <p>{size}</p>
+                        <p>{phone}</p>
+                        <p>{shirtSize}</p>
                     </div>
                 </div>
             </div>

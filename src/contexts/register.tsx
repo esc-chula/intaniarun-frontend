@@ -7,6 +7,7 @@ import { TRegisterBodyState } from '@/types/register';
 interface ContextProps {
     registerBody: TRegisterBodyState[];
     setRegisterBodyState: (index: number, key: string, value: string) => void;
+    addUserToRegisterBody: () => void;
 }
 
 const Context = createContext<ContextProps>({
@@ -35,6 +36,8 @@ const Context = createContext<ContextProps>({
         },
     ],
     setRegisterBodyState: () => {},
+    addUserToRegisterBody: () => {}
+
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -73,11 +76,40 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         setRegisterBody(newRegisterBody);
     };
 
+    const addUserToRegisterBody = () => {
+        setRegisterBody(prevState => [
+            ...prevState,
+            {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birthDate: '',
+                citizenId: '',
+                nationality: '',
+                shirtSize: '',
+                province: '',
+                email: '',
+                phone: '',
+                disease: '',
+                bloodType: '',
+                emergencyName: '',
+                emergencyPhone: '',
+                relationship: '',
+                gmail: '',
+                type: '',
+                runnerNo: '',
+                selectedPackage: '',
+                paymentId: '',
+            }
+        ]);
+    };    
+
     return (
         <Context.Provider
             value={{
                 registerBody,
                 setRegisterBodyState,
+                addUserToRegisterBody,
             }}
         >
             {children}

@@ -9,6 +9,7 @@ import InfoCard from './components/info-card';
 import CheckBox from './components/check-box';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useRegisterContext } from '@/contexts/register';
 
 export default function PaymentInfo() {
 
@@ -23,11 +24,22 @@ export default function PaymentInfo() {
         setChecked(newChecked);
      };
 
+    const { registerBody , setRegisterBodyState } = useRegisterContext();
+
     return (
         <>
             <h1 className='text-2xl font-bold'>ข้อมูลการชำระเงิน</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
-                <InfoCard />
+                {registerBody.map((registrant, index) => (
+                    <InfoCard 
+                        key={index} // Don't forget to add a unique key for each child
+                        name={registrant.firstName + ' ' + registrant.lastName}
+                        distance={registrant.type}
+                        citizenId={registrant.citizenId}
+                        phone={registrant.phone}
+                        shirtSize={registrant.shirtSize}
+                    />
+                ))}
             </div>
             <div className="sticky bottom-0 left-0 w-full px-4 py-2">
                 <div className="flex justify-between items-center border-t-2 border-gray-200 pt-2">

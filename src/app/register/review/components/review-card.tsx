@@ -1,17 +1,17 @@
 export default function ReviewCard({
-    distance = ' 10 KM',
-    name = 'นายใจดี ดีใจ',
-    accountNumber = '0 1234 56789 10 1',
-    phoneNumber = '011-111-1111',
-    size = 'XL',
-    raceNumber = '1',
+    distance,
+    name,
+    citizenId,
+    phone,
+    shirtSize,
+    raceNumber,
 }: {
     distance?: string;
     name?: string;
-    accountNumber?: string;
-    phoneNumber?: string;
-    size?: string;
-    raceNumber?: string;
+    citizenId?: string;
+    phone?: string;
+    shirtSize?: string;
+    raceNumber?: number;
 }) {
     return (
         <div className='relative flex h-[200px] w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg'>
@@ -29,9 +29,9 @@ export default function ReviewCard({
                         <p>ไซส์เสื้อ: </p>
                     </div>
                     <div>
-                        <p>{accountNumber}</p>
-                        <p>{phoneNumber}</p>
-                        <p>{size}</p>
+                        <p>{citizenId}</p>
+                        <p>{phone}</p>
+                        <p>{shirtSize}</p>
                     </div>
                 </div>
             </div>
