@@ -3,17 +3,31 @@
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
-const SHOW_STATUS_PATH = ['/register/info'];
+const SHOW_STATUS_PATH = {
+    information: ['/register/info'],
+    package: ['/register/distance','/register/review'],
+    payment: ['/register/paymentinfo']
+};
 
 export default function Header() {
     const pathname = usePathname();
 
-    const showStatusBar = SHOW_STATUS_PATH.includes(pathname);
+    function determineStatus(pathname: string) {
+        for (const status in SHOW_STATUS_PATH) {
+            if (SHOW_STATUS_PATH[status].includes(pathname)) {
+                return status;
+            }
+        }
+        return null;
+    }
+
+    const currentStatus = determineStatus(pathname);
+
 
     return (
         <header className='fixed left-0 right-0 top-0 z-50 select-none bg-primary-400'>
-            <div className='flex h-20 flex-col items-center  justify-center rounded-bl-[64px] bg-white py-1'>
-                <div className='relative h-full w-full'>
+            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-4'>
+                <div className='relative h-[56px] w-full'>
                     <Image
                         src='/intania-run-logo.png'
                         alt='intania-run-logo'
@@ -21,8 +35,22 @@ export default function Header() {
                         className='object-contain object-center'
                     />
                 </div>
+                {currentStatus &&
+                <div className='relative w-full h-[40px]'>
+                    {currentStatus === 'information' && (
+                        <Image src='/status-bar-information.svg' alt='Status bar information' layout='fill' objectFit='contain' objectPosition='center' />
+                    )}
+                
+                    {currentStatus === 'package' && (
+                        <Image src='/status-bar-package.svg' alt='Status bar package' layout='fill' objectFit='contain' objectPosition='center' />
+                    )}
+
+                    {currentStatus === 'payment' && (
+                        <Image src='/status-bar-payment.svg' alt='Status bar payment' layout='fill' objectFit='contain' objectPosition='center' />
+                    )}
+                </div>
+                }
             </div>
-            {showStatusBar ? <></> : null}
         </header>
     );
 }

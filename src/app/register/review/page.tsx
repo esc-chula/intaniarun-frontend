@@ -14,7 +14,7 @@ export default function Review() {
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>เลือกระยะทาง</h1>
+            <h1 className='text-2xl font-bold'>ยืนยันข้อมูลผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 <ReviewCard />
                 <button className='h-[64px] w-full rounded-[16px] border-2 border-black bg-white font-bold'>
