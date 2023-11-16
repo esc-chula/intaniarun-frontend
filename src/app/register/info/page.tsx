@@ -12,14 +12,9 @@ import { TRegisterBloodType } from '@/types/register';
 
 import Header from '../../../components/header';
 import FormComponent from './components/form';
-
-const nameTitles = ['นาย', 'นาง', 'นางสาว'];
-
-const genders = ['ชาย', 'หญิง'];
-
-const bloodtypes = ['A', 'B', 'AB', 'O'];
-
-const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L'];
+import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
+import { nameTitles, genders, bloodtypes, shirtSizes , province_th , months_th } from './data';
 
 export default function PersonalInformationPage() {
     const router = useRouter();
@@ -27,6 +22,10 @@ export default function PersonalInformationPage() {
     const { registerBody, setRegisterBodyState, currentRegistrantIndex } =
         useRegisterContext();
     const [page, setPage] = useState(0);
+    const [isFormComplete, setIsFormComplete] = useState(false);
+    const [day, setDay] = useState('');
+    const [month, setMonth] = useState('');
+    const [year, setYear] = useState('');
 
     const type = searchParams.get('type');
 
@@ -58,8 +57,36 @@ export default function PersonalInformationPage() {
         const { name, value } = e.target;
         // console.log("Handle Change:", name, value);
         // console.log("currentRegistrantIndex:", currentRegistrantIndex);
-        setRegisterBodyState(currentRegistrantIndex, name, value);
+
+        if (name === 'day' || name === 'month' || name === 'year') {
+            // Update the local states for day, month, and year
+            if (name === 'day') setDay(value);
+            else if (name === 'month') setMonth(value);
+            else if (name === 'year') setYear(value);
+
+            // Update the registerBody for other fields
+        } else {
+            setRegisterBodyState(currentRegistrantIndex, name, value);
+        }
+        checkFormCompletion();
     };
+
+    useEffect(() => {
+        if (day && month && year) {
+            const yearNumber = parseInt(year, 10);
+            const monthIndex = months_th.indexOf(month);
+            const dayNumber = parseInt(day, 10);
+    
+            if (!isNaN(yearNumber) && !isNaN(dayNumber) && monthIndex >= 0) {
+                const date = new Date(dayNumber, monthIndex, yearNumber);
+    
+                // Format to datetime string, e.g., "YYYY-MM-DD"
+                const dateString = date.toISOString().split('T')[0];
+    
+                setRegisterBodyState(currentRegistrantIndex, 'dateBirth', dateString);
+            }
+        }
+    }, [day, month, year]);
 
     const nextPage = () => {
         window.scrollTo(0, 0);
@@ -69,11 +96,38 @@ export default function PersonalInformationPage() {
     const prevPage = () => {
         window.scrollTo(0, 0);
         setPage((prev) => prev - 1);
+    }
+
+    const checkFormCompletion = () => {
+        if (page === 0) {
+            setIsFormComplete(
+                registerBody[currentRegistrantIndex].firstName!=='' &&
+                registerBody[currentRegistrantIndex].lastName!=='' &&
+                registerBody[currentRegistrantIndex].citizenId!=='' &&
+                registerBody[currentRegistrantIndex].gender!=='' &&
+                registerBody[currentRegistrantIndex].province!=='' &&
+                registerBody[currentRegistrantIndex].gmail!=='' &&
+                registerBody[currentRegistrantIndex].phone!=='' &&
+                day !== '' && 
+                month !== '' && 
+                year !== ''
+            );
+        }
+        else if (page === 1) {
+            setIsFormComplete(
+                registerBody[currentRegistrantIndex].disease!=='' &&
+                registerBody[currentRegistrantIndex].bloodType!=='' &&
+                registerBody[currentRegistrantIndex].emergencyName!=='' &&
+                registerBody[currentRegistrantIndex].relationship!=='' &&
+                registerBody[currentRegistrantIndex].emergencyPhone!=='' &&
+                registerBody[currentRegistrantIndex].shirtSize!==''
+            );
+        }
     };
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>ข้อมูลผู้สมัคร</h1>
+            <h1 className='text-2xl font-bold mt-[40px]'>ข้อมูลผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center'>
                 <form
                     // onSubmit={formHandler}
@@ -111,30 +165,83 @@ export default function PersonalInformationPage() {
                                 onChange={handleChange}
                             />
 
-                            <FormComponent
-                                id='gender'
-                                label='เพศ (ตามบัตรประชาชน)'
-                                placeholder='-- เลือกรายการ --'
-                                name='gender'
-                                value={registerBody[0].gender}
-                                required={true}
-                                options={genders.map((gender) => ({
-                                    value: gender,
-                                    label: gender,
-                                }))}
-                                onChange={handleChange}
-                            />
+                        <FormComponent
+                            id='gender'
+                            label='เพศ (ตามบัตรประชาชน)'
+                            placeholder='-- เลือกรายการ --'
+                            name='gender'
+                            value={registerBody[0].gender}
+                            required={true}
+                            options={genders.map((gender) => ({
+                                value: gender,
+                                label: gender,
+                            }))}
+                            onChange={handleChange}
+                        />
 
-                            <FormComponent
-                                id='province'
-                                label='จังหวัดที่พักอาศัย'
-                                placeholder='---- เลือกรายการ ----'
-                                name='province'
-                                value={registerBody[0].province}
-                                required={true}
-                                //options
-                                onChange={handleChange}
-                            />
+                        <div className='flex flex-col items-start justify-start'>
+                            <label className='items-start justify-start font-bold text-left b-0'>
+                                วัน เดือน ปีเกิด
+                            </label>
+                            <div className='flex flex-row gap-2'>
+                                <div className='w-[75px]'>
+                                    <FormComponent
+                                    id='day'
+                                    placeholder='วัน'
+                                    name='day'
+                                    // value={registerBody[0].day}
+                                    required={true}
+                                    options={Array.from({ length: 30 }, (_, i) => i + 1).map((day) => ({
+                                        value: day.toString(),
+                                        label: day.toString().padStart(2, '0'),
+                                    }))}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+                                <div className='w-[145px]'>
+                                    <FormComponent
+                                    id='month'
+                                    placeholder='เดือน'
+                                    name='month'
+                                    // value={registerBody[0].gender}
+                                    required={true}
+                                    options={months_th.map((month) => ({
+                                        value: month,
+                                        label: month,
+                                    }))}
+                                    onChange={handleChange}
+                                    />
+                                </div>
+                                <div className='w-[94px]'>
+                                <FormComponent
+                                    id='year'
+                                    placeholder='ปี'
+                                    name='year'
+                                    // value={registerBody[0].year}
+                                    required={true}
+                                    options={Array.from({ length: 2566 - 2486 + 1 }, (_, i) => 2486 + i).map((year) => ({
+                                        value: year.toString(),
+                                        label: year.toString()
+                                    }))}
+                                    onChange={handleChange}
+                                />
+                                </div>
+                            </div>
+                        </div>
+
+                        <FormComponent
+                            id='province'
+                            label='จังหวัดที่พักอาศัย'
+                            placeholder='---- เลือกรายการ ----'
+                            name='province'
+                            value={registerBody[0].province}
+                            required={true}
+                            options={province_th.map((province) => ({
+                                value: province,
+                                label: province,
+                            }))}
+                            onChange={handleChange}
+                        />
 
                             <FormComponent
                                 id='email'
@@ -236,9 +343,7 @@ export default function PersonalInformationPage() {
                         </>
                     )}
                     <br />
-                    <Button type='submit' onClick={formHandler}>
-                        ต่อไป
-                    </Button>
+                    <Button type='submit' onClick={formHandler} disabled={!isFormComplete}>ต่อไป</Button>
                 </form>
             </div>
         </>

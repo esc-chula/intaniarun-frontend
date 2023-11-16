@@ -20,7 +20,7 @@ export default function Review() {
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>ยืนยันข้อมูลผู้สมัคร</h1>
+            <h1 className='text-2xl font-bold mt-[40px]'>ยืนยันข้อมูลผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 {registerBody.map((registrant, index) => (
                     <ReviewCard

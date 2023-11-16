@@ -11,7 +11,7 @@ export default function FormComponent({
     name,
     value,
 }: {
-    label: string;
+    label?: string;
     id: string;
     placeholder: string;
     type?: string;
@@ -23,7 +23,7 @@ export default function FormComponent({
             | React.ChangeEvent<HTMLInputElement>
             | React.ChangeEvent<HTMLSelectElement>
     ) => void;
-    name: string;
+    name?: string;
     value?: string | number;
 }) {
     return (
@@ -66,7 +66,7 @@ export default function FormComponent({
                     type={type}
                     placeholder={placeholder}
                     required={required}
-                    className={`h-[48px] w-full rounded-[10px] px-4 py-2 accent-primary-100`}
+                    className={`h-[48px] w-full rounded-[10px] px-4 py-2 accent-primary-100 text-sm`}
                     onChange={onChange}
                 />
             )}

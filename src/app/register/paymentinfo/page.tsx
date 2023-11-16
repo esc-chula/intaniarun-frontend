@@ -32,7 +32,7 @@ export default function PaymentInfo() {
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>ข้อมูลการชำระเงิน</h1>
+            <h1 className='text-2xl font-bold mt-[40px]'>ข้อมูลการชำระเงิน</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 {registerBody.map((registrant, index) => (
                     <InfoCard
