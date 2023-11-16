@@ -4,7 +4,7 @@ import moment from 'moment';
 import { usePathname } from 'next/navigation';
 
 import Header from '@/components/header';
-import RegisterConfig from '@/configs/register';
+import { END_DATE, OPEN_DATE } from '@/configs/register';
 import { RegisterProvider } from '@/contexts/register';
 import { determineStatus } from '@/utils/status';
 
@@ -17,12 +17,7 @@ export default function RootLayout({
 
     const currentStatus = determineStatus(pathname);
 
-    const IS_OPEN = moment().isBetween(
-        RegisterConfig.OPEN_DATE,
-        RegisterConfig.END_DATE,
-        'day',
-        '[]'
-    );
+    const IS_OPEN = moment().isBetween(OPEN_DATE, END_DATE, 'day', '[]');
 
     if (!IS_OPEN && process.env.NODE_ENV === 'production') {
         return null; // TODO: add close page
