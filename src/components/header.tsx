@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 const SHOW_STATUS_PATH = {
     information: ['/register/info'],
     package: ['/register/distance','/register/review'],
-    payment: ['/register/paymentinfo']
+    payment: ['/register/paymentinfo','/register/payment'],
 };
 
 export default function Header() {

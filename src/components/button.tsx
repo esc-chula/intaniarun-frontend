@@ -10,7 +10,7 @@ export default function Button({
     children: React.ReactNode;
     disabled?: boolean;
     className?: string;
-    onClick?: () => void;
+    onClick?: ((event: React.MouseEvent<HTMLButtonElement>) => void) | (() => void);
     type?: 'submit' | 'button';
 }) {
     return (

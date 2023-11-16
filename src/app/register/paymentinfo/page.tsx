@@ -43,7 +43,7 @@ export default function PaymentInfo() {
             </div>
             <div className="sticky bottom-0 left-0 w-full px-4 py-2">
                 <div className="flex justify-between items-center border-t-2 border-gray-200 pt-2">
-                    <div className="flex flex-col jusity-start">
+                    <div className="flex flex-col items-start">
                         <p>ราคาแพ็คเกจทั้งหมด</p>
                         <p>ส่วนลด</p>
                     </div>
@@ -53,8 +53,8 @@ export default function PaymentInfo() {
                     </div>
                 </div>
                 <div className="flex justify-between items-center mt-2">
-                    <span className="text-lg font-bold text-[#941214]">ยอดชำระเงิน</span>
-                    <span className="text-xl font-bold text-[#941214]">{totalPrice}</span>
+                    <span className="text-lg font-bold text-primary-100">ยอดชำระเงิน</span>
+                    <span className="text-xl font-bold text-primary-100">{totalPrice}</span>
                 </div>
                 <div className='flex flex-col space-y-4'>
                     <CheckBox
@@ -69,13 +69,13 @@ export default function PaymentInfo() {
                         onChange={() => handleCheck(1)}
                     />
                 </div>
-                <button
-                    className="mt-4 w-full bg-[#941214] text-white py-2 rounded-lg shadow-md disabled:bg-gray-400"
-                    onClick={() => router.push('/register/type')}
+                <Button
+                    type='submit'
+                    onClick={() => router.push('/register/payment')}
                     disabled={!checked.every(Boolean)}
                 >
                     ชำระเงิน
-                </button>
+                </Button>
             </div>
         </>
     );
