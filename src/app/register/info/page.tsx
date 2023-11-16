@@ -1,9 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter , useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import Button from '@/components/button';
@@ -13,7 +11,6 @@ import { TRegisterBloodType } from '@/types/register';
 import Header from '../../../components/header';
 import FormComponent from './components/form';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import { nameTitles, genders, bloodtypes, shirtSizes , province_th , months_th } from './data';
 
 export default function PersonalInformationPage() {
@@ -127,7 +124,7 @@ export default function PersonalInformationPage() {
 
     return (
         <>
-            <h1 className='text-2xl font-bold mt-[40px]'>ข้อมูลผู้สมัคร</h1>
+            <h1 className='text-2xl font-bold'>ข้อมูลผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center'>
                 <form
                     // onSubmit={formHandler}

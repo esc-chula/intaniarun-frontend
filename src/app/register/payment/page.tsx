@@ -41,17 +41,10 @@ export default function PaymentInfo() {
 
     return (
         <>
-<<<<<<< HEAD
             <div className='w-full px-6 py-4'>
                 <h1 className='mb-6 text-2xl font-bold'>ชำระเงิน</h1>
 
                 <div className='mb-4 flex justify-between py-5 font-bold'>
-=======
-            <div className='w-full px-6 py-4 mt-[40px]'>
-                <h1 className='text-2xl font-bold mb-6'>ชำระเงิน</h1>
-                
-                <div className='flex justify-between mb-4 font-bold py-5'>
->>>>>>> 2aa9176 (fix: change form data)
                     <p>ยอดชำระเงิน</p>
                     <p>{totalPrice.toFixed(2)}฿</p>
                 </div>
