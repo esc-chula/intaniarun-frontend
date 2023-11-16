@@ -33,7 +33,7 @@ export default function CheckBox ({
             </svg>
           )}
         </div>
-        <label className='text-gray-700 text-[12px] '>
+        <label className='text-gray-700 text-[12px] items-start justify-start'>
           {label}
         </label>
       </div>

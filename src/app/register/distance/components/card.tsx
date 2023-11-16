@@ -10,12 +10,14 @@ export default function Card({
     onClick: (distance: string) => void;
 }) {
     return (
-        <div className='relative flex h-[143px] w-full items-center justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg' 
+        <div 
+            className='relative flex h-[143px] w-full items-center justify-between overflow-hidden 
+                rounded-[12px] bg-white p-6 shadow-lg border-t-[8px] border-primary-100' 
             onClick={() => onClick(distance)}
         >
             <div className='px-[10px] pt-[10px]'>
                 <div className='text-[32px] font-bold'>{distance}</div>
-                <p className='text-[14px] text-base font-bold text-[#941214]'>
+                <p className='text-[14px] text-base font-bold text-primary-100'>
                     ของที่ระลึก
                 </p>
                 <div className='pb-2 pt-2'>
@@ -25,7 +27,7 @@ export default function Card({
                 </div>
             </div>
             <div className='absolute right-0 px-6 pb-2 pt-4'>
-                <span className='inline-block text-2xl'>฿{price}</span>
+                {/* <span className='inline-block text-2xl'>฿{price}</span> */}
             </div>
         </div>
     );

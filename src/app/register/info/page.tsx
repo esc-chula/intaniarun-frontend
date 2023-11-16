@@ -31,9 +31,9 @@ export default function PersonalInformationPage() {
         setRegisterBodyState(currentRegistrantIndex, 'type', type);
     }, []);
 
-    useEffect(() => {
-        console.log('registerBody updated:', registerBody);
-    }, [registerBody]);
+    // useEffect(() => {
+    //     console.log('registerBody updated:', registerBody);
+    // }, [registerBody]);
 
     const formHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -59,10 +59,12 @@ export default function PersonalInformationPage() {
     };
 
     const nextPage = () => {
+        window.scrollTo(0, 0);
         setPage((prev) => prev + 1);
     }
 
     const prevPage = () => {
+        window.scrollTo(0, 0);
         setPage((prev) => prev - 1);
     }
 

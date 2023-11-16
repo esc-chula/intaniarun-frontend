@@ -37,7 +37,7 @@ export default function ReviewCard({
             </div>
             <div className='absolute bottom-5 right-5 flex items-center justify-between opacity-50'>
                 <div className='text-4xl font-bold text-[#941214]'>
-                    {distance}
+                    {distance} KM
                 </div>
             </div>
         </div>
