@@ -9,6 +9,7 @@ import { TRegisterBloodType } from '@/types/register';
 import Header from '../../../components/header';
 import FormComponent from './components/form';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const nameTitles = ['นาย', 'นาง', 'นางสาว'];
 
@@ -20,8 +21,15 @@ const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L'];
 
 export default function PersonalInformationPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { registerBody, setRegisterBodyState , currentRegistrantIndex } = useRegisterContext();
     const [page, setPage] = useState(0);
+
+    const type = searchParams.get('type');
+
+    useEffect(() => {
+        setRegisterBodyState(currentRegistrantIndex, 'type', type);
+    }, []);
 
     useEffect(() => {
         console.log('registerBody updated:', registerBody);

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function ChooseDistancePage() {
-    const { registerBody, setRegisterBodyState } = useRegisterContext();
+    const { registerBody, setRegisterBodyState , currentRegistrantIndex } = useRegisterContext();
     const router = useRouter();
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export default function ChooseDistancePage() {
 
 
     const handleClick = (distance: string) => {
-        setRegisterBodyState(0, 'selectedPackage', distance);
+        setRegisterBodyState(currentRegistrantIndex, 'selectedPackage', distance);
         router.push('/register/review');
     };
 

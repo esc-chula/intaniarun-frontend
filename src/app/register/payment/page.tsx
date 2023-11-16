@@ -16,7 +16,13 @@ export default function PaymentInfo() {
     const { registerBody } = useRegisterContext();
 
 
-    const totalPrice = 'XXX.XX฿';
+    const numberOfRegistrants = registerBody.length;
+    const totalPackagePrice = 700 * numberOfRegistrants;
+    let discount = 0;
+    if (registerBody[0] && registerBody[0].type === 'student') {
+        discount = 400 * numberOfRegistrants;
+    }
+    const totalPrice = totalPackagePrice-discount;
 
     const handleUploadSlip = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -42,7 +48,7 @@ export default function PaymentInfo() {
                 
                 <div className='flex justify-between mb-4 font-bold py-5'>
                     <p>ยอดชำระเงิน</p>
-                    <p>{totalPrice}</p>
+                    <p>{totalPrice.toFixed(2)}฿</p>
                 </div>
                 <div className='bg-white shadow-md rounded-lg p-4 mb-6 flex flex-col items-start gap-2.5'>
                     <div className='flex gap-5 items-center'>

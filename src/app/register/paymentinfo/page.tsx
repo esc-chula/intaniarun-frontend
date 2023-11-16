@@ -15,16 +15,22 @@ export default function PaymentInfo() {
 
     const router = useRouter();
     const [checked, setChecked] = useState([false, false]);
+    const { registerBody , setRegisterBodyState } = useRegisterContext();
 
-    const totalPrice = 'XXX.XX฿';
+
+    const numberOfRegistrants = registerBody.length;
+    const totalPackagePrice = 700 * numberOfRegistrants;
+    let discount = 0;
+    if (registerBody[0] && registerBody[0].type === 'student') {
+        discount = 400 * numberOfRegistrants;
+    }
+    const totalPrice = totalPackagePrice-discount;
 
     const handleCheck = (index: number) => {
         const newChecked = [...checked];
         newChecked[index] = !newChecked[index];
         setChecked(newChecked);
      };
-
-    const { registerBody , setRegisterBodyState } = useRegisterContext();
 
     return (
         <>
@@ -48,13 +54,13 @@ export default function PaymentInfo() {
                         <p>ส่วนลด</p>
                     </div>
                     <div className="text-right">
-                        <p>XXX.XX฿</p>
-                        <p>XXX.XX฿</p>
+                        <p>{totalPackagePrice.toFixed(2)}฿</p>
+                        <p>{discount.toFixed(2)}฿</p>
                     </div>
                 </div>
                 <div className="flex justify-between items-center mt-2">
                     <span className="text-lg font-bold text-primary-100">ยอดชำระเงิน</span>
-                    <span className="text-xl font-bold text-primary-100">{totalPrice}</span>
+                    <span className="text-xl font-bold text-primary-100">{totalPrice.toFixed(2)}฿</span>
                 </div>
                 <div className='flex flex-col space-y-4'>
                     <CheckBox

@@ -27,7 +27,7 @@ export default function Review() {
                     <ReviewCard 
                         key={index} // Don't forget to add a unique key for each child
                         name={registrant.firstName + ' ' + registrant.lastName}
-                        distance={registrant.type}
+                        distance={registrant.selectedPackage}
                         citizenId={registrant.citizenId}
                         phone={registrant.phone}
                         shirtSize={registrant.shirtSize}
