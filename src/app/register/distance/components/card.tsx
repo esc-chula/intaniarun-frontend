@@ -10,9 +10,9 @@ export default function Card({
     onClick: (distance: string) => void;
 }) {
     return (
-        <div 
+        <div
             className='relative flex h-[143px] w-full items-center justify-between overflow-hidden 
-                rounded-[12px] bg-white p-6 shadow-lg border-t-[8px] border-primary-100' 
+                rounded-[12px] border-t-[8px] border-primary-100 bg-white p-6 shadow-lg'
             onClick={() => onClick(distance)}
         >
             <div className='px-[10px] pt-[10px]'>

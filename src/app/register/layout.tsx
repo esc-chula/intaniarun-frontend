@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 import Header from '@/components/header';
-import { RegisterProvider } from '@/contexts/register';
 import RegisterConfig from '@/configs/register';
+import { RegisterProvider } from '@/contexts/register';
 
 export default function RootLayout({
     children,

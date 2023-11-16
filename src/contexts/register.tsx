@@ -39,7 +39,6 @@ const Context = createContext<ContextProps>({
     setRegisterBodyState: () => {},
     addUserToRegisterBody: () => {},
     currentRegistrantIndex: 0,
-
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -79,7 +78,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const addUserToRegisterBody = () => {
-        setRegisterBody(prevState => [
+        setRegisterBody((prevState) => [
             ...prevState,
             {
                 firstName: '',
@@ -102,13 +101,13 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 runnerNo: '',
                 selectedPackage: '',
                 paymentId: '',
-            }
+            },
         ]);
         setCurrentRegistrantIndex(registerBody.length);
-    };    
+    };
 
     const [currentRegistrantIndex, setCurrentRegistrantIndex] = useState(0);
-    
+
     return (
         <Context.Provider
             value={{

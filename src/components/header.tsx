@@ -5,8 +5,8 @@ import { usePathname } from 'next/navigation';
 
 const SHOW_STATUS_PATH = {
     information: ['/register/info'],
-    package: ['/register/distance','/register/review'],
-    payment: ['/register/paymentinfo','/register/payment'],
+    package: ['/register/distance', '/register/review'],
+    payment: ['/register/paymentinfo', '/register/payment'],
 };
 
 export default function Header() {
@@ -14,7 +14,11 @@ export default function Header() {
 
     function determineStatus(pathname: string) {
         for (const status in SHOW_STATUS_PATH) {
-            if (SHOW_STATUS_PATH[status].includes(pathname)) {
+            if (
+                SHOW_STATUS_PATH[
+                    status as keyof typeof SHOW_STATUS_PATH
+                ].includes(pathname)
+            ) {
                 return status;
             }
         }
@@ -22,7 +26,6 @@ export default function Header() {
     }
 
     const currentStatus = determineStatus(pathname);
-
 
     return (
         <header className='fixed left-0 right-0 top-0 z-50 select-none bg-primary-400'>
@@ -35,21 +38,39 @@ export default function Header() {
                         className='object-contain object-center'
                     />
                 </div>
-                {currentStatus &&
-                <div className='relative w-full h-[40px]'>
-                    {currentStatus === 'information' && (
-                        <Image src='/status-bar-information.svg' alt='Status bar information' layout='fill' objectFit='contain' objectPosition='center' />
-                    )}
-                
-                    {currentStatus === 'package' && (
-                        <Image src='/status-bar-package.svg' alt='Status bar package' layout='fill' objectFit='contain' objectPosition='center' />
-                    )}
+                {currentStatus && (
+                    <div className='relative h-[40px] w-full'>
+                        {currentStatus === 'information' && (
+                            <Image
+                                src='/status-bar-information.svg'
+                                alt='Status bar information'
+                                layout='fill'
+                                objectFit='contain'
+                                objectPosition='center'
+                            />
+                        )}
 
-                    {currentStatus === 'payment' && (
-                        <Image src='/status-bar-payment.svg' alt='Status bar payment' layout='fill' objectFit='contain' objectPosition='center' />
-                    )}
-                </div>
-                }
+                        {currentStatus === 'package' && (
+                            <Image
+                                src='/status-bar-package.svg'
+                                alt='Status bar package'
+                                layout='fill'
+                                objectFit='contain'
+                                objectPosition='center'
+                            />
+                        )}
+
+                        {currentStatus === 'payment' && (
+                            <Image
+                                src='/status-bar-payment.svg'
+                                alt='Status bar payment'
+                                layout='fill'
+                                objectFit='contain'
+                                objectPosition='center'
+                            />
+                        )}
+                    </div>
+                )}
             </div>
         </header>
     );

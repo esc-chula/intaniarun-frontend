@@ -1,22 +1,20 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import Button from '@/components/button';
 import Header from '@/components/header';
-
-import InfoCard from './components/info-card';
-import CheckBox from './components/check-box';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useRegisterContext } from '@/contexts/register';
 
-export default function PaymentInfo() {
+import CheckBox from './components/check-box';
+import InfoCard from './components/info-card';
 
+export default function PaymentInfo() {
     const router = useRouter();
     const [checked, setChecked] = useState([false, false]);
-    const { registerBody , setRegisterBodyState } = useRegisterContext();
-
+    const { registerBody, setRegisterBodyState } = useRegisterContext();
 
     const numberOfRegistrants = registerBody.length;
     const totalPackagePrice = 700 * numberOfRegistrants;
@@ -24,20 +22,20 @@ export default function PaymentInfo() {
     if (registerBody[0] && registerBody[0].type === 'student') {
         discount = 400 * numberOfRegistrants;
     }
-    const totalPrice = totalPackagePrice-discount;
+    const totalPrice = totalPackagePrice - discount;
 
     const handleCheck = (index: number) => {
         const newChecked = [...checked];
         newChecked[index] = !newChecked[index];
         setChecked(newChecked);
-     };
+    };
 
     return (
         <>
             <h1 className='text-2xl font-bold'>ข้อมูลการชำระเงิน</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 {registerBody.map((registrant, index) => (
-                    <InfoCard 
+                    <InfoCard
                         key={index} // Don't forget to add a unique key for each child
                         name={registrant.firstName + ' ' + registrant.lastName}
                         distance={registrant.type}
@@ -47,20 +45,24 @@ export default function PaymentInfo() {
                     />
                 ))}
             </div>
-            <div className="sticky bottom-0 left-0 w-full px-4 py-2">
-                <div className="flex justify-between items-center border-t-2 border-gray-200 pt-2">
-                    <div className="flex flex-col items-start">
+            <div className='sticky bottom-0 left-0 w-full px-4 py-2'>
+                <div className='flex items-center justify-between border-t-2 border-gray-200 pt-2'>
+                    <div className='flex flex-col items-start'>
                         <p>ราคาแพ็คเกจทั้งหมด</p>
                         <p>ส่วนลด</p>
                     </div>
-                    <div className="text-right">
+                    <div className='text-right'>
                         <p>{totalPackagePrice.toFixed(2)}฿</p>
                         <p>{discount.toFixed(2)}฿</p>
                     </div>
                 </div>
-                <div className="flex justify-between items-center mt-2">
-                    <span className="text-lg font-bold text-primary-100">ยอดชำระเงิน</span>
-                    <span className="text-xl font-bold text-primary-100">{totalPrice.toFixed(2)}฿</span>
+                <div className='mt-2 flex items-center justify-between'>
+                    <span className='text-lg font-bold text-primary-100'>
+                        ยอดชำระเงิน
+                    </span>
+                    <span className='text-xl font-bold text-primary-100'>
+                        {totalPrice.toFixed(2)}฿
+                    </span>
                 </div>
                 <div className='flex flex-col space-y-4'>
                     <CheckBox
