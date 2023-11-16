@@ -20,7 +20,7 @@ const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L'];
 
 export default function PersonalInformationPage() {
     const router = useRouter();
-    const { registerBody, setRegisterBodyState } = useRegisterContext();
+    const { registerBody, setRegisterBodyState , currentRegistrantIndex } = useRegisterContext();
     const [page, setPage] = useState(0);
 
     useEffect(() => {
@@ -46,7 +46,8 @@ export default function PersonalInformationPage() {
     ) => {
         const { name, value } = e.target;
         // console.log("Handle Change:", name, value);
-        setRegisterBodyState(0, name, value);
+        // console.log("currentRegistrantIndex:", currentRegistrantIndex);
+        setRegisterBodyState(currentRegistrantIndex, name, value);
     };
 
     const nextPage = () => {

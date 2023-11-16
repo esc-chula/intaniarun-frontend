@@ -8,6 +8,7 @@ interface ContextProps {
     registerBody: TRegisterBodyState[];
     setRegisterBodyState: (index: number, key: string, value: string) => void;
     addUserToRegisterBody: () => void;
+    currentRegistrantIndex: number;
 }
 
 const Context = createContext<ContextProps>({
@@ -36,7 +37,8 @@ const Context = createContext<ContextProps>({
         },
     ],
     setRegisterBodyState: () => {},
-    addUserToRegisterBody: () => {}
+    addUserToRegisterBody: () => {},
+    currentRegistrantIndex: 0,
 
 });
 
@@ -102,14 +104,18 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 paymentId: '',
             }
         ]);
+        setCurrentRegistrantIndex(registerBody.length);
     };    
 
+    const [currentRegistrantIndex, setCurrentRegistrantIndex] = useState(0);
+    
     return (
         <Context.Provider
             value={{
                 registerBody,
                 setRegisterBodyState,
                 addUserToRegisterBody,
+                currentRegistrantIndex,
             }}
         >
             {children}
