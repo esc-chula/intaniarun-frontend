@@ -9,6 +9,8 @@ import Dialog from '@/components/dialog';
 import { useRegisterContext } from '@/contexts/register';
 import { TRegisterBodyState } from '@/types/register';
 
+import { shirtSizes } from '../../info/data';
+
 export default function ReviewCard({
     index,
     registrant,
@@ -57,7 +59,13 @@ export default function ReviewCard({
                                 )}
                             </p>
                             <p>{registrant.phone}</p>
-                            <p>{registrant.shirtSize}</p>
+                            <p>
+                                {
+                                    shirtSizes.find(
+                                        (e) => e.value === registrant.shirtSize
+                                    )?.label
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>

@@ -26,6 +26,8 @@ export default function Payment() {
     };
 
     const handleSumbit = async () => {
+        setIsLoading(true);
+
         console.log('registerBody:', registerBody);
         console.log('file', file);
         // router.push('/register/sucess');
@@ -84,10 +86,12 @@ export default function Payment() {
                     const data = await response.json();
                     console.log('User Data Success:', data);
                     router.push('/register/success');
+                    setIsLoading(false);
                 } else {
                     console.error('User Data Upload failed');
                     console.log(response);
                     router.push('/register/error');
+                    setIsLoading(false);
                 }
             }
         } catch (error) {
@@ -171,7 +175,7 @@ export default function Payment() {
                         <div className='flex items-center justify-center space-x-2'>
                             <svg
                                 aria-hidden='true'
-                                className='h-8 w-8 animate-spin fill-primary-100 text-gray-200 dark:text-gray-600'
+                                className='h-6 w-6 animate-spin fill-primary-100 text-gray-200 dark:text-gray-600'
                                 viewBox='0 0 100 101'
                                 fill='none'
                                 xmlns='http://www.w3.org/2000/svg'
