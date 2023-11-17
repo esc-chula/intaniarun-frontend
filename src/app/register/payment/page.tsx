@@ -36,19 +36,20 @@ export default function Payment() {
         }
     };
 
-    const uploadFileToServer = async (file) => {
+    const uploadFileToServer = async (file: any) => {
         const formData = new FormData();
         formData.append('file', file);
-    
+
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`, {
-                method: 'POST',
-                headers: {
-                    'x-auth-token': process.env.X_AUTH_TOKEN,
-                },
-                body: formData,
-            });
-    
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`,
+                {
+                    method: 'POST',
+
+                    body: formData,
+                }
+            );
+
             if (response.ok) {
                 const data = await response.json();
                 console.log('File upload success:', data);
@@ -63,15 +64,14 @@ export default function Payment() {
 
     const postUserData = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-auth-token': process.env.X_AUTH_TOKEN,
-                },
-                body: JSON.stringify(registerBody),
-            });
-    
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(registerBody),
+                }
+            );
+
             if (response.ok) {
                 const data = await response.json();
                 console.log('User Data Success:', data);
@@ -82,8 +82,6 @@ export default function Payment() {
             console.error('Error:', error);
         }
     };
-
-
 
     return (
         <>
