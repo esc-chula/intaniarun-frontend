@@ -11,16 +11,8 @@ import InfoCard from './components/info-card';
 
 export default function Summary() {
     const router = useRouter();
+    const { registerBody, totalPackagePrice } = useRegisterContext();
     const [checked, setChecked] = useState([false, false]);
-    const { registerBody } = useRegisterContext();
-
-    const numberOfRegistrants = registerBody.length;
-    const totalPackagePrice = 700 * numberOfRegistrants;
-    let discount = 0;
-    if (registerBody[0] && registerBody[0].type === 'student') {
-        discount = 400 * numberOfRegistrants;
-    }
-    const totalPrice = totalPackagePrice - discount;
 
     const handleCheck = (index: number) => {
         const newChecked = [...checked];
@@ -33,32 +25,28 @@ export default function Summary() {
             <h1 className='text-2xl font-bold'>ข้อมูลการชำระเงิน</h1>
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 {registerBody.map((registrant, index) => (
-                    <InfoCard
-                        key={index}
-                        name={registrant.firstName + ' ' + registrant.lastName}
-                        distance={registrant.type}
-                        phone={registrant.phone}
-                        shirtSize={registrant.shirtSize}
-                    />
+                    <InfoCard key={index} registrant={registrant} />
                 ))}
             </div>
             <div className='w-full px-4 py-2'>
-                <div className='flex items-center justify-between border-t-2 border-gray-200 pt-2'>
-                    <div className='flex flex-col items-start'>
+                <div className='flex flex-col items-center justify-between border-t-2 border-gray-200 pt-2'>
+                    <div className='flex w-full items-center justify-between'>
                         <p>ราคาแพ็คเกจทั้งหมด</p>
-                        <p>ส่วนลด</p>
-                    </div>
-                    <div className='text-right'>
                         <p>{totalPackagePrice.toFixed(2)}฿</p>
-                        <p>{discount.toFixed(2)}฿</p>
                     </div>
+                    {registerBody[0].type === 'STUDENT' && (
+                        <div className='flex w-full items-center justify-between'>
+                            <p>ส่วนลด</p>
+                            <p>300฿</p>
+                        </div>
+                    )}
                 </div>
                 <div className='mt-2 flex items-center justify-between'>
                     <span className='text-lg font-bold text-primary-100'>
                         ยอดชำระเงิน
                     </span>
                     <span className='text-xl font-bold text-primary-100'>
-                        {totalPrice.toFixed(2)}฿
+                        {totalPackagePrice.toFixed(2)}฿
                     </span>
                 </div>
                 <div className='my-6 flex flex-col space-y-5'>

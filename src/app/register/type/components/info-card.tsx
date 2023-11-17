@@ -14,7 +14,7 @@ export default function InfoCard({
     return (
         <button
             onClick={onClick}
-            className='relative flex h-[148px] w-full items-center justify-between rounded-[16px] border-2 border-red-200 bg-white p-[25px] text-left shadow-xl'
+            className='relative flex h-40 w-full items-center justify-between rounded-[16px] border-2 border-red-200 bg-white p-[25px] text-left shadow-xl'
         >
             <div className='w-3/4'>
                 <h1 className='text-[24px] font-bold'>{title}</h1>

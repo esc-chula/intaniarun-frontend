@@ -12,15 +12,7 @@ export default function Payment() {
     const router = useRouter();
     const [checked, setChecked] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const { registerBody } = useRegisterContext();
-
-    const numberOfRegistrants = registerBody.length;
-    const totalPackagePrice = 700 * numberOfRegistrants;
-    let discount = 0;
-    if (registerBody[0] && registerBody[0].type === 'student') {
-        discount = 400 * numberOfRegistrants;
-    }
-    const totalPrice = totalPackagePrice - discount;
+    const { registerBody, totalPackagePrice } = useRegisterContext();
 
     const handleUploadSlip = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -36,31 +28,32 @@ export default function Payment() {
     const handleSumbit = () => {
         console.log('registerBody:', registerBody);
         console.log('file', file);
-        // router.push('/register/sucess');
     };
 
     return (
         <>
-            <div className='w-full px-6 py-4'>
-                <h1 className='mb-6 text-2xl font-bold'>ชำระเงิน</h1>
-
-                <div className='mb-4 flex justify-between py-5 font-bold'>
+            <h1 className='text-2xl font-bold'>ชำระเงิน</h1>
+            <div className='w-full'>
+                <div className='mb-4 flex justify-between font-bold'>
                     <p>ยอดชำระเงิน</p>
-                    <p>{totalPrice.toFixed(2)}฿</p>
+                    <p>{totalPackagePrice.toFixed(2)}฿</p>
                 </div>
                 <div className='mb-6 flex flex-col items-start gap-2.5 rounded-lg bg-white p-4 shadow-md'>
                     <div className='flex items-center gap-5'>
                         <Image
-                            src='/kbank-icon.png'
-                            alt='K+'
+                            src='/bank-icon.png'
+                            alt='Bangkok Bank'
                             width={32}
                             height={32}
+                            className='rounded-lg'
                         />
-                        <p className='text-lg'>ธนาคารกสิกรไทย</p>
+                        <p className='text-lg'>ธนาคารกรุงเทพ</p>
                     </div>
-                    <p className='font-semi-bold text-lg'>1234567890</p>
+                    <p className='font-semi-bold text-lg'>939-3-01072-4</p>
                     <div className='w-full border-t pt-3' />
-                    <p>ชื่อบัญชี</p>
+                    <p className='-mt-2 text-left'>
+                        สมาคมนิสิตเก่าวิศวกรรมศาสตร์แห่งจุฬาลงกรณ์มหาวิทยาลัยเพื่อปรับปรุงห้องประชุมคณะวิศวจุฬาฯ
+                    </p>
                 </div>
 
                 <label
@@ -72,6 +65,7 @@ export default function Payment() {
                 <div className='relative mb-6 items-center rounded-lg bg-white p-4'>
                     <input
                         type='file'
+                        accept='image/*'
                         id='upload-slip'
                         name='upload-slip'
                         onChange={handleUploadSlip}
@@ -95,7 +89,7 @@ export default function Payment() {
                 </div>
 
                 <p className='py-5 text-[12px]'>
-                    หากอัพโหลดสลิปเสร็จแล้วจะได้รับอีเมลยืนยันภายใน 7 วัน
+                    หากอัพโหลดสลิปเสร็จแล้วจะได้รับอีเมลยืนยันภายใน 15 วัน
                 </p>
 
                 <Button

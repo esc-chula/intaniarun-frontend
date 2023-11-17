@@ -39,7 +39,7 @@ export default function StatusPage() {
                             'STUDENT'
                         );
                         signIn('google', {
-                            callbackUrl: '/register/info?type=student',
+                            callbackUrl: '/register/info',
                         });
                     }}
                 />
@@ -67,7 +67,7 @@ export default function StatusPage() {
                             'type',
                             'CHULA'
                         );
-                        router.push('/register/info?type=general');
+                        router.push('/register/info');
                     }}
                 />
                 <InfoCard
@@ -79,7 +79,7 @@ export default function StatusPage() {
                             'type',
                             'PUBLIC'
                         );
-                        router.push('/register/info?type=general');
+                        router.push('/register/info');
                     }}
                 />
             </div>

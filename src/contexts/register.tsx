@@ -10,6 +10,7 @@ import {
     useState,
 } from 'react';
 
+import { prices } from '@/constants/price';
 import { TRegisterBodyState } from '@/types/register';
 import { userSchema } from '@/utils/validator';
 
@@ -21,6 +22,7 @@ interface ContextProps {
     addUserToRegisterBody: () => void;
     removeUserFromRegisterBody: (index: number) => void;
     validateRegisterBody: () => Joi.ValidationError | undefined;
+    totalPackagePrice: number;
 }
 
 const Context = createContext<ContextProps>({
@@ -50,6 +52,7 @@ const Context = createContext<ContextProps>({
     addUserToRegisterBody: () => {},
     removeUserFromRegisterBody: () => {},
     validateRegisterBody: () => undefined,
+    totalPackagePrice: 0,
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -142,6 +145,13 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         return error;
     }, [currentRegistrantIndex, pageMounted, registerBody]);
 
+    const totalPackagePrice =
+        registerBody.reduce(
+            (acc, registrant) =>
+                acc + prices[registrant.type as keyof typeof prices],
+            0
+        ) - (registerBody[0].type === 'STUDENT' ? 300 : 0);
+
     useEffect(() => {
         setPageMounted(true);
         const localRegisterBody = localStorage.getItem('registerBody');
@@ -210,6 +220,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 addUserToRegisterBody,
                 removeUserFromRegisterBody,
                 validateRegisterBody,
+                totalPackagePrice,
             }}
         >
             {children}
