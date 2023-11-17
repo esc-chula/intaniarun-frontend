@@ -10,6 +10,7 @@ import { useRegisterContext } from '@/contexts/register';
 
 import FormComponent from './components/form';
 import { fields } from './field';
+import { register } from 'module';
 
 export default function PersonalInformationPage() {
     const session = useSession();
@@ -81,6 +82,10 @@ export default function PersonalInformationPage() {
             }
         }
     }, [session]);
+
+    useEffect(() => {
+        setRegisterBodyState(currentRegistrantIndex, 'email', registerBody[0].email);
+    },[]);
 
     return (
         <>
