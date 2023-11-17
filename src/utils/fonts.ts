@@ -5,6 +5,4 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
     weight: ['100', '200', '300', '400', '500', '600', '700'],
 });
 
-const jockeyOne = Jockey_One({ subsets: ['latin'], weight: '400' });
-
-export { ibmPlexSansThai, jockeyOne };
+export { ibmPlexSansThai };

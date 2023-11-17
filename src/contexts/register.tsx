@@ -1,12 +1,29 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import Joi from 'joi';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 
+import { prices } from '@/constants/price';
 import { TRegisterBodyState } from '@/types/register';
+import { userSchema } from '@/utils/validator';
 
 interface ContextProps {
     registerBody: TRegisterBodyState[];
+    currentRegistrantIndex: number;
+    setCurrentRegistrantIndex: (index: number) => void;
     setRegisterBodyState: (index: number, key: string, value: string) => void;
+    addUserToRegisterBody: () => void;
+    removeUserFromRegisterBody: (index: number) => void;
+    validateRegisterBody: () => Joi.ValidationError | undefined;
+    totalPackagePrice: number;
+    resetRegisterBody: () => void;
 }
 
 const Context = createContext<ContextProps>({
@@ -16,12 +33,11 @@ const Context = createContext<ContextProps>({
             lastName: '',
             gender: '',
             birthDate: '',
-            citizenId: '',
-            nationality: '',
             shirtSize: '',
             province: '',
             email: '',
             phone: '',
+            joinedYear: '',
             disease: '',
             bloodType: '',
             emergencyName: '',
@@ -29,27 +45,36 @@ const Context = createContext<ContextProps>({
             relationship: '',
             gmail: '',
             type: '',
-            runnerNo: '',
             selectedPackage: '',
-            paymentId: '',
         },
     ],
+    currentRegistrantIndex: 0,
+    setCurrentRegistrantIndex: () => {},
     setRegisterBodyState: () => {},
+    addUserToRegisterBody: () => {},
+    removeUserFromRegisterBody: () => {},
+    validateRegisterBody: () => undefined,
+    totalPackagePrice: 0,
+    resetRegisterBody: () => {},
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const [pageMounted, setPageMounted] = useState(false);
+
     const [registerBody, setRegisterBody] = useState<TRegisterBodyState[]>([
         {
             firstName: '',
             lastName: '',
             gender: '',
             birthDate: '',
-            citizenId: '',
-            nationality: '',
             shirtSize: '',
             province: '',
             email: '',
             phone: '',
+            joinedYear: '',
             disease: '',
             bloodType: '',
             emergencyName: '',
@@ -57,11 +82,14 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
             relationship: '',
             gmail: '',
             type: '',
-            runnerNo: '',
             selectedPackage: '',
-            paymentId: '',
         },
     ]);
+
+    const [currentRegistrantIndex, setCurrentRegistrantIndex] =
+        useState<number>(0);
+
+    const [registered, setRegistered] = useState(false);
 
     const setRegisterBodyState = (
         index: number,
@@ -73,11 +101,191 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         setRegisterBody(newRegisterBody);
     };
 
+    const addUserToRegisterBody = () => {
+        setRegisterBody((prevState) => [
+            ...prevState,
+            {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birthDate: '',
+                shirtSize: '',
+                province: '',
+                email: '',
+                phone: '',
+                joinedYear: '',
+                disease: '',
+                bloodType: '',
+                emergencyName: '',
+                emergencyPhone: '',
+                relationship: '',
+                gmail: '',
+                type: '',
+                selectedPackage: '',
+            },
+        ]);
+        setCurrentRegistrantIndex(registerBody.length);
+    };
+
+    const removeUserFromRegisterBody = (index: number) => {
+        if (registerBody.length === 1) {
+            setRegisterBody((prevState) => [
+                ...prevState.slice(1),
+                {
+                    firstName: '',
+                    lastName: '',
+                    gender: '',
+                    birthDate: '',
+                    shirtSize: '',
+                    province: '',
+                    email: '',
+                    phone: '',
+                    joinedYear: '',
+                    disease: '',
+                    bloodType: '',
+                    emergencyName: '',
+                    emergencyPhone: '',
+                    relationship: '',
+                    gmail: '',
+                    type: '',
+                    selectedPackage: '',
+                },
+            ]);
+            setCurrentRegistrantIndex(0);
+        } else {
+            setRegisterBody((prevState) => {
+                const newRegisterBody = [...prevState];
+                newRegisterBody.splice(index, 1);
+                return newRegisterBody;
+            });
+            setCurrentRegistrantIndex(registerBody.length - 2);
+        }
+    };
+
+    const validateRegisterBody = useCallback(() => {
+        const localRegisterBody = localStorage.getItem('registerBody');
+
+        if (!localRegisterBody || !pageMounted) {
+            return;
+        }
+
+        const { error } = userSchema.validate(
+            registerBody[currentRegistrantIndex],
+            {
+                abortEarly: false,
+            }
+        );
+
+        return error;
+    }, [currentRegistrantIndex, pageMounted, registerBody]);
+
+    const totalPackagePrice = registerBody.reduce(
+        (acc, registrant) =>
+            acc + prices[registrant.type as keyof typeof prices],
+        0
+    );
+
+    const resetRegisterBody = () => {
+        setRegisterBody([
+            {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birthDate: '',
+                shirtSize: '',
+                province: '',
+                email: '',
+                phone: '',
+                joinedYear: '',
+                disease: '',
+                bloodType: '',
+                emergencyName: '',
+                emergencyPhone: '',
+                relationship: '',
+                gmail: '',
+                type: '',
+                selectedPackage: '',
+            },
+        ]);
+        setCurrentRegistrantIndex(0);
+    };
+
+    useEffect(() => {
+        setPageMounted(true);
+        const localRegisterBody = localStorage.getItem('registerBody');
+        const localCurrentRegistrantIndex = localStorage.getItem(
+            'currentRegistrantIndex'
+        );
+        const localRegistered = localStorage.getItem('registered');
+        if (localRegisterBody) {
+            setRegisterBody(JSON.parse(localRegisterBody));
+            setCurrentRegistrantIndex(
+                localCurrentRegistrantIndex
+                    ? JSON.parse(localCurrentRegistrantIndex)
+                    : 0
+            );
+            setRegistered(
+                localRegistered ? JSON.parse(localRegistered) : false
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!pageMounted) return;
+        localStorage.setItem('registerBody', JSON.stringify(registerBody));
+        localStorage.setItem(
+            'currentRegistrantIndex',
+            JSON.stringify(currentRegistrantIndex)
+        );
+        localStorage.setItem('registered', JSON.stringify(registered));
+    }, [pageMounted, registerBody, currentRegistrantIndex, registered]);
+
+    useEffect(() => {
+        const localRegisterBody = localStorage.getItem('registerBody');
+        if (!pageMounted || !localRegisterBody) return;
+        switch (pathname) {
+            case '/register/info':
+                if (!registerBody[currentRegistrantIndex].type) {
+                    router.push('/register/type');
+                }
+                break;
+            case '/register/distance':
+                const error = validateRegisterBody();
+                if (error) {
+                    const errorFields = new Set<string>();
+                    error.details.forEach((error) => {
+                        const path = error.path[0] as string;
+                        errorFields.add(path);
+                    });
+
+                    if (errorFields === new Set(['selectedPackage'])) {
+                        router.push('/register/info');
+                    }
+                }
+                break;
+        }
+    }, [
+        currentRegistrantIndex,
+        pageMounted,
+        pathname,
+        registerBody,
+        registered,
+        router,
+        validateRegisterBody,
+    ]);
+
     return (
         <Context.Provider
             value={{
                 registerBody,
+                currentRegistrantIndex,
+                setCurrentRegistrantIndex,
                 setRegisterBodyState,
+                addUserToRegisterBody,
+                removeUserFromRegisterBody,
+                validateRegisterBody,
+                totalPackagePrice,
+                resetRegisterBody,
             }}
         >
             {children}

@@ -3,12 +3,11 @@ export type TRegisterBodyState = {
     lastName: string;
     gender: TRegisterGender | string;
     birthDate: string;
-    citizenId: string;
-    nationality: string;
     shirtSize: TRegisterShirtSize | string;
     province: string;
     email: string;
     phone: string;
+    joinedYear: string;
     disease: string;
     bloodType: TRegisterBloodType | string;
     emergencyName: string;
@@ -16,13 +15,7 @@ export type TRegisterBodyState = {
     relationship: string;
     gmail: string;
     type: TRegisterRunnerType | string;
-    runnerNo: string;
     selectedPackage: TRegisterPackageType | string;
-    paymentId: string;
-    receiverName?: string;
-    receiverPhone?: string;
-    receiverAddress?: string;
-    receiverPostalCode?: string;
 };
 
 export type TRegisterBody = TRegisterBodyState & {
@@ -48,6 +41,11 @@ export type TRegisterShirtSize =
 
 export type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
 
-export type TRegisterRunnerType = 'ALUMNI' | 'STUDENT' | 'PUBLIC';
+export type TRegisterRunnerType =
+    | 'VIP'
+    | 'ALUMNI'
+    | 'STUDENT'
+    | 'CHULA'
+    | 'PUBLIC';
 
 export type TRegisterPackageType = 'F' | 'T';

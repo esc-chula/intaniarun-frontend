@@ -1,193 +1,164 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
-import { TRegisterBloodType } from '@/types/register';
 
-import Header from '../../../components/header';
 import FormComponent from './components/form';
-
-const nameTitles = ['นาย', 'นาง', 'นางสาว'];
-
-const genders = ['ชาย', 'หญิง'];
-
-const bloodtypes = ['A', 'B', 'AB', 'O'];
-
-const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L'];
+import { fields } from './field';
 
 export default function PersonalInformationPage() {
-    const { registerBody, setRegisterBodyState } = useRegisterContext();
+    const session = useSession();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const {
+        registerBody,
+        setRegisterBodyState,
+        currentRegistrantIndex,
+        validateRegisterBody,
+    } = useRegisterContext();
+    const page = searchParams.get('page')
+        ? parseInt(searchParams.get('page')!)
+        : 0;
+    const type = searchParams.get('type');
 
-    const formHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    const [errorFields, setErrorFields] = useState<string[]>([]);
+
+    const validateForm = useCallback(() => {
+        const error = validateRegisterBody();
+
+        if (error) {
+            const errorFields = new Set<string>();
+            error.details.forEach((error) => {
+                const path = error.path[0] as string;
+                const message = error.message;
+
+                const pageFields = fields[page as keyof typeof fields].map(
+                    (field) => field.name
+                );
+
+                if (pageFields.includes(path)) {
+                    errorFields.add(path);
+                }
+            });
+
+            setErrorFields(Array.from(errorFields));
+        }
+    }, [page, validateRegisterBody]);
+
+    const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const target = e.target as typeof e.target;
+        validateForm();
+
+        if (errorFields.length > 0) return;
+
+        setErrorFields([]);
+
+        if (page === 0) {
+            router.push(`/register/info?page=1&type=${type}`);
+        } else if (page === 1) {
+            router.push(`/register/distance`);
+        }
     };
 
-    const handleChange = (
-        e:
-            | React.ChangeEvent<HTMLInputElement>
-            | React.ChangeEvent<HTMLSelectElement>
-    ) => {
-        const { name, value } = e.target;
-        setRegisterBodyState(0, name, value);
-    };
+    useEffect(() => {
+        validateForm();
+    }, [page, validateForm]);
+
+    useEffect(() => {
+        if (registerBody[0].type === 'STUDENT') {
+            if (!session) {
+                router.push('/register/type');
+            } else {
+                if (!session.data?.user?.email) return;
+                setRegisterBodyState(0, 'email', session.data?.user?.email);
+                setRegisterBodyState(0, 'gmail', session.data?.user?.email);
+            }
+        }
+    }, [session]);
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>ข้อมูลผู้สมัคร</h1>
+            <div className='relative flex w-full items-center justify-center'>
+                <h1 className='text-2xl font-bold'>
+                    ข้อมูลผู้สมัคร
+                    {registerBody.length > 1
+                        ? ` คนที่ ${currentRegistrantIndex + 1}`
+                        : ''}
+                </h1>
+            </div>
             <div className='flex w-full flex-col items-center justify-center'>
-                <form
-                    // onSubmit={formHandler}
-                    className='grid w-full gap-7 px-2'
-                >
-                    <FormComponent
-                        id='name'
-                        label='ชื่อ'
-                        placeholder='ชื่อ'
-                        name='firstName'
-                        value={registerBody[0].firstName}
-                        required={true}
-                        onChange={handleChange}
-                    />
+                <form onSubmit={formHandler} className='grid w-full gap-7 px-2'>
+                    {Object.keys(fields).map((key) => {
+                        if (parseInt(key) !== page) return null;
+                        return fields[parseInt(key) as keyof typeof fields].map(
+                            (field) => {
+                                if (
+                                    registerBody[currentRegistrantIndex]
+                                        .type !== 'ALUMNI' &&
+                                    field.id === 'joinedYear'
+                                ) {
+                                    return null;
+                                }
+                                return (
+                                    <FormComponent
+                                        key={field.id}
+                                        id={field.id}
+                                        label={field.label}
+                                        placeholder={field.placeholder}
+                                        name={field.name}
+                                        value={
+                                            registerBody[
+                                                currentRegistrantIndex
+                                            ][
+                                                field.name as keyof (typeof registerBody)[0]
+                                            ]
+                                        }
+                                        options={field.options}
+                                        required={true}
+                                        type={field.type}
+                                        onChange={(e) => {
+                                            const { name, value } = e.target;
+                                            setRegisterBodyState(
+                                                currentRegistrantIndex,
+                                                name,
+                                                value
+                                            );
+                                            validateForm();
+                                        }}
+                                        description={field.description}
+                                    />
+                                );
+                            }
+                        );
+                    })}
 
-                    <FormComponent
-                        id='surname'
-                        label='นามสกุล'
-                        placeholder='นามสกุล'
-                        name='lastName'
-                        value={registerBody[0].lastName}
-                        required={true}
-                        onChange={handleChange}
-                    />
+                    <p className='h-4 text-sm font-medium text-red-500'>
+                        {errorFields.length > 0 ? (
+                            <>
+                                {Object.keys(fields).map((key) => {
+                                    if (parseInt(key) !== page) return null;
+                                    return fields[
+                                        page as keyof typeof fields
+                                    ].find((field) => {
+                                        if (errorFields[0] === field.name) {
+                                            return true;
+                                        }
+                                    })?.label;
+                                })}{' '}
+                                ไม่ถูกต้อง
+                            </>
+                        ) : null}
+                    </p>
 
-                    <FormComponent
-                        id='gender'
-                        label='เพศ (ตามบัตรประชาชน)'
-                        placeholder='-- เลือกรายการ --'
-                        name='gender'
-                        value={registerBody[0].gender}
-                        required={true}
-                        options={genders.map((gender) => ({
-                            value: gender,
-                            label: gender,
-                        }))}
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='email'
-                        label='อีเมล'
-                        placeholder='อีเมล'
-                        name='email'
-                        value={registerBody[0].email}
-                        required={true}
-                        type='email'
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='phone'
-                        label='โทรศัพท์'
-                        placeholder='0XX-XXX-XXXX'
-                        name='phone'
-                        value={registerBody[0].phone}
-                        required={true}
-                        type='tel'
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='citizenId'
-                        label='เลขบัตรประชาชน'
-                        placeholder='X-XXXX-XXXXX-XX-X'
-                        name='citizenId'
-                        value={registerBody[0].citizenId}
-                        required={true}
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='province'
-                        label='จังหวัดที่พักอาศัย'
-                        placeholder='---- เลือกรายการ ----'
-                        name='province'
-                        value={registerBody[0].province}
-                        required={true}
-                        //options
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='disease'
-                        label='ปัญหาสุขภาพ'
-                        placeholder='ปัญหาสุขภาพ'
-                        name='disease'
-                        value={registerBody[0].disease}
-                        required={true}
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='bloodType'
-                        label='หมู่เลือด'
-                        placeholder='---- เลือกรายการ ----'
-                        name='bloodType'
-                        value={registerBody[0].bloodType}
-                        required={true}
-                        options={bloodtypes.map((bloodtype) => ({
-                            value: bloodtype,
-                            label: bloodtype,
-                        }))}
-                        onChange={handleChange}
-                    />
-
-                    <FormComponent
-                        id='emergencyName'
-                        label='ชื่อผู้ติดต่อกรณีฉุกเฉิน'
-                        placeholder='ชื่อ - นามสกุล'
-                        name='emergencyName'
-                        value={registerBody[0].emergencyName}
-                        required={true}
-                        onChange={handleChange}
-                    />
-                    <FormComponent
-                        id='relationship'
-                        label='เกี่ยวข้องเป็น'
-                        placeholder='ความสัมพันธ์'
-                        name='relationship'
-                        value={registerBody[0].relationship}
-                        required={true}
-                        onChange={handleChange}
-                    />
-                    <FormComponent
-                        id='emergencyPhone'
-                        label='เบอร์โทรศัพท์กรณีฉุกเฉิน'
-                        placeholder='0XX-XXX-XXXX'
-                        name='emergencyPhone'
-                        value={registerBody[0].emergencyPhone}
-                        required={true}
-                        onChange={handleChange}
-                    />
-                    <FormComponent
-                        id='shirtSize'
-                        label='ไซซ์เสื้อ'
-                        placeholder='---- เลือกรายการ ----'
-                        name='shirtSize'
-                        value={registerBody[0].shirtSize}
-                        required={true}
-                        // type={TRegisterShirtSize}
-                        options={shirtSizes.map((shirtSize) => ({
-                            value: shirtSize,
-                            label: shirtSize,
-                        }))}
-                        onChange={handleChange}
-                    />
-                    <br />
-                    <Button type='submit'>ต่อไป</Button>
+                    <Button type='submit' disabled={errorFields.length > 0}>
+                        ต่อไป
+                    </Button>
                 </form>
             </div>
         </>
