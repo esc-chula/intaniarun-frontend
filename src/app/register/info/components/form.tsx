@@ -79,7 +79,7 @@ export default function FormComponent({
             </div>
             {name === 'shirtSize' && (
                 <Image
-                    src='/shirt-size.svg'
+                    src='/shirt-size.png'
                     alt='shirt-size'
                     width={700}
                     height={220}

@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/button';
-import Header from '@/components/header';
 import { useRegisterContext } from '@/contexts/register';
 
 export default function Payment() {
@@ -73,6 +72,9 @@ export default function Payment() {
                         body: JSON.stringify({
                             ...registrant,
                             paymentId: fileName,
+                            joinedYear: registrant.joinedYear
+                                ? Number(registrant.joinedYear)
+                                : undefined,
                         }),
                     }
                 );
@@ -80,9 +82,11 @@ export default function Payment() {
                 if (response.ok) {
                     const data = await response.json();
                     console.log('User Data Success:', data);
+                    router.push('/register/success');
                 } else {
                     console.error('User Data Upload failed');
                     console.log(response);
+                    router.push('/register/error');
                 }
             }
         } catch (error) {
