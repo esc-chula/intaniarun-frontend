@@ -32,7 +32,7 @@ export default function Success() {
             </p>
             <Button
                 onClick={() => {
-                    router.push('/');
+                    router.push('/register');
                 }}
             >
                 กลับสู่หน้าแรก

@@ -89,6 +89,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     const [currentRegistrantIndex, setCurrentRegistrantIndex] =
         useState<number>(0);
 
+    const [registered, setRegistered] = useState(false);
+
     const setRegisterBodyState = (
         index: number,
         key: string,
@@ -214,12 +216,16 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         const localCurrentRegistrantIndex = localStorage.getItem(
             'currentRegistrantIndex'
         );
+        const localRegistered = localStorage.getItem('registered');
         if (localRegisterBody) {
             setRegisterBody(JSON.parse(localRegisterBody));
             setCurrentRegistrantIndex(
                 localCurrentRegistrantIndex
                     ? JSON.parse(localCurrentRegistrantIndex)
                     : 0
+            );
+            setRegistered(
+                localRegistered ? JSON.parse(localRegistered) : false
             );
         }
     }, []);
@@ -231,7 +237,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
             'currentRegistrantIndex',
             JSON.stringify(currentRegistrantIndex)
         );
-    }, [pageMounted, registerBody, currentRegistrantIndex]);
+        localStorage.setItem('registered', JSON.stringify(registered));
+    }, [pageMounted, registerBody, currentRegistrantIndex, registered]);
 
     useEffect(() => {
         const localRegisterBody = localStorage.getItem('registerBody');
@@ -262,6 +269,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         pageMounted,
         pathname,
         registerBody,
+        registered,
         router,
         validateRegisterBody,
     ]);
