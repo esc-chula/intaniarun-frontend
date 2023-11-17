@@ -39,6 +39,7 @@ export default function FormComponent({
                         required={required}
                         className={`h-[48px] w-full appearance-none rounded-lg bg-white px-4 py-2 text-sm accent-primary-100`}
                         defaultValue=''
+                        value={value}
                         onChange={onChange}
                     >
                         <option disabled value=''>
@@ -50,7 +51,7 @@ export default function FormComponent({
                             </option>
                         ))}
                     </select>
-                    <div className='absolute bottom-0 right-5 flex h-full items-center'>
+                    <div className='pointer-events-none absolute bottom-0 right-5 flex h-full items-center'>
                         <Image
                             src='/dropdown-arrow.svg'
                             alt='dropdown-arrow'
@@ -66,8 +67,9 @@ export default function FormComponent({
                     type={type}
                     placeholder={placeholder}
                     required={required}
-                    className={`h-[48px] w-full rounded-[10px] px-4 py-2 accent-primary-100 text-sm`}
+                    className={`h-[48px] w-full rounded-[10px] px-4 py-2 text-sm accent-primary-100`}
                     onChange={onChange}
+                    value={value}
                 />
             )}
         </div>

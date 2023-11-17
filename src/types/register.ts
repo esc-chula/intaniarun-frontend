@@ -16,7 +16,6 @@ export type TRegisterBodyState = {
     relationship: string;
     gmail: string;
     type: TRegisterRunnerType | string;
-    runnerNo: string;
     selectedPackage: TRegisterPackageType | string;
     paymentId: string;
     receiverName?: string;

@@ -1,26 +1,27 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { HiPencilAlt, HiTrash } from 'react-icons/hi';
+
+import { useRegisterContext } from '@/contexts/register';
+import { TRegisterBodyState } from '@/types/register';
+
 export default function ReviewCard({
-    distance,
-    name,
-    citizenId,
-    phone,
-    shirtSize,
-    raceNumber,
+    index,
+    registrant,
 }: {
-    distance?: string;
-    name?: string;
-    citizenId?: string;
-    phone?: string;
-    shirtSize?: string;
-    raceNumber?: number;
+    index: number;
+    registrant: TRegisterBodyState;
 }) {
+    const router = useRouter();
+    const { setCurrentRegistrantIndex, removeUserFromRegisterBody } =
+        useRegisterContext();
+
     return (
         <div className='relative flex h-[200px] w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg'>
-            {/* <div className="bg-gradient-to-r from-[#941214] to-[#dd3333] text-white text-sm font-bold py-1 px-4 w-max rounded-full absolute top-[-10px] z-[10]">
-                    ผู้สมัครคนที่ {raceNumber}
-                </div> */}
             <div className='flex-1'>
                 <div className='mb-2 text-xl font-bold text-[#941214]'>
-                    {name}
+                    {registrant.firstName + ' ' + registrant.lastName}
                 </div>
                 <div className='flex flex-row gap-5'>
                     <div className='text-base text-gray-700'>
@@ -29,15 +30,34 @@ export default function ReviewCard({
                         <p>ไซส์เสื้อ: </p>
                     </div>
                     <div>
-                        <p>{citizenId}</p>
-                        <p>{phone}</p>
-                        <p>{shirtSize}</p>
+                        <p>{registrant.citizenId}</p>
+                        <p>{registrant.phone}</p>
+                        <p>{registrant.shirtSize}</p>
                     </div>
                 </div>
             </div>
+            <div className='absolute right-3 top-3 flex items-center gap-0.5 text-xl'>
+                <button
+                    onClick={() => {
+                        setCurrentRegistrantIndex(index);
+                        router.push('/register/info');
+                    }}
+                    className='p-2'
+                >
+                    <HiPencilAlt />
+                </button>
+                <button
+                    onClick={() => {
+                        removeUserFromRegisterBody(index);
+                    }}
+                    className='p-2'
+                >
+                    <HiTrash />
+                </button>
+            </div>
             <div className='absolute bottom-5 right-5 flex items-center justify-between opacity-50'>
                 <div className='text-4xl font-bold text-[#941214]'>
-                    {distance} KM
+                    {registrant.selectedPackage} KM
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 import { TRegisterBodyState } from '@/types/register';
 
@@ -8,7 +8,9 @@ interface ContextProps {
     registerBody: TRegisterBodyState[];
     setRegisterBodyState: (index: number, key: string, value: string) => void;
     addUserToRegisterBody: () => void;
+    removeUserFromRegisterBody: (index: number) => void;
     currentRegistrantIndex: number;
+    setCurrentRegistrantIndex: (index: number) => void;
 }
 
 const Context = createContext<ContextProps>({
@@ -31,14 +33,15 @@ const Context = createContext<ContextProps>({
             relationship: '',
             gmail: '',
             type: '',
-            runnerNo: '',
             selectedPackage: '',
             paymentId: '',
         },
     ],
     setRegisterBodyState: () => {},
     addUserToRegisterBody: () => {},
+    removeUserFromRegisterBody: () => {},
     currentRegistrantIndex: 0,
+    setCurrentRegistrantIndex: () => {},
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -61,11 +64,13 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
             relationship: '',
             gmail: '',
             type: '',
-            runnerNo: '',
             selectedPackage: '',
             paymentId: '',
         },
     ]);
+
+    const [currentRegistrantIndex, setCurrentRegistrantIndex] =
+        useState<number>(0);
 
     const setRegisterBodyState = (
         index: number,
@@ -98,7 +103,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 relationship: '',
                 gmail: '',
                 type: '',
-                runnerNo: '',
                 selectedPackage: '',
                 paymentId: '',
             },
@@ -106,7 +110,40 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         setCurrentRegistrantIndex(registerBody.length);
     };
 
-    const [currentRegistrantIndex, setCurrentRegistrantIndex] = useState(0);
+    const removeUserFromRegisterBody = (index: number) => {
+        setRegisterBody((prevState) => {
+            const newRegisterBody = [...prevState];
+            newRegisterBody.splice(index, 1);
+            return newRegisterBody;
+        });
+    };
+
+    const [pageMounted, setPageMounted] = useState(false);
+
+    useEffect(() => {
+        setPageMounted(true);
+        const localRegisterBody = localStorage.getItem('registerBody');
+        const localCurrentRegistrantIndex = localStorage.getItem(
+            'currentRegistrantIndex'
+        );
+        if (localRegisterBody) {
+            setRegisterBody(JSON.parse(localRegisterBody));
+            setCurrentRegistrantIndex(
+                localCurrentRegistrantIndex
+                    ? JSON.parse(localCurrentRegistrantIndex)
+                    : 0
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!pageMounted) return;
+        localStorage.setItem('registerBody', JSON.stringify(registerBody));
+        localStorage.setItem(
+            'currentRegistrantIndex',
+            JSON.stringify(currentRegistrantIndex)
+        );
+    }, [pageMounted, registerBody, currentRegistrantIndex]);
 
     return (
         <Context.Provider
@@ -114,7 +151,9 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 registerBody,
                 setRegisterBodyState,
                 addUserToRegisterBody,
+                removeUserFromRegisterBody,
                 currentRegistrantIndex,
+                setCurrentRegistrantIndex,
             }}
         >
             {children}

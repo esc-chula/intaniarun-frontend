@@ -1,49 +1,42 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter , useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
-import { TRegisterBloodType } from '@/types/register';
+import { userSchema } from '@/utils/validator';
 
-import Header from '../../../components/header';
 import FormComponent from './components/form';
-import Image from 'next/image';
-import { nameTitles, genders, bloodtypes, shirtSizes , province_th , months_th } from './data';
+import { bloodtypes, genders, province_th, shirtSizes } from './data';
 
 export default function PersonalInformationPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { registerBody, setRegisterBodyState, currentRegistrantIndex } =
         useRegisterContext();
-    const [page, setPage] = useState(0);
-    const [isFormComplete, setIsFormComplete] = useState(false);
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
-
+    const page = searchParams.get('page')
+        ? parseInt(searchParams.get('page')!)
+        : 0;
     const type = searchParams.get('type');
 
-    useEffect(() => {
-        setRegisterBodyState(currentRegistrantIndex, 'type', type!);
-    }, []);
+    const [errorFields, setErrorFields] = useState<string[]>([]);
 
-    // useEffect(() => {
-    //     console.log('registerBody updated:', registerBody);
-    // }, [registerBody]);
+    const validateForm = () => {
+        const { error, value } = userSchema.validate(
+            registerBody[currentRegistrantIndex],
+            {
+                abortEarly: false,
+            }
+        );
 
-    const formHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (page === 0) {
-            nextPage();
-            return;
+        if (error) {
+            error.details.forEach((error) => {
+                const { path, message } = error;
+                console.log(path[0], message);
+            });
         }
-
-        console.log(registerBody[0]);
-        router.push('/register/distance');
     };
 
     const handleChange = (
@@ -52,84 +45,34 @@ export default function PersonalInformationPage() {
             | React.ChangeEvent<HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
-        // console.log("Handle Change:", name, value);
-        // console.log("currentRegistrantIndex:", currentRegistrantIndex);
-
-        if (name === 'day' || name === 'month' || name === 'year') {
-            // Update the local states for day, month, and year
-            if (name === 'day') setDay(value);
-            else if (name === 'month') setMonth(value);
-            else if (name === 'year') setYear(value);
-
-            // Update the registerBody for other fields
-        } else {
-            setRegisterBodyState(currentRegistrantIndex, name, value);
-        }
-        checkFormCompletion();
+        setRegisterBodyState(currentRegistrantIndex, name, value);
+        validateForm();
     };
 
-    useEffect(() => {
-        if (day && month && year) {
-            const yearNumber = parseInt(year, 10);
-            const monthIndex = months_th.indexOf(month);
-            const dayNumber = parseInt(day, 10);
-    
-            if (!isNaN(yearNumber) && !isNaN(dayNumber) && monthIndex >= 0) {
-                const date = new Date(dayNumber, monthIndex, yearNumber);
-    
-                // Format to datetime string, e.g., "YYYY-MM-DD"
-                const dateString = date.toISOString().split('T')[0];
-    
-                setRegisterBodyState(currentRegistrantIndex, 'dateBirth', dateString);
-            }
-        }
-    }, [day, month, year]);
+    const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    const nextPage = () => {
-        window.scrollTo(0, 0);
-        setPage((prev) => prev + 1);
-    };
+        validateForm();
 
-    const prevPage = () => {
-        window.scrollTo(0, 0);
-        setPage((prev) => prev - 1);
-    }
-
-    const checkFormCompletion = () => {
         if (page === 0) {
-            setIsFormComplete(
-                registerBody[currentRegistrantIndex].firstName!=='' &&
-                registerBody[currentRegistrantIndex].lastName!=='' &&
-                registerBody[currentRegistrantIndex].citizenId!=='' &&
-                registerBody[currentRegistrantIndex].gender!=='' &&
-                registerBody[currentRegistrantIndex].province!=='' &&
-                registerBody[currentRegistrantIndex].gmail!=='' &&
-                registerBody[currentRegistrantIndex].phone!=='' &&
-                day !== '' && 
-                month !== '' && 
-                year !== ''
-            );
-        }
-        else if (page === 1) {
-            setIsFormComplete(
-                registerBody[currentRegistrantIndex].disease!=='' &&
-                registerBody[currentRegistrantIndex].bloodType!=='' &&
-                registerBody[currentRegistrantIndex].emergencyName!=='' &&
-                registerBody[currentRegistrantIndex].relationship!=='' &&
-                registerBody[currentRegistrantIndex].emergencyPhone!=='' &&
-                registerBody[currentRegistrantIndex].shirtSize!==''
-            );
+            router.push(`/register/info?page=1&type=${type}`);
+        } else if (page === 1) {
+            router.push(`/register/distance`);
         }
     };
 
     return (
         <>
-            <h1 className='text-2xl font-bold'>ข้อมูลผู้สมัคร</h1>
+            <div className='relative flex w-full items-center justify-center'>
+                <h1 className='text-2xl font-bold'>
+                    ข้อมูลผู้สมัคร
+                    {registerBody.length > 0
+                        ? ` คนที่ ${currentRegistrantIndex + 1}`
+                        : ''}
+                </h1>
+            </div>
             <div className='flex w-full flex-col items-center justify-center'>
-                <form
-                    // onSubmit={formHandler}
-                    className='grid w-full gap-7 px-2'
-                >
+                <form onSubmit={formHandler} className='grid w-full gap-7 px-2'>
                     {page === 0 && (
                         <>
                             <FormComponent
@@ -137,7 +80,10 @@ export default function PersonalInformationPage() {
                                 label='ชื่อ'
                                 placeholder='ชื่อ'
                                 name='firstName'
-                                value={registerBody[0].firstName}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .firstName
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -147,7 +93,10 @@ export default function PersonalInformationPage() {
                                 label='นามสกุล'
                                 placeholder='นามสกุล'
                                 name='lastName'
-                                value={registerBody[0].lastName}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .lastName
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -157,95 +106,69 @@ export default function PersonalInformationPage() {
                                 label='เลขบัตรประชาชน'
                                 placeholder='X-XXXX-XXXXX-XX-X'
                                 name='citizenId'
-                                value={registerBody[0].citizenId}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .citizenId
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
 
-                        <FormComponent
-                            id='gender'
-                            label='เพศ (ตามบัตรประชาชน)'
-                            placeholder='-- เลือกรายการ --'
-                            name='gender'
-                            value={registerBody[0].gender}
-                            required={true}
-                            options={genders.map((gender) => ({
-                                value: gender,
-                                label: gender,
-                            }))}
-                            onChange={handleChange}
-                        />
+                            <FormComponent
+                                id='gender'
+                                label='เพศ (ตามบัตรประชาชน)'
+                                placeholder='-- เลือกรายการ --'
+                                name='gender'
+                                value={
+                                    registerBody[currentRegistrantIndex].gender
+                                }
+                                required={true}
+                                options={genders.map((gender) => ({
+                                    value: gender.value,
+                                    label: gender.label,
+                                }))}
+                                onChange={handleChange}
+                            />
 
-                        <div className='flex flex-col items-start justify-start'>
-                            <label className='items-start justify-start font-bold text-left b-0'>
-                                วัน เดือน ปีเกิด
-                            </label>
-                            <div className='flex flex-row gap-2'>
-                                <div className='w-[75px]'>
-                                    <FormComponent
-                                    id='day'
-                                    placeholder='วัน'
-                                    name='day'
-                                    // value={registerBody[0].day}
-                                    required={true}
-                                    options={Array.from({ length: 30 }, (_, i) => i + 1).map((day) => ({
-                                        value: day.toString(),
-                                        label: day.toString().padStart(2, '0'),
-                                    }))}
-                                    onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='w-[145px]'>
-                                    <FormComponent
-                                    id='month'
-                                    placeholder='เดือน'
-                                    name='month'
-                                    // value={registerBody[0].gender}
-                                    required={true}
-                                    options={months_th.map((month) => ({
-                                        value: month,
-                                        label: month,
-                                    }))}
-                                    onChange={handleChange}
-                                    />
-                                </div>
-                                <div className='w-[94px]'>
-                                <FormComponent
-                                    id='year'
-                                    placeholder='ปี'
-                                    name='year'
-                                    // value={registerBody[0].year}
-                                    required={true}
-                                    options={Array.from({ length: 2566 - 2486 + 1 }, (_, i) => 2486 + i).map((year) => ({
-                                        value: year.toString(),
-                                        label: year.toString()
-                                    }))}
-                                    onChange={handleChange}
-                                />
-                                </div>
-                            </div>
-                        </div>
+                            <FormComponent
+                                id='birthDate'
+                                label='วันเกิด'
+                                placeholder='วัน/เดือน/ปี ค.ศ.'
+                                name='birthDate'
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .birthDate
+                                }
+                                required={true}
+                                type='date'
+                                onChange={handleChange}
+                            />
 
-                        <FormComponent
-                            id='province'
-                            label='จังหวัดที่พักอาศัย'
-                            placeholder='---- เลือกรายการ ----'
-                            name='province'
-                            value={registerBody[0].province}
-                            required={true}
-                            options={province_th.map((province) => ({
-                                value: province,
-                                label: province,
-                            }))}
-                            onChange={handleChange}
-                        />
+                            <FormComponent
+                                id='province'
+                                label='จังหวัดที่พักอาศัย'
+                                placeholder='---- เลือกรายการ ----'
+                                name='province'
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .province
+                                }
+                                required={true}
+                                options={province_th.map((province) => ({
+                                    value: province,
+                                    label: province,
+                                }))}
+                                onChange={handleChange}
+                            />
 
                             <FormComponent
                                 id='email'
                                 label='อีเมล'
                                 placeholder='อีเมล'
-                                name='gmail'
-                                value={registerBody[0].email}
+                                name='email'
+                                value={
+                                    registerBody[currentRegistrantIndex].email
+                                }
                                 required={true}
                                 type='email'
                                 onChange={handleChange}
@@ -256,7 +179,9 @@ export default function PersonalInformationPage() {
                                 label='โทรศัพท์'
                                 placeholder='0XX-XXX-XXXX'
                                 name='phone'
-                                value={registerBody[0].phone}
+                                value={
+                                    registerBody[currentRegistrantIndex].phone
+                                }
                                 required={true}
                                 type='tel'
                                 onChange={handleChange}
@@ -271,7 +196,9 @@ export default function PersonalInformationPage() {
                                 label='ปัญหาสุขภาพ'
                                 placeholder='ปัญหาสุขภาพ'
                                 name='disease'
-                                value={registerBody[0].disease}
+                                value={
+                                    registerBody[currentRegistrantIndex].disease
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -281,7 +208,10 @@ export default function PersonalInformationPage() {
                                 label='หมู่เลือด'
                                 placeholder='---- เลือกรายการ ----'
                                 name='bloodType'
-                                value={registerBody[0].bloodType}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .bloodType
+                                }
                                 required={true}
                                 options={bloodtypes.map((bloodtype) => ({
                                     value: bloodtype,
@@ -295,7 +225,10 @@ export default function PersonalInformationPage() {
                                 label='ชื่อผู้ติดต่อกรณีฉุกเฉิน'
                                 placeholder='ชื่อ - นามสกุล'
                                 name='emergencyName'
-                                value={registerBody[0].emergencyName}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .emergencyName
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -304,7 +237,10 @@ export default function PersonalInformationPage() {
                                 label='เกี่ยวข้องเป็น'
                                 placeholder='ความสัมพันธ์'
                                 name='relationship'
-                                value={registerBody[0].relationship}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .relationship
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -313,7 +249,10 @@ export default function PersonalInformationPage() {
                                 label='เบอร์โทรศัพท์กรณีฉุกเฉิน'
                                 placeholder='0XX-XXX-XXXX'
                                 name='emergencyPhone'
-                                value={registerBody[0].emergencyPhone}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .emergencyPhone
+                                }
                                 required={true}
                                 onChange={handleChange}
                             />
@@ -325,10 +264,13 @@ export default function PersonalInformationPage() {
                             />
                             <FormComponent
                                 id='shirtSize'
-                                label='ไซซ์เสื้อ'
+                                label='ไซส์เสื้อ'
                                 placeholder='---- เลือกรายการ ----'
                                 name='shirtSize'
-                                value={registerBody[0].shirtSize}
+                                value={
+                                    registerBody[currentRegistrantIndex]
+                                        .shirtSize
+                                }
                                 required={true}
                                 // type={TRegisterShirtSize}
                                 options={shirtSizes.map((shirtSize) => ({
@@ -340,7 +282,7 @@ export default function PersonalInformationPage() {
                         </>
                     )}
                     <br />
-                    <Button type='submit' onClick={formHandler} disabled={!isFormComplete}>ต่อไป</Button>
+                    <Button type='submit'>ต่อไป</Button>
                 </form>
             </div>
         </>

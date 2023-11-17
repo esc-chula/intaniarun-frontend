@@ -13,8 +13,16 @@ export default function StatusPage() {
             <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center space-y-10'>
                 <InfoCard
-                    title='นิสิตปัจจุบัน'
+                    title='VIP'
+                    price='11,100 บาท'
+                    onClick={() => {
+                        router.push('/register/info?type=vip');
+                    }}
+                />
+                <InfoCard
+                    title='นิสิตวิศวฯ จุฬาฯ'
                     subTitle='คณะวิศวกรรมศาสตร์'
+                    price='300 บาท'
                     onClick={() => {
                         signIn('google', {
                             callbackUrl: '/register/info?type=student',
@@ -22,14 +30,25 @@ export default function StatusPage() {
                     }}
                 />
                 <InfoCard
-                    title='นิสิตเก่า'
+                    title='นิสิตเก่าวิศวฯ จุฬาฯ'
                     subTitle='คณะวิศวกรรมศาสตร์'
+                    price='700 บาท'
                     onClick={() => {
                         router.push('/register/info?type=alumni');
                     }}
                 />
                 <InfoCard
-                    title='บุคคลทั่วไป'
+                    title='ประชาคมจุฬาฯ'
+                    subTitle='นิสิตและนิสิตเก่าต่างคณะ,
+                    คณาจารย์ บุคลากร, นักเรียนโรงเรียนสาธิตจุฬาฯ'
+                    price='700 บาท'
+                    onClick={() => {
+                        router.push('/register/info?type=general');
+                    }}
+                />
+                <InfoCard
+                    title='ประชาชน'
+                    price='700 บาท'
                     onClick={() => {
                         router.push('/register/info?type=general');
                     }}
