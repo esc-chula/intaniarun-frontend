@@ -210,35 +210,35 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         setCurrentRegistrantIndex(0);
     };
 
-    // useEffect(() => {
-    //     setPageMounted(true);
-    //     const localRegisterBody = localStorage.getItem('registerBody');
-    //     const localCurrentRegistrantIndex = localStorage.getItem(
-    //         'currentRegistrantIndex'
-    //     );
-    //     const localRegistered = localStorage.getItem('registered');
-    //     if (localRegisterBody) {
-    //         setRegisterBody(JSON.parse(localRegisterBody));
-    //         setCurrentRegistrantIndex(
-    //             localCurrentRegistrantIndex
-    //                 ? JSON.parse(localCurrentRegistrantIndex)
-    //                 : 0
-    //         );
-    //         setRegistered(
-    //             localRegistered ? JSON.parse(localRegistered) : false
-    //         );
-    //     }
-    // }, []);
+    useEffect(() => {
+        setPageMounted(true);
+        const localRegisterBody = localStorage.getItem('registerBody');
+        const localCurrentRegistrantIndex = localStorage.getItem(
+            'currentRegistrantIndex'
+        );
+        const localRegistered = localStorage.getItem('registered');
+        if (localRegisterBody) {
+            setRegisterBody(JSON.parse(localRegisterBody));
+            setCurrentRegistrantIndex(
+                localCurrentRegistrantIndex
+                    ? JSON.parse(localCurrentRegistrantIndex)
+                    : 0
+            );
+            setRegistered(
+                localRegistered ? JSON.parse(localRegistered) : false
+            );
+        }
+    }, []);
 
-    // useEffect(() => {
-    //     if (!pageMounted) return;
-    //     localStorage.setItem('registerBody', JSON.stringify(registerBody));
-    //     localStorage.setItem(
-    //         'currentRegistrantIndex',
-    //         JSON.stringify(currentRegistrantIndex)
-    //     );
-    //     localStorage.setItem('registered', JSON.stringify(registered));
-    // }, [pageMounted, registerBody, currentRegistrantIndex, registered]);
+    useEffect(() => {
+        if (!pageMounted) return;
+        localStorage.setItem('registerBody', JSON.stringify(registerBody));
+        localStorage.setItem(
+            'currentRegistrantIndex',
+            JSON.stringify(currentRegistrantIndex)
+        );
+        localStorage.setItem('registered', JSON.stringify(registered));
+    }, [pageMounted, registerBody, currentRegistrantIndex, registered]);
 
     useEffect(() => {
         const localRegisterBody = localStorage.getItem('registerBody');
