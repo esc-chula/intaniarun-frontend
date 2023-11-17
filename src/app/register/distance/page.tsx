@@ -12,10 +12,6 @@ export default function ChooseDistancePage() {
         useRegisterContext();
     const router = useRouter();
 
-    useEffect(() => {
-        console.log('registerBody updated:', registerBody);
-    }, [registerBody]);
-
     const handleClick = (distance: string) => {
         setRegisterBodyState(
             currentRegistrantIndex,
