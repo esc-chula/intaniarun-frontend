@@ -48,11 +48,23 @@ export default function ReviewCard({
                     </div>
                     <div className='flex flex-row gap-5'>
                         <div className='text-base text-gray-700'>
+                            <p>ประเภทผู้สมัคร: </p>
                             <p>วัน เดือน ปี เกิด: </p>
                             <p>เบอร์โทรศัพท์: </p>
                             <p>ไซส์เสื้อ: </p>
                         </div>
                         <div>
+                            <p>
+                                {registrant.type === 'VIP'
+                                    ? 'VIP'
+                                    : registrant.type === 'ALUMNI'
+                                    ? 'นิสิตเก่าวิศวฯ จุฬาฯ'
+                                    : registrant.type === 'CHULA'
+                                    ? 'ประชาคมจุฬาฯ'
+                                    : registrant.type === 'PUBLIC'
+                                    ? 'ประชาชนทั่วไป'
+                                    : 'นิสิตปัจจุบัน'}
+                            </p>
                             <p>
                                 {moment(registrant.birthDate).format(
                                     'DD MMMM YYYY'
@@ -89,7 +101,7 @@ export default function ReviewCard({
                     </button>
                 </div>
                 <div className='absolute bottom-5 left-5 right-5 flex items-end justify-between'>
-                    <div className='text-sm font-semibold text-red-500'>
+                    <div className='text font-semibold text-red-500'>
                         {validated ? '' : 'ยังกรอกข้อมูลไม่สำเร็จ'}
                     </div>
                     <div className='text-4xl font-bold text-[#941214]'>
