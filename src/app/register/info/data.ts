@@ -2,7 +2,6 @@ export const nameTitles = ['นาย', 'นาง', 'นางสาว'];
 export const genders = [
     { value: 'MALE', label: 'ชาย' },
     { value: 'FEMALE', label: 'หญิง' },
-    { value: 'OTHER', label: 'อื่นๆ' },
 ];
 export const bloodtypes = ['A', 'B', 'AB', 'O'];
 export const shirtSizes = [

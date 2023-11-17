@@ -55,6 +55,18 @@ export const fields = {
             placeholder: '0XX-XXX-XXXX',
             type: 'tel',
         },
+        {
+            id: 'joinedYear',
+            name: 'joinedYear',
+            label: 'ปีการศึกษาแรกเข้า',
+            placeholder: '---- เลือกรายการ ----',
+            options: Array.from({ length: 68 }, (_, i) => ({
+                value: `${2495 + i}`,
+                label: `${2495 + i} (วศ. ${(2495 + i + 23)
+                    .toString()
+                    .slice(-2)})`,
+            })),
+        },
     ],
     1: [
         {

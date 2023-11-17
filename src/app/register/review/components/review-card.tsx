@@ -39,7 +39,7 @@ export default function ReviewCard({
                 showDialog={showDialog}
                 setShowDialog={setShowDialog}
             />
-            <div className='relative flex h-[200px] w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg'>
+            <div className='relative flex h-56 w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg'>
                 <div className='flex-1'>
                     <div className='mb-2 text-xl font-bold text-[#941214]'>
                         {registrant.firstName + ' ' + registrant.lastName}
@@ -47,7 +47,7 @@ export default function ReviewCard({
                     <div className='flex flex-row gap-5'>
                         <div className='text-base text-gray-700'>
                             <p>วัน เดือน ปี เกิด: </p>
-                            <p>โทรศัพท์: </p>
+                            <p>เบอร์โทรศัพท์: </p>
                             <p>ไซส์เสื้อ: </p>
                         </div>
                         <div>

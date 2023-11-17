@@ -32,7 +32,7 @@ export default function Summary() {
                 <div className='flex flex-col items-center justify-between border-t-2 border-gray-200 pt-2'>
                     <div className='flex w-full items-center justify-between'>
                         <p>ราคาแพ็คเกจทั้งหมด</p>
-                        <p>{totalPackagePrice.toFixed(2)}฿</p>
+                        <p>{Intl.NumberFormat().format(totalPackagePrice)}฿</p>
                     </div>
                 </div>
                 <div className='mt-2 flex items-center justify-between'>
@@ -40,7 +40,7 @@ export default function Summary() {
                         ยอดชำระเงิน
                     </span>
                     <span className='text-xl font-bold text-primary-100'>
-                        {totalPackagePrice.toFixed(2)}฿
+                        {Intl.NumberFormat().format(totalPackagePrice)}฿
                     </span>
                 </div>
                 <div className='my-6 flex flex-col space-y-5'>

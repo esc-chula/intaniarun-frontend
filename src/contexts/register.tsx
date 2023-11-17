@@ -11,7 +11,6 @@ import {
 } from 'react';
 
 import { prices } from '@/constants/price';
-import { defaultRegisterBodyState } from '@/constants/register';
 import { TRegisterBodyState } from '@/types/register';
 import { userSchema } from '@/utils/validator';
 
@@ -24,6 +23,7 @@ interface ContextProps {
     removeUserFromRegisterBody: (index: number) => void;
     validateRegisterBody: () => Joi.ValidationError | undefined;
     totalPackagePrice: number;
+    resetRegisterBody: () => void;
 }
 
 const Context = createContext<ContextProps>({
@@ -54,6 +54,7 @@ const Context = createContext<ContextProps>({
     removeUserFromRegisterBody: () => {},
     validateRegisterBody: () => undefined,
     totalPackagePrice: 0,
+    resetRegisterBody: () => {},
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
@@ -178,6 +179,30 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         0
     );
 
+    const resetRegisterBody = () => {
+        setRegisterBody([
+            {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birthDate: '',
+                shirtSize: '',
+                province: '',
+                email: '',
+                phone: '',
+                disease: '',
+                bloodType: '',
+                emergencyName: '',
+                emergencyPhone: '',
+                relationship: '',
+                gmail: '',
+                type: '',
+                selectedPackage: '',
+            },
+        ]);
+        setCurrentRegistrantIndex(0);
+    };
+
     useEffect(() => {
         setPageMounted(true);
         const localRegisterBody = localStorage.getItem('registerBody');
@@ -247,6 +272,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 removeUserFromRegisterBody,
                 validateRegisterBody,
                 totalPackagePrice,
+                resetRegisterBody,
             }}
         >
             {children}

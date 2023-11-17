@@ -15,14 +15,14 @@ export default function Header() {
     return (
         <header className='fixed left-0 right-0 top-0 z-50 select-none'>
             <button
-                className='absolute left-4 top-6 z-50 p-2 text-2xl'
+                className='absolute left-4 top-4 z-50 p-2 text-2xl'
                 onClick={() => {
                     router.back();
                 }}
             >
                 <FiChevronLeft />
             </button>
-            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-5 shadow-lg'>
+            <div className='flex h-full flex-col items-center justify-center rounded-bl-[64px] bg-white pb-5 pt-3 shadow-md'>
                 <div className='relative h-[48px] w-full'>
                     <Image
                         src='/intania-run-logo.png'
@@ -32,7 +32,7 @@ export default function Header() {
                     />
                 </div>
                 {currentStatus && (
-                    <div className='relative h-[40px] w-full'>
+                    <div className='relative mt-3 h-[40px] w-full'>
                         {currentStatus === 'information' && (
                             <Image
                                 src='/status-bar-information.svg'

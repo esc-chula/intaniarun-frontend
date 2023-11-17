@@ -89,7 +89,9 @@ export default function Payment() {
             <div className='w-full'>
                 <div className='mb-4 flex justify-between font-bold'>
                     <p>ยอดชำระเงิน</p>
-                    <p>{totalPackagePrice.toFixed(2)}฿</p>
+                    <p>
+                        {Intl.NumberFormat().format(Number(totalPackagePrice))}฿
+                    </p>
                 </div>
                 <div className='mb-6 flex flex-col items-start gap-2.5 rounded-lg bg-white p-4 shadow-md'>
                     <div className='flex items-center gap-5'>
@@ -142,7 +144,9 @@ export default function Payment() {
                 </div>
 
                 <p className='py-5 text-[12px]'>
-                    หากอัพโหลดสลิปเสร็จแล้วจะได้รับอีเมลยืนยันภายใน 15 วัน
+                    หากอัปโหลดสลิปเสร็จแล้วจะได้รับอีเมลยืนยันภายใน 15 วัน
+                    <br />
+                    โปรดเก็บหลังฐานการชำเงินหรือสลิปไว้เป็นหลักฐาน
                 </p>
 
                 <Button

@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -51,7 +52,8 @@ export default function Review() {
                         validated={validatedRegistrants[index]}
                     />
                 ))}
-                {registerBody[0].type !== 'STUDENT' && (
+                {registerBody[0].type === 'STUDENT' ||
+                registerBody[0].type === 'VIP' ? null : (
                     <>
                         <button
                             className='h-[64px] w-full rounded-[16px] border-2 border-black bg-white font-bold disabled:cursor-not-allowed disabled:opacity-20'

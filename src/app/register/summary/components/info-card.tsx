@@ -27,7 +27,11 @@ export default function InfoCard({
                 </div>
                 <hr className='pb-2' />
                 <div className='text-end text-sm font-semibold text-slate-700'>
-                    ราคา {prices[registrant.type as keyof typeof prices]}฿
+                    ราคา{' '}
+                    {Intl.NumberFormat().format(
+                        prices[registrant.type as keyof typeof prices]
+                    )}{' '}
+                    ฿
                 </div>
             </div>
         </div>
