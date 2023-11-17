@@ -25,12 +25,10 @@ export default function ReviewCard({
                 </div>
                 <div className='flex flex-row gap-5'>
                     <div className='text-base text-gray-700'>
-                        <p>เลขบัตรประชาชน: </p>
                         <p>โทรศัพท์: </p>
                         <p>ไซส์เสื้อ: </p>
                     </div>
                     <div>
-                        <p>{registrant.citizenId}</p>
                         <p>{registrant.phone}</p>
                         <p>{registrant.shirtSize}</p>
                     </div>

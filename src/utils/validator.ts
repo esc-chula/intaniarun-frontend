@@ -1,19 +1,10 @@
 import joi from 'joi';
-const validateThaiID = require('thai-id-validator');
 
 const user = {
     firstName: joi.string().required(),
     lastName: joi.string().required(),
     gender: joi.string().valid('MALE', 'FEMALE', 'OTHER').required(),
     birthDate: joi.date().required(),
-    citizenId: joi
-        .string()
-        .custom((value, helper) => {
-            if (!validateThaiID(value))
-                return helper.message({ custom: 'Invalid citizen ID' });
-            return value;
-        })
-        .required(),
     shirtSize: joi
         .string()
         .valid('XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L')

@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
-import { userSchema } from '@/utils/validator';
 
 import FormComponent from './components/form';
 import { fields } from './field';
@@ -13,8 +12,12 @@ import { fields } from './field';
 export default function PersonalInformationPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { registerBody, setRegisterBodyState, currentRegistrantIndex } =
-        useRegisterContext();
+    const {
+        registerBody,
+        setRegisterBodyState,
+        currentRegistrantIndex,
+        validateRegisterBody,
+    } = useRegisterContext();
     const page = searchParams.get('page')
         ? parseInt(searchParams.get('page')!)
         : 0;
@@ -23,12 +26,7 @@ export default function PersonalInformationPage() {
     const [errorFields, setErrorFields] = useState<string[]>([]);
 
     const validateForm = useCallback(() => {
-        const { error } = userSchema.validate(
-            registerBody[currentRegistrantIndex],
-            {
-                abortEarly: false,
-            }
-        );
+        const error = validateRegisterBody();
 
         if (error) {
             const errorFields = new Set<string>();
@@ -47,7 +45,7 @@ export default function PersonalInformationPage() {
 
             setErrorFields(Array.from(errorFields));
         }
-    }, [registerBody, currentRegistrantIndex, page]);
+    }, [page, validateRegisterBody]);
 
     const formHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

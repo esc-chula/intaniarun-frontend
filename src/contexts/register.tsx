@@ -1,16 +1,26 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import Joi from 'joi';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 
 import { TRegisterBodyState } from '@/types/register';
+import { userSchema } from '@/utils/validator';
 
 interface ContextProps {
     registerBody: TRegisterBodyState[];
+    currentRegistrantIndex: number;
+    setCurrentRegistrantIndex: (index: number) => void;
     setRegisterBodyState: (index: number, key: string, value: string) => void;
     addUserToRegisterBody: () => void;
     removeUserFromRegisterBody: (index: number) => void;
-    currentRegistrantIndex: number;
-    setCurrentRegistrantIndex: (index: number) => void;
+    validateRegisterBody: () => Joi.ValidationError | undefined;
 }
 
 const Context = createContext<ContextProps>({
@@ -20,8 +30,6 @@ const Context = createContext<ContextProps>({
             lastName: '',
             gender: '',
             birthDate: '',
-            citizenId: '',
-            nationality: '',
             shirtSize: '',
             province: '',
             email: '',
@@ -34,25 +42,28 @@ const Context = createContext<ContextProps>({
             gmail: '',
             type: '',
             selectedPackage: '',
-            paymentId: '',
         },
     ],
+    currentRegistrantIndex: 0,
+    setCurrentRegistrantIndex: () => {},
     setRegisterBodyState: () => {},
     addUserToRegisterBody: () => {},
     removeUserFromRegisterBody: () => {},
-    currentRegistrantIndex: 0,
-    setCurrentRegistrantIndex: () => {},
+    validateRegisterBody: () => undefined,
 });
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const [pageMounted, setPageMounted] = useState(false);
+
     const [registerBody, setRegisterBody] = useState<TRegisterBodyState[]>([
         {
             firstName: '',
             lastName: '',
             gender: '',
             birthDate: '',
-            citizenId: '',
-            nationality: '',
             shirtSize: '',
             province: '',
             email: '',
@@ -65,7 +76,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
             gmail: '',
             type: '',
             selectedPackage: '',
-            paymentId: '',
         },
     ]);
 
@@ -118,7 +128,22 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         });
     };
 
-    const [pageMounted, setPageMounted] = useState(false);
+    const validateRegisterBody = useCallback(() => {
+        const localRegisterBody = localStorage.getItem('registerBody');
+
+        if (!localRegisterBody || !pageMounted) {
+            return;
+        }
+
+        const { error } = userSchema.validate(
+            registerBody[currentRegistrantIndex],
+            {
+                abortEarly: false,
+            }
+        );
+
+        return error;
+    }, [currentRegistrantIndex, pageMounted, registerBody]);
 
     useEffect(() => {
         setPageMounted(true);
@@ -145,15 +170,49 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         );
     }, [pageMounted, registerBody, currentRegistrantIndex]);
 
+    useEffect(() => {
+        const localRegisterBody = localStorage.getItem('registerBody');
+        if (!pageMounted || !localRegisterBody) return;
+        switch (pathname) {
+            case '/register/info':
+                if (!registerBody[currentRegistrantIndex].type) {
+                    router.push('/register/type');
+                }
+                break;
+            case '/register/distance':
+                const error = validateRegisterBody();
+                if (error) {
+                    const errorFields = new Set<string>();
+                    error.details.forEach((error) => {
+                        const path = error.path[0] as string;
+                        errorFields.add(path);
+                    });
+
+                    if (errorFields === new Set(['selectedPackage'])) {
+                        router.push('/register/info');
+                    }
+                }
+                break;
+        }
+    }, [
+        currentRegistrantIndex,
+        pageMounted,
+        pathname,
+        registerBody,
+        router,
+        validateRegisterBody,
+    ]);
+
     return (
         <Context.Provider
             value={{
                 registerBody,
+                currentRegistrantIndex,
+                setCurrentRegistrantIndex,
                 setRegisterBodyState,
                 addUserToRegisterBody,
                 removeUserFromRegisterBody,
-                currentRegistrantIndex,
-                setCurrentRegistrantIndex,
+                validateRegisterBody,
             }}
         >
             {children}

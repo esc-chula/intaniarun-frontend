@@ -3,8 +3,6 @@ export type TRegisterBodyState = {
     lastName: string;
     gender: TRegisterGender | string;
     birthDate: string;
-    citizenId: string;
-    nationality: string;
     shirtSize: TRegisterShirtSize | string;
     province: string;
     email: string;
@@ -17,11 +15,6 @@ export type TRegisterBodyState = {
     gmail: string;
     type: TRegisterRunnerType | string;
     selectedPackage: TRegisterPackageType | string;
-    paymentId: string;
-    receiverName?: string;
-    receiverPhone?: string;
-    receiverAddress?: string;
-    receiverPostalCode?: string;
 };
 
 export type TRegisterBody = TRegisterBodyState & {
