@@ -41,24 +41,6 @@ export default function Summary() {
                         shirtSize={registrant.shirtSize}
                     />
                 ))}
-                {registerBody.map((registrant, index) => (
-                    <InfoCard
-                        key={index}
-                        name={registrant.firstName + ' ' + registrant.lastName}
-                        distance={registrant.type}
-                        phone={registrant.phone}
-                        shirtSize={registrant.shirtSize}
-                    />
-                ))}
-                {registerBody.map((registrant, index) => (
-                    <InfoCard
-                        key={index}
-                        name={registrant.firstName + ' ' + registrant.lastName}
-                        distance={registrant.type}
-                        phone={registrant.phone}
-                        shirtSize={registrant.shirtSize}
-                    />
-                ))}
             </div>
             <div className='w-full px-4 py-2'>
                 <div className='flex items-center justify-between border-t-2 border-gray-200 pt-2'>
