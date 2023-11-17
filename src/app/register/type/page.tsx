@@ -50,7 +50,7 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
-                <InfoCard
+                {/* <InfoCard
                     title='ประชาคมจุฬาฯ'
                     subTitle='นิสิตและนิสิตเก่าต่างคณะ,
                     คณาจารย์ บุคลากร, นักเรียนโรงเรียนสาธิตจุฬาฯ'
@@ -63,7 +63,7 @@ export default function StatusPage() {
                         );
                         router.push('/register/info');
                     }}
-                />
+                /> */}
                 {/* TODO: uncomment on 25 nov */}
                 {/* <InfoCard
                     title='ประชาชนทั่วไป'
