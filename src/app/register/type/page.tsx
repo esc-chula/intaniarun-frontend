@@ -16,33 +16,38 @@ export default function StatusPage() {
         <div className='w-full space-y-10'>
             <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center space-y-10'>
-                <InfoCard
-                    title='VIP'
-                    price='11,100 บาท'
-                    onClick={() => {
-                        setRegisterBodyState(
-                            currentRegistrantIndex,
-                            'type',
-                            'VIP'
-                        );
-                        router.push('/register/info');
-                    }}
-                />
-                <InfoCard
-                    title='นิสิตวิศวฯ จุฬาฯ'
-                    subTitle='คณะวิศวกรรมศาสตร์'
-                    price='300 บาท'
-                    onClick={() => {
-                        setRegisterBodyState(
-                            currentRegistrantIndex,
-                            'type',
-                            'STUDENT'
-                        );
-                        signIn('google', {
-                            callbackUrl: '/register/info',
-                        });
-                    }}
-                />
+                {registerBody.length <= 1 && (
+                    <>
+                        <InfoCard
+                            title='VIP'
+                            price='11,100 บาท'
+                            onClick={() => {
+                                setRegisterBodyState(
+                                    currentRegistrantIndex,
+                                    'type',
+                                    'VIP'
+                                );
+                                router.push('/register/info');
+                            }}
+                        />
+                        <InfoCard
+                            title='นิสิตวิศวฯ จุฬาฯ'
+                            subTitle='คณะวิศวกรรมศาสตร์'
+                            price='300 บาท'
+                            onClick={() => {
+                                setRegisterBodyState(
+                                    currentRegistrantIndex,
+                                    'type',
+                                    'STUDENT'
+                                );
+                                signIn('google', {
+                                    callbackUrl: '/register/info',
+                                });
+                            }}
+                        />
+                    </>
+                )}
+
                 <InfoCard
                     title='นิสิตเก่าวิศวฯ จุฬาฯ'
                     subTitle='คณะวิศวกรรมศาสตร์'
