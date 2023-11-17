@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useRegisterContext } from '@/contexts/register';
 
 import Card from './components/card';
-import RouteModal from './components/route';
+import RouteModal from './components/route-modal';
 
 export default function ChooseDistancePage() {
     const { setRegisterBodyState, currentRegistrantIndex } =
