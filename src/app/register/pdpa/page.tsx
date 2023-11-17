@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { useRouter } from 'next/navigation';
@@ -12,7 +13,7 @@ export default function Pdpa() {
 
     useEffect(() => {
         resetRegisterBody();
-    }, [resetRegisterBody]);
+    }, []);
 
     const [isChecked, setIsChecked] = useState(false);
 

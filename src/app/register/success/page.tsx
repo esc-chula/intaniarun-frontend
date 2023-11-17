@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import Image from 'next/image';
@@ -13,7 +14,7 @@ export default function Success() {
 
     useEffect(() => {
         resetRegisterBody();
-    }, [resetRegisterBody]);
+    }, []);
 
     return (
         <div className='space-y-6 px-2'>
