@@ -1,29 +1,31 @@
-// CheckBox.jsx or CheckBox.tsx if using TypeScript
 export default function CheckBox({
+    id,
     label,
     checked,
     onChange,
 }: {
+    id: string;
     label: string;
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
     return (
-        <div className='inline-flex items-center space-x-2'>
+        <div className='flex items-start space-x-3'>
             <div
-                className={`relative h-5 w-5 ${
+                className={`relative aspect-square h-5 w-5 rounded border border-gray-300 ${
                     checked ? 'bg-[#941214]' : 'bg-white'
-                } rounded border border-gray-300`}
+                }`}
             >
                 <input
+                    id={id}
                     type='checkbox'
-                    className='absolute opacity-0'
+                    className='absolute bottom-0 left-0 right-0 top-0 opacity-0'
                     checked={checked}
                     onChange={onChange}
                 />
                 {checked && (
                     <svg
-                        className='pointer-events-none absolute inset-0 m-auto h-4 w-4 fill-current text-white'
+                        className='pointer-events-none absolute h-5 w-5 fill-current text-white'
                         viewBox='0 0 20 20'
                     >
                         <path
@@ -33,7 +35,10 @@ export default function CheckBox({
                     </svg>
                 )}
             </div>
-            <label className='items-start justify-start text-[12px] text-gray-700'>
+            <label
+                htmlFor={id}
+                className='w-full text-left text-sm text-gray-700'
+            >
                 {label}
             </label>
         </div>

@@ -41,8 +41,26 @@ export default function Summary() {
                         shirtSize={registrant.shirtSize}
                     />
                 ))}
+                {registerBody.map((registrant, index) => (
+                    <InfoCard
+                        key={index}
+                        name={registrant.firstName + ' ' + registrant.lastName}
+                        distance={registrant.type}
+                        phone={registrant.phone}
+                        shirtSize={registrant.shirtSize}
+                    />
+                ))}
+                {registerBody.map((registrant, index) => (
+                    <InfoCard
+                        key={index}
+                        name={registrant.firstName + ' ' + registrant.lastName}
+                        distance={registrant.type}
+                        phone={registrant.phone}
+                        shirtSize={registrant.shirtSize}
+                    />
+                ))}
             </div>
-            <div className='sticky bottom-0 left-0 w-full px-4 py-2'>
+            <div className='w-full px-4 py-2'>
                 <div className='flex items-center justify-between border-t-2 border-gray-200 pt-2'>
                     <div className='flex flex-col items-start'>
                         <p>ราคาแพ็คเกจทั้งหมด</p>
@@ -61,13 +79,15 @@ export default function Summary() {
                         {totalPrice.toFixed(2)}฿
                     </span>
                 </div>
-                <div className='flex flex-col space-y-4'>
+                <div className='my-6 flex flex-col space-y-5'>
                     <CheckBox
+                        id='accept-terms'
                         label='ฉันยอมรับเงื่อนไขการสมัครของผู้จัดงาน'
                         checked={checked[0]}
                         onChange={() => handleCheck(0)}
                     />
                     <CheckBox
+                        id='accept-data'
                         label='ข้าพเจ้าได้ตรวจสอบข้อมูลความถูกต้องของใบสมัครเรียบร้อยแล้ว
                         (หากกดปุ่มชำระเงินจะไม่สามารถแก้ไขข้อมูลใด ๆ ได้)'
                         checked={checked[1]}
