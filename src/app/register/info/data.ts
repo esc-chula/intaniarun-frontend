@@ -5,9 +5,9 @@ export const genders = [
 ];
 export const bloodtypes = ['A', 'B', 'AB', 'O', 'ไม่ทราบ'];
 export const shirtSizes = [
-    { value: '4XS', label: 'XS (30")' },
-    { value: '3XS', label: 'XS (32")' },
-    { value: '2XS', label: 'XS (34")' },
+    { value: '4XS', label: '4XS (30")' },
+    { value: '3XS', label: '3XS (32")' },
+    { value: '2XS', label: '2XS (34")' },
     { value: 'XS', label: 'XS (36")' },
     { value: 'S', label: 'S (38")' },
     { value: 'M', label: 'M (40")' },
