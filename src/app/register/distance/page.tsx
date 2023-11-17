@@ -23,7 +23,7 @@ export default function ChooseDistancePage() {
     };
 
     const [showDialog, setShowDialog] = useState(false);
-    const [image, setImage] = useState('/3km-route.png');
+    const [image, setImage] = useState('/10km-route.png');
 
     return (
         <>
@@ -36,16 +36,6 @@ export default function ChooseDistancePage() {
             <div className='flex w-full flex-col items-center justify-center gap-10 text-left'>
                 <Card
                     onClick={() => {
-                        handleClick('3.711');
-                    }}
-                    distance='3.711 KM'
-                    showImage={() => {
-                        setShowDialog(true);
-                        setImage('/3km-route.png');
-                    }}
-                />
-                <Card
-                    onClick={() => {
                         handleClick('10.111');
                         setImage('/10km-route.png');
                     }}
@@ -53,6 +43,16 @@ export default function ChooseDistancePage() {
                     showImage={() => {
                         setShowDialog(true);
                         setImage('/10km-route.png');
+                    }}
+                />
+                <Card
+                    onClick={() => {
+                        handleClick('3.711');
+                    }}
+                    distance='3.711 KM'
+                    showImage={() => {
+                        setShowDialog(true);
+                        setImage('/3km-route.png');
                     }}
                 />
             </div>
