@@ -91,7 +91,7 @@ export default function StatusPage() {
                 {registerBody.length <= 1 && (
                     <InfoCard
                         title='นิสิตวิศวฯ จุฬาฯ'
-                        subTitle='คณะวิศวกรรมศาสตร์'
+                        subTitle='ใช้อีเมลนิสิตคณะวิศวกรรมศาสตร์'
                         price='300 บาท'
                         onClick={() => {
                             setRegisterBodyState(
