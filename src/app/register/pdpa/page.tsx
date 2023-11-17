@@ -15,7 +15,7 @@ export default function Pdpa() {
             <h1 className='text-2xl font-bold'>นโยบายการใช้ข้อมูลส่วนบุคคล</h1>
             <div className='h-[524px] overflow-hidden rounded-xl bg-white p-4'>
                 <h2 className='text-gray-500'>นโยบายการใช้ข้อมูลส่วนบุคคล</h2>
-                <div className='h-full w-full overflow-y-auto px-4 pb-8 pt-4 text-left text-sm'>
+                <div className='h-full w-full overflow-y-auto px-8 pb-8 pt-4 text-left text-sm'>
                     ข้าพเจ้าขอยอมรับข้อตกลง เงื่อนไข และกติกา
                     การลงทะเบียนสมัครกิจกรรม CHULA INTANIA RUN 2024
                     ตามนโยบายการใช้ข้อมูลส่วนบุคคล ดังต่อไปนี้
