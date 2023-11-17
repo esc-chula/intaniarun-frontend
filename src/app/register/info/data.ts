@@ -5,7 +5,17 @@ export const genders = [
     { value: 'OTHER', label: 'อื่นๆ' },
 ];
 export const bloodtypes = ['A', 'B', 'AB', 'O'];
-export const shirtSizes = ['XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L'];
+export const shirtSizes = [
+    { value: 'XS', label: 'XS (36)' },
+    { value: 'S', label: 'S (38)' },
+    { value: 'M', label: 'M (40)' },
+    { value: 'L', label: 'L (42)' },
+    { value: 'XL', label: 'XL (44)' },
+    { value: '2L', label: '2L (46)' },
+    { value: '3L', label: '3L (48)' },
+    { value: '5L', label: '5L (52)' },
+    { value: '7L', label: '7L (56)' },
+];
 
 export const province_th = [
     'กรุงเทพฯ',

@@ -155,7 +155,8 @@ export default function Payment() {
 
                 <Button
                     type='submit'
-                    onClick={handleSumbit}
+                    // onClick={handleSumbit}
+                    onClick={() => router.push('/register/success')}
                     disabled={!checked}
                 >
                     ชำระเงิน
