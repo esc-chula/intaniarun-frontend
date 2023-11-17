@@ -1,7 +1,7 @@
 const SHOW_STATUS_PATH = {
     information: ['/register/info'],
     package: ['/register/distance', '/register/review'],
-    payment: ['/register/paymentinfo', '/register/payment'],
+    payment: ['/register/summary', '/register/payment'],
 };
 
 export function determineStatus(pathname: string) {

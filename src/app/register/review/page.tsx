@@ -44,7 +44,7 @@ export default function Review() {
 
                 <Button
                     type='submit'
-                    onClick={() => router.push('/register/paymentinfo')}
+                    onClick={() => router.push('/register/summary')}
                 >
                     ต่อไป
                 </Button>

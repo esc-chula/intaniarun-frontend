@@ -8,7 +8,7 @@ import Button from '@/components/button';
 import Header from '@/components/header';
 import { useRegisterContext } from '@/contexts/register';
 
-export default function PaymentInfo() {
+export default function Payment() {
     const router = useRouter();
     const [checked, setChecked] = useState(false);
     const [file, setFile] = useState<File | null>(null);

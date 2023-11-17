@@ -1,20 +1,18 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/button';
-import Header from '@/components/header';
 import { useRegisterContext } from '@/contexts/register';
 
 import CheckBox from './components/check-box';
 import InfoCard from './components/info-card';
 
-export default function PaymentInfo() {
+export default function Summary() {
     const router = useRouter();
     const [checked, setChecked] = useState([false, false]);
-    const { registerBody, setRegisterBodyState } = useRegisterContext();
+    const { registerBody } = useRegisterContext();
 
     const numberOfRegistrants = registerBody.length;
     const totalPackagePrice = 700 * numberOfRegistrants;
@@ -36,10 +34,9 @@ export default function PaymentInfo() {
             <div className='flex w-full flex-col items-center justify-center gap-[35px] text-left'>
                 {registerBody.map((registrant, index) => (
                     <InfoCard
-                        key={index} // Don't forget to add a unique key for each child
+                        key={index}
                         name={registrant.firstName + ' ' + registrant.lastName}
                         distance={registrant.type}
-                        citizenId={registrant.citizenId}
                         phone={registrant.phone}
                         shirtSize={registrant.shirtSize}
                     />
