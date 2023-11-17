@@ -5,15 +5,22 @@ export const genders = [
 ];
 export const bloodtypes = ['A', 'B', 'AB', 'O'];
 export const shirtSizes = [
-    { value: 'XS', label: 'XS (36)' },
-    { value: 'S', label: 'S (38)' },
-    { value: 'M', label: 'M (40)' },
-    { value: 'L', label: 'L (42)' },
+    { value: '4XS', label: 'XS (30")' },
+    { value: '3XS', label: 'XS (32")' },
+    { value: '2XS', label: 'XS (34")' },
+    { value: 'XS', label: 'XS (36")' },
+    { value: 'S', label: 'S (38")' },
+    { value: 'M', label: 'M (40")' },
+    { value: 'L', label: 'L (42")' },
     { value: 'XL', label: 'XL (44)' },
     { value: '2L', label: '2L (46)' },
     { value: '3L', label: '3L (48)' },
-    { value: '5L', label: '5L (52)' },
-    { value: '7L', label: '7L (56)' },
+    { value: '4L', label: '4L (50")' },
+    { value: '5L', label: '5L (52")' },
+    { value: '6L', label: '6L (54")' },
+    { value: '7L', label: '7L (56")' },
+    { value: '8L', label: '8L (58")' },
+    { value: '9L', label: '9L (60")' },
 ];
 
 export const province_th = [

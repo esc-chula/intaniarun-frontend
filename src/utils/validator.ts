@@ -18,6 +18,7 @@ const user = {
         .string()
         .regex(/^[0-9]{10}$/)
         .required(),
+    joinedYear: joi.number().optional(),
     disease: joi.string().required(),
     bloodType: joi.string().valid('A', 'B', 'AB', 'O').required(),
     emergencyName: joi.string().required(),
