@@ -3,7 +3,7 @@ export const genders = [
     { value: 'MALE', label: 'ชาย' },
     { value: 'FEMALE', label: 'หญิง' },
 ];
-export const bloodtypes = ['A', 'B', 'AB', 'O'];
+export const bloodtypes = ['A', 'B', 'AB', 'O', 'ไม่ทราบ'];
 export const shirtSizes = [
     { value: '4XS', label: 'XS (30")' },
     { value: '3XS', label: 'XS (32")' },
@@ -12,9 +12,9 @@ export const shirtSizes = [
     { value: 'S', label: 'S (38")' },
     { value: 'M', label: 'M (40")' },
     { value: 'L', label: 'L (42")' },
-    { value: 'XL', label: 'XL (44)' },
-    { value: '2L', label: '2L (46)' },
-    { value: '3L', label: '3L (48)' },
+    { value: 'XL', label: 'XL (44")' },
+    { value: '2L', label: '2L (46")' },
+    { value: '3L', label: '3L (48")' },
     { value: '4L', label: '4L (50")' },
     { value: '5L', label: '5L (52")' },
     { value: '6L', label: '6L (54")' },

@@ -16,7 +16,7 @@ const user = {
         .required(),
     joinedYear: joi.number().allow(''),
     disease: joi.string().required(),
-    bloodType: joi.string().valid('A', 'B', 'AB', 'O').required(),
+    bloodType: joi.string().valid('A', 'B', 'AB', 'O', 'ไม่ทราบ').required(),
     emergencyName: joi.string().required(),
     emergencyPhone: joi
         .string()

@@ -1,12 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/button';
+import { useRegisterContext } from '@/contexts/register';
 
 export default function Pdpa() {
     const router = useRouter();
+    const { resetRegisterBody } = useRegisterContext();
+
+    useEffect(() => {
+        resetRegisterBody();
+    }, [resetRegisterBody]);
 
     const [isChecked, setIsChecked] = useState(false);
 

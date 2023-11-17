@@ -63,7 +63,11 @@ export const fields = {
             placeholder: '---- เลือกรายการ ----',
             options: Array.from({ length: 68 }, (_, i) => ({
                 value: `${2495 + i}`,
-                label: `${2495 + i} (วศ. ${(2495 + i + 23)
+                label: `วศ ${2495 + i} (Intania ${2495 + i > 2558 ? '1' : ''}${(
+                    2495 +
+                    i +
+                    41
+                )
                     .toString()
                     .slice(-2)})`,
             })),
@@ -98,7 +102,6 @@ export const fields = {
             name: 'relationship',
             label: 'เกี่ยวข้องเป็น',
             placeholder: 'ความสัมพันธ์',
-            description: 'กรอกในรูปแบบ 0XXXXXXXXX',
         },
         {
             id: 'emergencyPhone',
@@ -106,6 +109,7 @@ export const fields = {
             label: 'เบอร์โทรศัพท์กรณีฉุกเฉิน',
             placeholder: '0XXXXXXXXX',
             type: 'tel',
+            description: 'กรอกในรูปแบบ 0XXXXXXXXX',
         },
         {
             id: 'shirtSize',

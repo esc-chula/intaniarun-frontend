@@ -17,35 +17,18 @@ export default function StatusPage() {
             <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
             <div className='flex w-full flex-col items-center justify-center space-y-10'>
                 {registerBody.length <= 1 && (
-                    <>
-                        <InfoCard
-                            title='VIP'
-                            price='11,100 บาท'
-                            onClick={() => {
-                                setRegisterBodyState(
-                                    currentRegistrantIndex,
-                                    'type',
-                                    'VIP'
-                                );
-                                router.push('/register/info');
-                            }}
-                        />
-                        <InfoCard
-                            title='นิสิตวิศวฯ จุฬาฯ'
-                            subTitle='คณะวิศวกรรมศาสตร์'
-                            price='300 บาท'
-                            onClick={() => {
-                                setRegisterBodyState(
-                                    currentRegistrantIndex,
-                                    'type',
-                                    'STUDENT'
-                                );
-                                signIn('google', {
-                                    callbackUrl: '/register/info',
-                                });
-                            }}
-                        />
-                    </>
+                    <InfoCard
+                        title='VIP'
+                        price='11,100 บาท'
+                        onClick={() => {
+                            setRegisterBodyState(
+                                currentRegistrantIndex,
+                                'type',
+                                'VIP'
+                            );
+                            router.push('/register/info');
+                        }}
+                    />
                 )}
 
                 <InfoCard
@@ -76,7 +59,8 @@ export default function StatusPage() {
                     }}
                 />
                 <InfoCard
-                    title='ประชาชน'
+                    title='ประชาชนทั่วไป'
+                    subTitle='บุคคลทั่วไปและครอบครัว'
                     price='700 บาท'
                     onClick={() => {
                         setRegisterBodyState(
@@ -87,6 +71,24 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
+
+                {registerBody.length <= 1 && (
+                    <InfoCard
+                        title='นิสิตวิศวฯ จุฬาฯ'
+                        subTitle='คณะวิศวกรรมศาสตร์'
+                        price='300 บาท'
+                        onClick={() => {
+                            setRegisterBodyState(
+                                currentRegistrantIndex,
+                                'type',
+                                'STUDENT'
+                            );
+                            signIn('google', {
+                                callbackUrl: '/register/info',
+                            });
+                        }}
+                    />
+                )}
             </div>
         </div>
     );
