@@ -240,39 +240,39 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     //     localStorage.setItem('registered', JSON.stringify(registered));
     // }, [pageMounted, registerBody, currentRegistrantIndex, registered]);
 
-    // useEffect(() => {
-    //     const localRegisterBody = localStorage.getItem('registerBody');
-    //     if (!pageMounted || !localRegisterBody) return;
-    //     switch (pathname) {
-    //         case '/register/info':
-    //             if (!registerBody[currentRegistrantIndex].type) {
-    //                 router.push('/register/type');
-    //             }
-    //             break;
-    //         case '/register/distance':
-    //             const error = validateRegisterBody();
-    //             if (error) {
-    //                 const errorFields = new Set<string>();
-    //                 error.details.forEach((error) => {
-    //                     const path = error.path[0] as string;
-    //                     errorFields.add(path);
-    //                 });
+    useEffect(() => {
+        const localRegisterBody = localStorage.getItem('registerBody');
+        if (!pageMounted || !localRegisterBody) return;
+        switch (pathname) {
+            case '/register/info':
+                if (!registerBody[currentRegistrantIndex].type) {
+                    router.push('/register/type');
+                }
+                break;
+            case '/register/distance':
+                const error = validateRegisterBody();
+                if (error) {
+                    const errorFields = new Set<string>();
+                    error.details.forEach((error) => {
+                        const path = error.path[0] as string;
+                        errorFields.add(path);
+                    });
 
-    //                 if (errorFields === new Set(['selectedPackage'])) {
-    //                     router.push('/register/info');
-    //                 }
-    //             }
-    //             break;
-    //     }
-    // }, [
-    //     currentRegistrantIndex,
-    //     pageMounted,
-    //     pathname,
-    //     registerBody,
-    //     registered,
-    //     router,
-    //     validateRegisterBody,
-    // ]);
+                    if (errorFields === new Set(['selectedPackage'])) {
+                        router.push('/register/info');
+                    }
+                }
+                break;
+        }
+    }, [
+        currentRegistrantIndex,
+        pageMounted,
+        pathname,
+        registerBody,
+        registered,
+        router,
+        validateRegisterBody,
+    ]);
 
     return (
         <Context.Provider
