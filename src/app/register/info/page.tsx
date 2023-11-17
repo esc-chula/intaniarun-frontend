@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
@@ -24,7 +24,7 @@ export default function PersonalInformationPage() {
     const [errorFields, setErrorFields] = useState<string[]>([]);
 
     const validateForm = () => {
-        const { error, value } = userSchema.validate(
+        const { error } = userSchema.validate(
             registerBody[currentRegistrantIndex],
             {
                 abortEarly: false,
@@ -32,10 +32,15 @@ export default function PersonalInformationPage() {
         );
 
         if (error) {
+            const errorFields = new Set<string>();
             error.details.forEach((error) => {
-                const { path, message } = error;
-                console.log(path[0], message);
+                const path = error.path[0] as string;
+                const message = error.message;
+
+                errorFields.add(path);
             });
+
+            setErrorFields(Array.from(errorFields));
         }
     };
 

@@ -3,10 +3,14 @@
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
+import { useRegisterContext } from '@/contexts/register';
+
 import InfoCard from './components/info-card';
 
 export default function StatusPage() {
     const router = useRouter();
+    const { registerBody, currentRegistrantIndex, setRegisterBodyState } =
+        useRegisterContext();
 
     return (
         <div className='w-full space-y-10'>
@@ -16,7 +20,12 @@ export default function StatusPage() {
                     title='VIP'
                     price='11,100 บาท'
                     onClick={() => {
-                        router.push('/register/info?type=vip');
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'VIP'
+                        );
+                        router.push('/register/info');
                     }}
                 />
                 <InfoCard
@@ -24,6 +33,11 @@ export default function StatusPage() {
                     subTitle='คณะวิศวกรรมศาสตร์'
                     price='300 บาท'
                     onClick={() => {
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'STUDENT'
+                        );
                         signIn('google', {
                             callbackUrl: '/register/info?type=student',
                         });
@@ -34,7 +48,12 @@ export default function StatusPage() {
                     subTitle='คณะวิศวกรรมศาสตร์'
                     price='700 บาท'
                     onClick={() => {
-                        router.push('/register/info?type=alumni');
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'ALUMNI'
+                        );
+                        router.push('/register/info');
                     }}
                 />
                 <InfoCard
@@ -43,6 +62,11 @@ export default function StatusPage() {
                     คณาจารย์ บุคลากร, นักเรียนโรงเรียนสาธิตจุฬาฯ'
                     price='700 บาท'
                     onClick={() => {
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'CHULA'
+                        );
                         router.push('/register/info?type=general');
                     }}
                 />
@@ -50,6 +74,11 @@ export default function StatusPage() {
                     title='ประชาชน'
                     price='700 บาท'
                     onClick={() => {
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'PUBLIC'
+                        );
                         router.push('/register/info?type=general');
                     }}
                 />
