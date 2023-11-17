@@ -22,8 +22,8 @@ export default function Header() {
             >
                 <FiChevronLeft />
             </button>
-            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-4 shadow-md'>
-                <div className='relative h-[56px] w-full'>
+            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-5 shadow-lg'>
+                <div className='relative h-[48px] w-full'>
                     <Image
                         src='/intania-run-logo.png'
                         alt='intania-run-logo'

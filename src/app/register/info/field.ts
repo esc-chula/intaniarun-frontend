@@ -98,8 +98,8 @@ export const fields = {
             label: 'ไซส์เสื้อ',
             placeholder: '---- เลือกรายการ ----',
             options: shirtSizes.map((shirtSize) => ({
-                value: shirtSize,
-                label: shirtSize,
+                value: shirtSize.value,
+                label: shirtSize.label,
             })),
         },
     ],
