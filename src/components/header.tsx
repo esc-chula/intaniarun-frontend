@@ -13,7 +13,7 @@ export default function Header() {
     const currentStatus = determineStatus(pathname);
 
     return (
-        <header className='fixed left-0 right-0 top-0 z-50 select-none bg-primary-400'>
+        <header className='fixed left-0 right-0 top-0 z-50 select-none'>
             <button
                 className='absolute left-4 top-6 z-50 p-2 text-2xl'
                 onClick={() => {
@@ -22,7 +22,7 @@ export default function Header() {
             >
                 <FiChevronLeft />
             </button>
-            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-4'>
+            <div className='flex h-full flex-col items-center  justify-center rounded-bl-[64px] bg-white py-4 shadow-md'>
                 <div className='relative h-[56px] w-full'>
                     <Image
                         src='/intania-run-logo.png'
