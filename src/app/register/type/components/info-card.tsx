@@ -40,5 +40,3 @@ export default function InfoCard({
         </button>
     );
 }
-
-//bg-gradient-to-r from-[#F998B9] to-[#941214]

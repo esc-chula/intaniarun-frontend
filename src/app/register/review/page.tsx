@@ -1,9 +1,10 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
+import { userSchema } from '@/utils/validator';
 
 import ReviewCard from './components/review-card';
 
@@ -16,6 +17,28 @@ export default function Review() {
         router.push('/register/type');
     };
 
+    const [validatedRegistrants, setValidatedRegistrants] = useState<boolean[]>(
+        []
+    );
+
+    useEffect(() => {
+        const newValidatedRegistrants = [] as boolean[];
+
+        registerBody.forEach((registrant, idx) => {
+            const { error } = userSchema.validate(registrant);
+
+            if (error) {
+                newValidatedRegistrants.push(false);
+            } else {
+                newValidatedRegistrants.push(true);
+            }
+        });
+
+        if (newValidatedRegistrants.length) {
+            setValidatedRegistrants(newValidatedRegistrants);
+        }
+    }, [registerBody]);
+
     return (
         <>
             <h1 className='text-2xl font-bold'>ยืนยันข้อมูลผู้สมัคร</h1>
@@ -25,6 +48,7 @@ export default function Review() {
                         key={index}
                         index={index}
                         registrant={registrant}
+                        validated={validatedRegistrants[index]}
                     />
                 ))}
                 {registerBody[0].type !== 'STUDENT' && (
@@ -45,6 +69,7 @@ export default function Review() {
                 <Button
                     type='submit'
                     onClick={() => router.push('/register/summary')}
+                    disabled={validatedRegistrants.includes(false)}
                 >
                     ต่อไป
                 </Button>

@@ -11,9 +11,11 @@ import { TRegisterBodyState } from '@/types/register';
 export default function ReviewCard({
     index,
     registrant,
+    validated,
 }: {
     index: number;
     registrant: TRegisterBodyState;
+    validated: boolean;
 }) {
     const router = useRouter();
     const { setCurrentRegistrantIndex, removeUserFromRegisterBody } =
@@ -68,7 +70,10 @@ export default function ReviewCard({
                         <HiTrash />
                     </button>
                 </div>
-                <div className='absolute bottom-5 right-5 flex items-center justify-between opacity-50'>
+                <div className='absolute bottom-5 left-5 right-5 flex items-end justify-between'>
+                    <div className='text-sm font-semibold text-red-500'>
+                        {validated ? '' : 'ยังกรอกข้อมูลไม่สำเร็จ'}
+                    </div>
                     <div className='text-4xl font-bold text-[#941214]'>
                         {registrant.selectedPackage} KM
                     </div>
