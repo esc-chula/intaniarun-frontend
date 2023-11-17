@@ -44,9 +44,6 @@ export default function Payment() {
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`,
                 {
                     method: 'POST',
-                    headers: {
-                        'X-Auth-Token': process.env.X_AUTH_TOKEN ?? '',
-                    },
                     body: formData,
                 }
             );
@@ -72,7 +69,6 @@ export default function Payment() {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-Auth-Token': process.env.X_AUTH_TOKEN ?? '',
                         },
                         body: JSON.stringify({
                             ...registrant,
