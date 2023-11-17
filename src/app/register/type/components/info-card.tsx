@@ -19,7 +19,9 @@ export default function InfoCard({
             <div className='w-3/4'>
                 <h1 className='text-[24px] font-bold'>{title}</h1>
                 {subTitle && (
-                    <div className='text-[16px] text-[#941214]'>{subTitle}</div>
+                    <p className='text-xs text-[#941214] sm:text-base'>
+                        {subTitle}
+                    </p>
                 )}
                 {price && (
                     <div className='pt-2 text-[16px] font-semibold text-[#941214]'>

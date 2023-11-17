@@ -3,6 +3,7 @@
 import moment from 'moment';
 import { usePathname } from 'next/navigation';
 
+import Dialog from '@/components/dialog';
 import Header from '@/components/header';
 import { END_DATE, OPEN_DATE } from '@/configs/register';
 import { RegisterProvider } from '@/contexts/register';
