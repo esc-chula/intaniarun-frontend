@@ -5,10 +5,6 @@ const user = {
     lastName: joi.string().required(),
     gender: joi.string().valid('MALE', 'FEMALE', 'OTHER').required(),
     birthDate: joi.date().required(),
-    shirtSize: joi
-        .string()
-        .valid('XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L')
-        .required(),
     province: joi.string().required(),
     email: joi
         .string()
@@ -18,7 +14,7 @@ const user = {
         .string()
         .regex(/^[0-9]{10}$/)
         .required(),
-    joinedYear: joi.number().optional(),
+    joinedYear: joi.number().allow(''),
     disease: joi.string().required(),
     bloodType: joi.string().valid('A', 'B', 'AB', 'O').required(),
     emergencyName: joi.string().required(),
@@ -32,6 +28,7 @@ const user = {
         .allow('')
         .regex(/^(?:(66|65|64|63)3\d{5}21@student.chula.ac.th)?$/)
         .message('Invalid gmail'),
+    shirtSize: joi.string().required(),
     type: joi
         .string()
         .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC')

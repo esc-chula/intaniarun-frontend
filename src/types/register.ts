@@ -7,6 +7,7 @@ export type TRegisterBodyState = {
     province: string;
     email: string;
     phone: string;
+    joinedYear: string;
     disease: string;
     bloodType: TRegisterBloodType | string;
     emergencyName: string;

@@ -51,9 +51,10 @@ export const fields = {
         {
             id: 'phone',
             name: 'phone',
-            label: 'โทรศัพท์',
-            placeholder: '0XX-XXX-XXXX',
+            label: 'เบอร์โทรศัพท์',
+            placeholder: '0XXXXXXXXX',
             type: 'tel',
+            description: 'กรอกในรูปแบบ 0XXXXXXXXX',
         },
         {
             id: 'joinedYear',
@@ -74,6 +75,7 @@ export const fields = {
             name: 'disease',
             label: 'ปัญหาสุขภาพ',
             placeholder: 'ปัญหาสุขภาพ',
+            description: 'หากไม่มีให้ใส่ -',
         },
         {
             id: 'bloodType',
@@ -96,12 +98,13 @@ export const fields = {
             name: 'relationship',
             label: 'เกี่ยวข้องเป็น',
             placeholder: 'ความสัมพันธ์',
+            description: 'กรอกในรูปแบบ 0XXXXXXXXX',
         },
         {
             id: 'emergencyPhone',
             name: 'emergencyPhone',
             label: 'เบอร์โทรศัพท์กรณีฉุกเฉิน',
-            placeholder: '0XX-XXX-XXXX',
+            placeholder: '0XXXXXXXXX',
             type: 'tel',
         },
         {

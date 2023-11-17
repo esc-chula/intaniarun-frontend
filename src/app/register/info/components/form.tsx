@@ -10,6 +10,7 @@ export default function FormComponent({
     onChange,
     name,
     value,
+    description,
 }: {
     label?: string;
     id: string;
@@ -25,6 +26,7 @@ export default function FormComponent({
     ) => void;
     name?: string;
     value?: string | number;
+    description?: string;
 }) {
     return (
         <>
@@ -73,6 +75,7 @@ export default function FormComponent({
                         value={value}
                     />
                 )}
+                <p className='text-sm text-slate-600'>{description}</p>
             </div>
             {name === 'shirtSize' && (
                 <Image

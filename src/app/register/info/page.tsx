@@ -98,6 +98,13 @@ export default function PersonalInformationPage() {
                         if (parseInt(key) !== page) return null;
                         return fields[parseInt(key) as keyof typeof fields].map(
                             (field) => {
+                                if (
+                                    registerBody[currentRegistrantIndex]
+                                        .type !== 'ALUMNI' &&
+                                    field.id === 'joinedYear'
+                                ) {
+                                    return null;
+                                }
                                 return (
                                     <FormComponent
                                         key={field.id}
@@ -124,13 +131,31 @@ export default function PersonalInformationPage() {
                                             );
                                             validateForm();
                                         }}
+                                        description={field.description}
                                     />
                                 );
                             }
                         );
                     })}
 
-                    <br />
+                    <p className='h-4 text-sm font-medium text-red-500'>
+                        {errorFields.length > 0 ? (
+                            <>
+                                {Object.keys(fields).map((key) => {
+                                    if (parseInt(key) !== page) return null;
+                                    return fields[
+                                        page as keyof typeof fields
+                                    ].find((field) => {
+                                        if (errorFields[0] === field.name) {
+                                            return true;
+                                        }
+                                    })?.label;
+                                })}{' '}
+                                ไม่ถูกต้อง
+                            </>
+                        ) : null}
+                    </p>
+
                     <Button type='submit' disabled={errorFields.length > 0}>
                         ต่อไป
                     </Button>
