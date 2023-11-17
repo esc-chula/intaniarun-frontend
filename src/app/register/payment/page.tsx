@@ -29,16 +29,15 @@ export default function Payment() {
         console.log('registerBody:', registerBody);
         console.log('file', file);
         // router.push('/register/sucess');
-        await postUserData();
-        if (file) {
-            const uploadResponse = await uploadFileToServer(file);
-            console.log(uploadResponse);
-        }
+        if (!file) return;
+        const uploadResponse = await uploadFileToServer(file);
+
+        if (uploadResponse) await postUserData(uploadResponse.fileName);
     };
 
-    const uploadFileToServer = async (file: any) => {
+    const uploadFileToServer = async (file: File) => {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', file, file.name);
 
         try {
             const response = await fetch(
@@ -62,21 +61,30 @@ export default function Payment() {
         }
     };
 
-    const postUserData = async () => {
+    const postUserData = async (fileName: string) => {
         try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
-                {
-                    method: 'POST',
-                    body: JSON.stringify(registerBody),
-                }
-            );
+            for (const registrant of registerBody) {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            ...registrant,
+                            paymentId: fileName,
+                        }),
+                    }
+                );
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log('User Data Success:', data);
-            } else {
-                console.error('User Data Upload failed');
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('User Data Success:', data);
+                } else {
+                    console.error('User Data Upload failed');
+                    console.log(response);
+                }
             }
         } catch (error) {
             console.error('Error:', error);
