@@ -25,10 +25,65 @@ export default function Payment() {
         }
     };
 
-    const handleSumbit = () => {
+    const handleSumbit = async () => {
         console.log('registerBody:', registerBody);
         console.log('file', file);
+        // router.push('/register/sucess');
+        await postUserData();
+        if (file) {
+            const uploadResponse = await uploadFileToServer(file);
+            console.log(uploadResponse);
+        }
     };
+
+    const uploadFileToServer = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`, {
+                method: 'POST',
+                headers: {
+                    'x-auth-token': process.env.X_AUTH_TOKEN,
+                },
+                body: formData,
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log('File upload success:', data);
+                return data;
+            } else {
+                console.error('File upload failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const postUserData = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': process.env.X_AUTH_TOKEN,
+                },
+                body: JSON.stringify(registerBody),
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log('User Data Success:', data);
+            } else {
+                console.error('User Data Upload failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+
 
     return (
         <>
