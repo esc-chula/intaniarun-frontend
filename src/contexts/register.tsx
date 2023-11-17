@@ -100,8 +100,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 lastName: '',
                 gender: '',
                 birthDate: '',
-                citizenId: '',
-                nationality: '',
                 shirtSize: '',
                 province: '',
                 email: '',
@@ -114,7 +112,6 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
                 gmail: '',
                 type: '',
                 selectedPackage: '',
-                paymentId: '',
             },
         ]);
         setCurrentRegistrantIndex(registerBody.length);
