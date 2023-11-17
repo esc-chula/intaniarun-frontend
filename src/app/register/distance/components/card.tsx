@@ -22,6 +22,7 @@ export default function Card({
                 <div className='pb-2 pt-2'>
                     <Tag data='เสื้อวิ่ง' />
                     <Tag data='เหรียญ' />
+                    <Tag data='ป้าย BIB' />
                     <Tag data='กระเป๋าเป้' />
                 </div>
             </div>

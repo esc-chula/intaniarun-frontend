@@ -1,5 +1,6 @@
 'use client';
 
+import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { HiPencilAlt, HiTrash } from 'react-icons/hi';
@@ -45,10 +46,16 @@ export default function ReviewCard({
                     </div>
                     <div className='flex flex-row gap-5'>
                         <div className='text-base text-gray-700'>
+                            <p>วัน เดือน ปี เกิด: </p>
                             <p>โทรศัพท์: </p>
                             <p>ไซส์เสื้อ: </p>
                         </div>
                         <div>
+                            <p>
+                                {moment(registrant.birthDate).format(
+                                    'DD MMMM YYYY'
+                                )}
+                            </p>
                             <p>{registrant.phone}</p>
                             <p>{registrant.shirtSize}</p>
                         </div>
