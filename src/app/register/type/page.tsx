@@ -78,7 +78,8 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 /> */}
-                {registerBody.length > 1 && (
+                {registerBody[0].type === 'ALUMNI' &&
+                registerBody.length > 1 ? (
                     <InfoCard
                         title='ครอบครัวและเพื่อน'
                         subTitle='ครอบครัวและเพื่อนของนิสิตเก่า'
@@ -92,10 +93,9 @@ export default function StatusPage() {
                             router.push('/register/info');
                         }}
                     />
-                )}
+                ) : null}
 
-                {registerBody[0].type === 'ALUMNI' &&
-                registerBody.length <= 1 ? (
+                {registerBody.length <= 1 ? (
                     <InfoCard
                         title='นิสิตวิศวฯ จุฬาฯ'
                         subTitle='ใช้อีเมลนิสิตคณะวิศวกรรมศาสตร์'
