@@ -18,8 +18,11 @@ export default function ReviewCard({
     validated: boolean;
 }) {
     const router = useRouter();
-    const { setCurrentRegistrantIndex, removeUserFromRegisterBody } =
-        useRegisterContext();
+    const {
+        registerBody,
+        setCurrentRegistrantIndex,
+        removeUserFromRegisterBody,
+    } = useRegisterContext();
 
     const [showDialog, setShowDialog] = useState(false);
 
@@ -27,7 +30,7 @@ export default function ReviewCard({
         <>
             <Dialog
                 action={() => {
-                    if (index === 0) {
+                    if (registerBody.length === 1) {
                         router.push('/register/type');
                     }
                     removeUserFromRegisterBody(index);

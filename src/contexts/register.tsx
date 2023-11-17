@@ -27,7 +27,26 @@ interface ContextProps {
 }
 
 const Context = createContext<ContextProps>({
-    registerBody: [defaultRegisterBodyState],
+    registerBody: [
+        {
+            firstName: '',
+            lastName: '',
+            gender: '',
+            birthDate: '',
+            shirtSize: '',
+            province: '',
+            email: '',
+            phone: '',
+            disease: '',
+            bloodType: '',
+            emergencyName: '',
+            emergencyPhone: '',
+            relationship: '',
+            gmail: '',
+            type: '',
+            selectedPackage: '',
+        },
+    ],
     currentRegistrantIndex: 0,
     setCurrentRegistrantIndex: () => {},
     setRegisterBodyState: () => {},
@@ -44,7 +63,24 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     const [pageMounted, setPageMounted] = useState(false);
 
     const [registerBody, setRegisterBody] = useState<TRegisterBodyState[]>([
-        defaultRegisterBodyState,
+        {
+            firstName: '',
+            lastName: '',
+            gender: '',
+            birthDate: '',
+            shirtSize: '',
+            province: '',
+            email: '',
+            phone: '',
+            disease: '',
+            bloodType: '',
+            emergencyName: '',
+            emergencyPhone: '',
+            relationship: '',
+            gmail: '',
+            type: '',
+            selectedPackage: '',
+        },
     ]);
 
     const [currentRegistrantIndex, setCurrentRegistrantIndex] =
@@ -63,23 +99,59 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     const addUserToRegisterBody = () => {
         setRegisterBody((prevState) => [
             ...prevState,
-            defaultRegisterBodyState,
+            {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birthDate: '',
+                shirtSize: '',
+                province: '',
+                email: '',
+                phone: '',
+                disease: '',
+                bloodType: '',
+                emergencyName: '',
+                emergencyPhone: '',
+                relationship: '',
+                gmail: '',
+                type: '',
+                selectedPackage: '',
+            },
         ]);
         setCurrentRegistrantIndex(registerBody.length);
     };
 
     const removeUserFromRegisterBody = (index: number) => {
-        if (index === 0) {
+        if (registerBody.length === 1) {
             setRegisterBody((prevState) => [
                 ...prevState.slice(1),
-                defaultRegisterBodyState,
+                {
+                    firstName: '',
+                    lastName: '',
+                    gender: '',
+                    birthDate: '',
+                    shirtSize: '',
+                    province: '',
+                    email: '',
+                    phone: '',
+                    disease: '',
+                    bloodType: '',
+                    emergencyName: '',
+                    emergencyPhone: '',
+                    relationship: '',
+                    gmail: '',
+                    type: '',
+                    selectedPackage: '',
+                },
             ]);
+            setCurrentRegistrantIndex(0);
         } else {
             setRegisterBody((prevState) => {
                 const newRegisterBody = [...prevState];
                 newRegisterBody.splice(index, 1);
                 return newRegisterBody;
             });
+            setCurrentRegistrantIndex(registerBody.length - 2);
         }
     };
 
