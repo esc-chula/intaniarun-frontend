@@ -1,0 +1,18 @@
+export const defaultRegisterBodyState = {
+    firstName: '',
+    lastName: '',
+    gender: '',
+    birthDate: '',
+    shirtSize: '',
+    province: '',
+    email: '',
+    phone: '',
+    disease: '',
+    bloodType: '',
+    emergencyName: '',
+    emergencyPhone: '',
+    relationship: '',
+    gmail: '',
+    type: '',
+    selectedPackage: '',
+};

@@ -11,6 +11,7 @@ import {
 } from 'react';
 
 import { prices } from '@/constants/price';
+import { defaultRegisterBodyState } from '@/constants/register';
 import { TRegisterBodyState } from '@/types/register';
 import { userSchema } from '@/utils/validator';
 
@@ -26,26 +27,7 @@ interface ContextProps {
 }
 
 const Context = createContext<ContextProps>({
-    registerBody: [
-        {
-            firstName: '',
-            lastName: '',
-            gender: '',
-            birthDate: '',
-            shirtSize: '',
-            province: '',
-            email: '',
-            phone: '',
-            disease: '',
-            bloodType: '',
-            emergencyName: '',
-            emergencyPhone: '',
-            relationship: '',
-            gmail: '',
-            type: '',
-            selectedPackage: '',
-        },
-    ],
+    registerBody: [defaultRegisterBodyState],
     currentRegistrantIndex: 0,
     setCurrentRegistrantIndex: () => {},
     setRegisterBodyState: () => {},
@@ -62,24 +44,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     const [pageMounted, setPageMounted] = useState(false);
 
     const [registerBody, setRegisterBody] = useState<TRegisterBodyState[]>([
-        {
-            firstName: '',
-            lastName: '',
-            gender: '',
-            birthDate: '',
-            shirtSize: '',
-            province: '',
-            email: '',
-            phone: '',
-            disease: '',
-            bloodType: '',
-            emergencyName: '',
-            emergencyPhone: '',
-            relationship: '',
-            gmail: '',
-            type: '',
-            selectedPackage: '',
-        },
+        defaultRegisterBodyState,
     ]);
 
     const [currentRegistrantIndex, setCurrentRegistrantIndex] =
@@ -98,34 +63,24 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     const addUserToRegisterBody = () => {
         setRegisterBody((prevState) => [
             ...prevState,
-            {
-                firstName: '',
-                lastName: '',
-                gender: '',
-                birthDate: '',
-                shirtSize: '',
-                province: '',
-                email: '',
-                phone: '',
-                disease: '',
-                bloodType: '',
-                emergencyName: '',
-                emergencyPhone: '',
-                relationship: '',
-                gmail: '',
-                type: '',
-                selectedPackage: '',
-            },
+            defaultRegisterBodyState,
         ]);
         setCurrentRegistrantIndex(registerBody.length);
     };
 
     const removeUserFromRegisterBody = (index: number) => {
-        setRegisterBody((prevState) => {
-            const newRegisterBody = [...prevState];
-            newRegisterBody.splice(index, 1);
-            return newRegisterBody;
-        });
+        if (index === 0) {
+            setRegisterBody((prevState) => [
+                ...prevState.slice(1),
+                defaultRegisterBodyState,
+            ]);
+        } else {
+            setRegisterBody((prevState) => {
+                const newRegisterBody = [...prevState];
+                newRegisterBody.splice(index, 1);
+                return newRegisterBody;
+            });
+        }
     };
 
     const validateRegisterBody = useCallback(() => {
@@ -145,12 +100,11 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         return error;
     }, [currentRegistrantIndex, pageMounted, registerBody]);
 
-    const totalPackagePrice =
-        registerBody.reduce(
-            (acc, registrant) =>
-                acc + prices[registrant.type as keyof typeof prices],
-            0
-        ) - (registerBody[0].type === 'STUDENT' ? 300 : 0);
+    const totalPackagePrice = registerBody.reduce(
+        (acc, registrant) =>
+            acc + prices[registrant.type as keyof typeof prices],
+        0
+    );
 
     useEffect(() => {
         setPageMounted(true);

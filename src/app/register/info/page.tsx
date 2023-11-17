@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import Button from '@/components/button';
@@ -10,6 +12,7 @@ import FormComponent from './components/form';
 import { fields } from './field';
 
 export default function PersonalInformationPage() {
+    const session = useSession();
     const router = useRouter();
     const searchParams = useSearchParams();
     const {
@@ -66,6 +69,18 @@ export default function PersonalInformationPage() {
     useEffect(() => {
         validateForm();
     }, [page, validateForm]);
+
+    useEffect(() => {
+        if (registerBody[0].type === 'STUDENT') {
+            if (!session) {
+                router.push('/register/type');
+            } else {
+                if (!session.data?.user?.email) return;
+                setRegisterBodyState(0, 'email', session.data?.user?.email);
+                setRegisterBodyState(0, 'gmail', session.data?.user?.email);
+            }
+        }
+    }, [session]);
 
     return (
         <>

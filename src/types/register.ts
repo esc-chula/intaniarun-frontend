@@ -40,6 +40,11 @@ export type TRegisterShirtSize =
 
 export type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
 
-export type TRegisterRunnerType = 'ALUMNI' | 'STUDENT' | 'PUBLIC';
+export type TRegisterRunnerType =
+    | 'VIP'
+    | 'ALUMNI'
+    | 'STUDENT'
+    | 'CHULA'
+    | 'PUBLIC';
 
 export type TRegisterPackageType = 'F' | 'T';

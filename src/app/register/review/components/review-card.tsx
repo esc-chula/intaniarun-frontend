@@ -46,6 +46,9 @@ export default function ReviewCard({
                 </button>
                 <button
                     onClick={() => {
+                        if (index === 0) {
+                            router.push('/register/type');
+                        }
                         removeUserFromRegisterBody(index);
                     }}
                     className='p-2'

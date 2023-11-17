@@ -34,12 +34,6 @@ export default function Summary() {
                         <p>ราคาแพ็คเกจทั้งหมด</p>
                         <p>{totalPackagePrice.toFixed(2)}฿</p>
                     </div>
-                    {registerBody[0].type === 'STUDENT' && (
-                        <div className='flex w-full items-center justify-between'>
-                            <p>ส่วนลด</p>
-                            <p>300฿</p>
-                        </div>
-                    )}
                 </div>
                 <div className='mt-2 flex items-center justify-between'>
                     <span className='text-lg font-bold text-primary-100'>

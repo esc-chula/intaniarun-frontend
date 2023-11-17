@@ -27,7 +27,7 @@ export default function Review() {
                         registrant={registrant}
                     />
                 ))}
-                {registerBody[0].type !== 'student' && (
+                {registerBody[0].type !== 'STUDENT' && (
                     <>
                         <button
                             className='h-[64px] w-full rounded-[16px] border-2 border-black bg-white font-bold disabled:cursor-not-allowed disabled:opacity-20'
