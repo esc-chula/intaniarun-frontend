@@ -63,6 +63,7 @@ export default function Home() {
                 <Image
                     src='/landing/bg.png'
                     alt='background'
+                    quality={0}
                     fill
                     className='object-cover object-center'
                 />

@@ -29,7 +29,7 @@ export default function Success() {
             <h1 className='pt-6 text-2xl font-bold'>ชำระเงินสำเร็จ</h1>
             <p className='pb-20'>
                 ท่านได้อัปโหลดหลักฐานการชำระเงินเรียบร้อยแล้ว
-                ระบบจะส่งอีเมลยืนยันภายใน 15 วัน
+                ระบบจะส่งอีเมลยืนยันภายใน 15 วันทำการ
             </p>
             <Button
                 onClick={() => {
