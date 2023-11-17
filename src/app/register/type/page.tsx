@@ -58,7 +58,8 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
-                <InfoCard
+                {/* uncomment on 25 nov */}
+                {/* <InfoCard
                     title='ประชาชนทั่วไป'
                     subTitle='บุคคลทั่วไปและครอบครัว'
                     price='700 บาท'
@@ -70,7 +71,22 @@ export default function StatusPage() {
                         );
                         router.push('/register/info');
                     }}
-                />
+                /> */}
+                {registerBody.length > 1 && (
+                    <InfoCard
+                        title='ครอบครัวและเพื่อน'
+                        subTitle='ครอบครัวและเพื่อนของนิสิตเก่า'
+                        price='700 บาท'
+                        onClick={() => {
+                            setRegisterBodyState(
+                                currentRegistrantIndex,
+                                'type',
+                                'PUBLIC'
+                            );
+                            router.push('/register/info');
+                        }}
+                    />
+                )}
 
                 {registerBody.length <= 1 && (
                     <InfoCard
