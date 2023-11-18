@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
+import imageCompression from 'browser-image-compression';
 
 export default function Payment() {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function Payment() {
     const [file, setFile] = useState<File | null>(null);
     const { registerBody, totalPackagePrice } = useRegisterContext();
     const [isLoading, setIsLoading] = useState(false);
+    
 
     const handleUploadSlip = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -25,22 +27,39 @@ export default function Payment() {
         }
     };
 
+    const compressFile = async (file: File) => {
+        if (!file) return;
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920
+        };
+        try {
+            const compressedFile = await imageCompression(file, options);
+            // console.log('Original size:', file.size / 1024 / 1024, 'MB');
+            // console.log('Compressed size:', compressedFile.size / 1024 / 1024, 'MB');
+            return compressedFile;
+        } catch (error) {
+            console.error('Compression error:', error);
+        }
+    };
+
     const handleSumbit = async () => {
         setIsLoading(true);
 
         console.log('registerBody:', registerBody);
         console.log('file', file);
         // router.push('/register/sucess');
+
         if (!file) return;
         const uploadResponse = await uploadFileToServer(file);
-
         if (uploadResponse) await postUserData(uploadResponse.fileName);
     };
 
     const uploadFileToServer = async (file: File) => {
         const formData = new FormData();
-        formData.append('file', file, file.name);
-
+        console.log('file:', file);
+        const compressedFile = await compressFile(file);
+        formData.append('file', compressedFile, file.name);
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`,
