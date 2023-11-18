@@ -28,7 +28,7 @@ export default function Payment() {
 
     const compressFile = async (file: File) => {
         if (!file) return;
-        if (file.size / 1024 / 1024 < 4) return;
+        if (file.size / 1024 / 1024 < 4) return file;
         const options = {
             maxSizeMB: 3,
             maxWidthOrHeight: 1920,
@@ -59,10 +59,6 @@ export default function Payment() {
     const handleSumbit = async () => {
         setIsLoading(true);
 
-        console.log('registerBody:', registerBody);
-        console.log('file', file);
-        // router.push('/register/sucess');
-
         if (!file) return;
         const uploadResponse = await uploadFileToServer(file);
         if (uploadResponse) await postUserData(uploadResponse.fileName);
@@ -70,8 +66,8 @@ export default function Payment() {
 
     const uploadFileToServer = async (file: File) => {
         const formData = new FormData();
-        console.log('file:', file);
         const compressedFile = await compressFile(file);
+        console.log(compressedFile);
         if (!compressedFile) return;
         formData.append('file', compressedFile, file.name);
         try {
