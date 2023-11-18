@@ -1,12 +1,12 @@
 'use client';
 
+import imageCompression from 'browser-image-compression';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Button from '@/components/button';
 import { useRegisterContext } from '@/contexts/register';
-import imageCompression from 'browser-image-compression';
 
 export default function Payment() {
     const router = useRouter();
@@ -14,7 +14,6 @@ export default function Payment() {
     const [file, setFile] = useState<File | null>(null);
     const { registerBody, totalPackagePrice } = useRegisterContext();
     const [isLoading, setIsLoading] = useState(false);
-    
 
     const handleUploadSlip = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -31,7 +30,7 @@ export default function Payment() {
         if (!file) return;
         const options = {
             maxSizeMB: 1,
-            maxWidthOrHeight: 1920
+            maxWidthOrHeight: 1920,
         };
         try {
             const compressedFile = await imageCompression(file, options);
@@ -59,6 +58,7 @@ export default function Payment() {
         const formData = new FormData();
         console.log('file:', file);
         const compressedFile = await compressFile(file);
+        if (!compressedFile) return;
         formData.append('file', compressedFile, file.name);
         try {
             const response = await fetch(
