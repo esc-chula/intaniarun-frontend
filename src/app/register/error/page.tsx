@@ -22,7 +22,7 @@ export default function Error() {
             <h1 className='pt-6 text-2xl font-bold'>Something went wrong!</h1>
             <p className='pb-20'>
                 {
-                    'Sorry, we can’t process your request at the moment. Please try againn later.'
+                    'Sorry, we can’t process your request at the moment. Please try again later.'
                 }
             </p>
             <Button
