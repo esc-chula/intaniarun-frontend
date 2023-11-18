@@ -28,14 +28,28 @@ export default function Payment() {
 
     const compressFile = async (file: File) => {
         if (!file) return;
+        if (file.size / 1024 / 1024 < 4) return;
         const options = {
-            maxSizeMB: 1,
+            maxSizeMB: 3,
             maxWidthOrHeight: 1920,
         };
         try {
             const compressedFile = await imageCompression(file, options);
             // console.log('Original size:', file.size / 1024 / 1024, 'MB');
-            // console.log('Compressed size:', compressedFile.size / 1024 / 1024, 'MB');
+            // console.log(
+            //     'Compressed size:',
+            //     compressedFile.size / 1024 / 1024,
+            //     'MB'
+            // );
+            // save file to local storage
+            const downloadLink = URL.createObjectURL(compressedFile);
+            const a = document.createElement('a');
+            a.href = downloadLink;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
             return compressedFile;
         } catch (error) {
             console.error('Compression error:', error);
