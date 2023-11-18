@@ -1,5 +1,6 @@
 'use client';
 
+import imageCompression from 'browser-image-compression';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,22 +26,54 @@ export default function Payment() {
         }
     };
 
+    const compressFile = async (file: File) => {
+        if (!file) return;
+        if (file.size / 1024 / 1024 < 4) return;
+        const options = {
+            maxSizeMB: 3,
+            maxWidthOrHeight: 1920,
+        };
+        try {
+            const compressedFile = await imageCompression(file, options);
+            // console.log('Original size:', file.size / 1024 / 1024, 'MB');
+            // console.log(
+            //     'Compressed size:',
+            //     compressedFile.size / 1024 / 1024,
+            //     'MB'
+            // );
+            // save file to local storage
+            const downloadLink = URL.createObjectURL(compressedFile);
+            const a = document.createElement('a');
+            a.href = downloadLink;
+            a.download = file.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            return compressedFile;
+        } catch (error) {
+            console.error('Compression error:', error);
+        }
+    };
+
     const handleSumbit = async () => {
         setIsLoading(true);
 
         console.log('registerBody:', registerBody);
         console.log('file', file);
         // router.push('/register/sucess');
+
         if (!file) return;
         const uploadResponse = await uploadFileToServer(file);
-
         if (uploadResponse) await postUserData(uploadResponse.fileName);
     };
 
     const uploadFileToServer = async (file: File) => {
         const formData = new FormData();
-        formData.append('file', file, file.name);
-
+        console.log('file:', file);
+        const compressedFile = await compressFile(file);
+        if (!compressedFile) return;
+        formData.append('file', compressedFile, file.name);
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 import { useRegisterContext } from '@/contexts/register';
@@ -11,6 +11,36 @@ export default function StatusPage() {
     const router = useRouter();
     const { registerBody, currentRegistrantIndex, setRegisterBodyState } =
         useRegisterContext();
+    const searchParams = useSearchParams();
+    const type = searchParams.get('type');
+
+    if (type === 'vip') {
+        return (
+            <div className='w-full space-y-10'>
+                {/* TODO: change to ภายนอกวันที่ 25 */}
+                <div className='space-y-2'>
+                    <h1 className='text-2xl font-bold'>ประเภทผู้สมัครภายใน</h1>
+                    <p className='text-sm text-slate-600'>
+                        เปิดให้ประชาชนทั่วไปสมัครในวันที่ 25 - 27 พฤศจิกายน 2566
+                    </p>
+                </div>
+                <div className='flex w-full flex-col items-center justify-center space-y-10'>
+                    <InfoCard
+                        title='VIP'
+                        price='11,100 บาท'
+                        onClick={() => {
+                            setRegisterBodyState(
+                                currentRegistrantIndex,
+                                'type',
+                                'VIP'
+                            );
+                            router.push('/register/info');
+                        }}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className='w-full space-y-10'>
