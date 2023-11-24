@@ -149,8 +149,8 @@ export default function Check() {
                                                         สำเร็จ
                                                     </span>
                                                 ) : (
-                                                    <span className='text-red-500'>
-                                                        กำลังดำเนินการ
+                                                    <span className='text-yellow-600'>
+                                                        กำลังตรวจสอบ
                                                     </span>
                                                 )}
                                             </td>
@@ -182,7 +182,7 @@ export default function Check() {
                                             </td>
                                             <td className='px-3 py-4'>
                                                 {moment(user.createdAt).format(
-                                                    'DD MMMM YYYY'
+                                                    'DD/MM/YYYY'
                                                 )}
                                             </td>
                                         </tr>
