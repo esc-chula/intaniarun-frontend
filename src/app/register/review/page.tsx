@@ -53,10 +53,15 @@ export default function Review() {
         const checkUsersExists = async () => {
             axios
                 .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/check`, {
-                    names: registerBody.map((registrant) => ({
-                        firstName: registrant.firstName,
-                        lastName: registrant.lastName,
-                    })),
+                    names: registerBody.map((registrant) => {
+                        if (!registrant.firstName || !registrant.lastName) {
+                            return;
+                        }
+                        return {
+                            firstName: registrant.firstName,
+                            lastName: registrant.lastName,
+                        };
+                    }),
                 })
                 .then((res) => {
                     setExistedUsers(res.data);
