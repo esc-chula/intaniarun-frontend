@@ -31,7 +31,7 @@ const user = {
     shirtSize: joi.string().required(),
     type: joi
         .string()
-        .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC')
+        .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC', 'ACQUAINTANCE')
         .required(),
     selectedPackage: joi.string().valid('3.711', '10.111').required(),
 };
