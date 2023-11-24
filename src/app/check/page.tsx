@@ -33,6 +33,7 @@ export default function Check() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         setError(null);
+        setUsers(null);
         e.preventDefault();
 
         const email = e.currentTarget.email.value;
