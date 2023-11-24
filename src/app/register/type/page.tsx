@@ -43,7 +43,6 @@ export default function StatusPage() {
 
     return (
         <div className='w-full space-y-10'>
-            {/* TODO: change to ภายนอกวันที่ 25 */}
             <div className='space-y-2'>
                 <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
                 {/* <p className='text-sm text-slate-600'>
@@ -78,7 +77,22 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
-                {/* TODO: uncomment on 25 nov */}
+                {registerBody[0].type === 'ALUMNI' &&
+                registerBody.length > 1 ? (
+                    <InfoCard
+                        title='ครอบครัวและเพื่อน'
+                        subTitle='ครอบครัวและเพื่อนของนิสิตเก่า'
+                        price='700 บาท'
+                        onClick={() => {
+                            setRegisterBodyState(
+                                currentRegistrantIndex,
+                                'type',
+                                'ACQUAINTANCE'
+                            );
+                            router.push('/register/info');
+                        }}
+                    />
+                ) : null}
                 <InfoCard
                     title='ประชาคมจุฬาฯ'
                     subTitle='นิสิตและนิสิตเก่าต่างคณะ,
@@ -106,23 +120,6 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
-                {registerBody[0].type === 'ALUMNI' &&
-                registerBody.length > 1 ? (
-                    <InfoCard
-                        title='ครอบครัวและเพื่อน'
-                        subTitle='ครอบครัวและเพื่อนของนิสิตเก่า'
-                        price='700 บาท'
-                        onClick={() => {
-                            setRegisterBodyState(
-                                currentRegistrantIndex,
-                                'type',
-                                'ACQUAINTANCE'
-                            );
-                            router.push('/register/info');
-                        }}
-                    />
-                ) : null}
-
                 {registerBody.length <= 1 ? (
                     <InfoCard
                         title='นิสิตวิศวฯ จุฬาฯ'
