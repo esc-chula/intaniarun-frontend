@@ -149,7 +149,7 @@ export default function Check() {
                                                         สำเร็จ
                                                     </span>
                                                 ) : (
-                                                    <span className='text-yellow-600'>
+                                                    <span className='text-yellow-500'>
                                                         กำลังตรวจสอบ
                                                     </span>
                                                 )}
