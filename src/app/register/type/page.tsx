@@ -81,7 +81,14 @@ export default function StatusPage() {
                 registerBody.length > 1 ? (
                     <InfoCard
                         title='ครอบครัวและเพื่อน'
-                        subTitle='ครอบครัวและเพื่อนของนิสิตเก่า'
+                        subTitle={
+                            <>
+                                ครอบครัวและเพื่อนของ
+                                <span className='underline'>
+                                    นิสิตเก่าวิศวฯ จุฬาฯ
+                                </span>
+                            </>
+                        }
                         price='700 บาท'
                         onClick={() => {
                             setRegisterBodyState(
