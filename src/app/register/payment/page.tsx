@@ -61,15 +61,20 @@ export default function Payment() {
 
         if (!file) return;
         const uploadResponse = await uploadFileToServer(file);
-        if (uploadResponse) await postUserData(uploadResponse.fileName);
+        if (!uploadResponse) {
+            setIsLoading(false);
+            alert('อัปโหลดสลิปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
+            return;
+        }
+        await postUserData(uploadResponse.fileName);
     };
 
     const uploadFileToServer = async (file: File) => {
         const formData = new FormData();
-        const compressedFile = await compressFile(file);
-        console.log(compressedFile);
-        if (!compressedFile) return;
-        formData.append('file', compressedFile, file.name);
+        // const compressedFile = await compressFile(file);
+        // console.log(compressedFile);
+        // if (!compressedFile) return;
+        formData.append('file', file, file.name);
         try {
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/file/upload`,
@@ -84,10 +89,11 @@ export default function Payment() {
                 console.log('File upload success:', data);
                 return data;
             } else {
-                console.error('File upload failed');
+                setIsLoading(false);
             }
         } catch (error) {
-            console.error('Error:', error);
+            setIsLoading(false);
+            alert(`อัปโหลดสลิปไม่สำเร็จ กรุณาลองใหม่อีกครั้ง ${error}`);
         }
     };
 
