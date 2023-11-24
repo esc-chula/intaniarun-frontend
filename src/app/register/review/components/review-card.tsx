@@ -59,10 +59,12 @@ export default function ReviewCard({
                                     ? 'VIP'
                                     : registrant.type === 'ALUMNI'
                                     ? 'นิสิตเก่าวิศวฯ จุฬาฯ'
+                                    : registrant.type === 'ACQUAINTANCE'
+                                    ? 'ครอบครัวและเพื่อนของนิสิตเก่า'
+                                    : registrant.type === 'STUDENT'
+                                    ? 'นิสิตปัจจุบัน'
                                     : registrant.type === 'CHULA'
                                     ? 'ประชาคมจุฬาฯ'
-                                    : registrant.type === 'PUBLIC'
-                                    ? 'ประชาชนทั่วไป'
                                     : 'นิสิตปัจจุบัน'}
                             </p>
                             <p>

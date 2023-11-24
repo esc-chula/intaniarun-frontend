@@ -118,7 +118,7 @@ export default function StatusPage() {
                             setRegisterBodyState(
                                 currentRegistrantIndex,
                                 'type',
-                                'PUBLIC'
+                                'ACQUAINTANCE'
                             );
                             router.push('/register/info');
                         }}

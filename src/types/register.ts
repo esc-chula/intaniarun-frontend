@@ -44,6 +44,7 @@ export type TRegisterBloodType = 'A' | 'B' | 'AB' | 'O';
 export type TRegisterRunnerType =
     | 'VIP'
     | 'ALUMNI'
+    | 'ACQUAINTANCE'
     | 'STUDENT'
     | 'CHULA'
     | 'PUBLIC';
