@@ -15,10 +15,18 @@ export default function ReviewCard({
     index,
     registrant,
     validated,
+    existedUser,
 }: {
     index: number;
     registrant: TRegisterBodyState;
     validated: boolean;
+    existedUser:
+        | {
+              firstName: string;
+              lastName: string;
+              email: string;
+          }
+        | undefined;
 }) {
     const router = useRouter();
     const {
@@ -103,9 +111,17 @@ export default function ReviewCard({
                     </button>
                 </div>
                 <div className='absolute bottom-5 left-5 right-5 flex items-end justify-between'>
-                    <div className='text font-semibold text-red-500'>
-                        {validated ? '' : 'ยังกรอกข้อมูลไม่สำเร็จ'}
-                    </div>
+                    {!validated ? (
+                        <div className='text-lg font-semibold text-red-500 underline'>
+                            ยังกรอกข้อมูลไม่สำเร็จ
+                        </div>
+                    ) : null}
+                    {existedUser ? (
+                        <div className='text-lg font-semibold text-red-500 underline'>
+                            ผู้สมัครนี้มีอยู่ในระบบแล้ว
+                        </div>
+                    ) : null}
+
                     <div className='text-4xl font-bold text-[#941214]'>
                         {registrant.selectedPackage} KM
                     </div>

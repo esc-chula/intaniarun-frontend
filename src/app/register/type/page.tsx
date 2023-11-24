@@ -17,12 +17,11 @@ export default function StatusPage() {
     if (type === 'vip') {
         return (
             <div className='w-full space-y-10'>
-                {/* TODO: change to ภายนอกวันที่ 25 */}
                 <div className='space-y-2'>
-                    <h1 className='text-2xl font-bold'>ประเภทผู้สมัครภายใน</h1>
-                    <p className='text-sm text-slate-600'>
+                    <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
+                    {/* <p className='text-sm text-slate-600'>
                         เปิดให้ประชาชนทั่วไปสมัครในวันที่ 25 - 27 พฤศจิกายน 2566
-                    </p>
+                    </p> */}
                 </div>
                 <div className='flex w-full flex-col items-center justify-center space-y-10'>
                     <InfoCard
@@ -44,12 +43,11 @@ export default function StatusPage() {
 
     return (
         <div className='w-full space-y-10'>
-            {/* TODO: change to ภายนอกวันที่ 25 */}
             <div className='space-y-2'>
-                <h1 className='text-2xl font-bold'>ประเภทผู้สมัครภายใน</h1>
-                <p className='text-sm text-slate-600'>
-                    เปิดให้ประชาชนทั่วไปสมัครในวันที่ 25 - 27 พฤศจิกายน 2566
-                </p>
+                <h1 className='text-2xl font-bold'>ประเภทผู้สมัคร</h1>
+                {/* <p className='text-sm text-slate-600'>
+                        เปิดให้ประชาชนทั่วไปสมัครในวันที่ 25 - 27 พฤศจิกายน 2566
+                    </p> */}
             </div>
             <div className='flex w-full flex-col items-center justify-center space-y-10'>
                 {registerBody.length <= 1 && (
@@ -66,7 +64,6 @@ export default function StatusPage() {
                         }}
                     />
                 )}
-
                 <InfoCard
                     title='นิสิตเก่าวิศวฯ จุฬาฯ'
                     subTitle='คณะวิศวกรรมศาสตร์'
@@ -80,34 +77,6 @@ export default function StatusPage() {
                         router.push('/register/info');
                     }}
                 />
-                {/* <InfoCard
-                    title='ประชาคมจุฬาฯ'
-                    subTitle='นิสิตและนิสิตเก่าต่างคณะ,
-                    คณาจารย์ บุคลากร, นักเรียนโรงเรียนสาธิตจุฬาฯ'
-                    price='700 บาท'
-                    onClick={() => {
-                        setRegisterBodyState(
-                            currentRegistrantIndex,
-                            'type',
-                            'CHULA'
-                        );
-                        router.push('/register/info');
-                    }}
-                /> */}
-                {/* TODO: uncomment on 25 nov */}
-                {/* <InfoCard
-                    title='ประชาชนทั่วไป'
-                    subTitle='บุคคลทั่วไปและครอบครัว'
-                    price='700 บาท'
-                    onClick={() => {
-                        setRegisterBodyState(
-                            currentRegistrantIndex,
-                            'type',
-                            'PUBLIC'
-                        );
-                        router.push('/register/info');
-                    }}
-                /> */}
                 {registerBody[0].type === 'ALUMNI' &&
                 registerBody.length > 1 ? (
                     <InfoCard
@@ -124,7 +93,33 @@ export default function StatusPage() {
                         }}
                     />
                 ) : null}
-
+                <InfoCard
+                    title='ประชาคมจุฬาฯ'
+                    subTitle='นิสิตและนิสิตเก่าต่างคณะ,
+                    คณาจารย์ บุคลากร, นักเรียนโรงเรียนสาธิตจุฬาฯ'
+                    price='700 บาท'
+                    onClick={() => {
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'CHULA'
+                        );
+                        router.push('/register/info');
+                    }}
+                />
+                <InfoCard
+                    title='ประชาชนทั่วไป'
+                    subTitle='บุคคลทั่วไปและครอบครัว'
+                    price='700 บาท'
+                    onClick={() => {
+                        setRegisterBodyState(
+                            currentRegistrantIndex,
+                            'type',
+                            'PUBLIC'
+                        );
+                        router.push('/register/info');
+                    }}
+                />
                 {registerBody.length <= 1 ? (
                     <InfoCard
                         title='นิสิตวิศวฯ จุฬาฯ'

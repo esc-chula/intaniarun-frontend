@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -22,10 +23,18 @@ export default function Review() {
         []
     );
 
+    const [existedUsers, setExistedUsers] = useState<
+        {
+            firstName: string;
+            lastName: string;
+            email: string;
+        }[]
+    >([]);
+
     useEffect(() => {
         const newValidatedRegistrants = [] as boolean[];
 
-        registerBody.forEach((registrant, idx) => {
+        registerBody.forEach((registrant) => {
             const { error } = userSchema.validate(registrant);
 
             if (error) {
@@ -40,6 +49,37 @@ export default function Review() {
         }
     }, [registerBody]);
 
+    useEffect(() => {
+        const checkUsersExists = async () => {
+            axios
+                .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/check`, {
+                    names: registerBody
+                        .filter((registrant) => {
+                            if (!registrant.firstName || !registrant.lastName) {
+                                return false;
+                            }
+                            return true;
+                        })
+                        .map((registrant) => {
+                            return {
+                                firstName: registrant.firstName,
+                                lastName: registrant.lastName,
+                            };
+                        }),
+                })
+                .then((res) => {
+                    setExistedUsers(res.data);
+                })
+                .catch((err) => {
+                    console.error(err.response.data);
+                });
+        };
+
+        if (validatedRegistrants.includes(true)) {
+            checkUsersExists();
+        }
+    }, [registerBody, validatedRegistrants]);
+
     return (
         <>
             <h1 className='text-2xl font-bold'>ยืนยันข้อมูลผู้สมัคร</h1>
@@ -50,6 +90,11 @@ export default function Review() {
                         index={index}
                         registrant={registrant}
                         validated={validatedRegistrants[index]}
+                        existedUser={existedUsers.find(
+                            (user) =>
+                                user.firstName === registrant.firstName &&
+                                user.lastName === registrant.lastName
+                        )}
                     />
                 ))}
                 {registerBody[0].type === 'STUDENT' ||
@@ -71,7 +116,10 @@ export default function Review() {
                 <Button
                     type='submit'
                     onClick={() => router.push('/register/summary')}
-                    disabled={validatedRegistrants.includes(false)}
+                    disabled={
+                        validatedRegistrants.includes(false) ||
+                        existedUsers.length > 0
+                    }
                 >
                     ต่อไป
                 </Button>

@@ -12,7 +12,7 @@ export default function Payment() {
     const router = useRouter();
     const [checked, setChecked] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const { registerBody, totalPackagePrice } = useRegisterContext();
+    const { registerBody, setError, totalPackagePrice } = useRegisterContext();
     const [isLoading, setIsLoading] = useState(false);
 
     const handleUploadSlip = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,8 +123,12 @@ export default function Payment() {
                     router.push('/register/success');
                     setIsLoading(false);
                 } else {
-                    console.error('User Data Upload failed');
-                    console.log(response);
+                    const data = await response.json();
+                    if (data?.message) {
+                        setError(data.message);
+                        console.log(data.message);
+                    }
+                    console.error('User Data Upload failed', data.message);
                     router.push('/register/error');
                     setIsLoading(false);
                 }
