@@ -32,10 +32,18 @@ export default function Home() {
                         <div className='flex h-full w-full items-center justify-center'>
                             <Link
                                 href='/register'
-                                className='absolute z-10 mt-36 h-20 w-64 rounded-xl bg-white bg-gradient-to-tl from-primary-300 to-primary-100 p-1 shadow-lg shadow-black/30'
+                                className='absolute z-10 mt-20 h-20 w-64 rounded-xl bg-white bg-gradient-to-tl from-primary-300 to-primary-100 p-1 shadow-lg shadow-black/30'
                             >
                                 <div className='grid h-full w-full place-content-center rounded-lg bg-white text-xl font-bold text-primary-100'>
                                     ลงทะเบียน
+                                </div>
+                            </Link>
+                            <Link
+                                href='/check'
+                                className='absolute z-10 mt-56 h-14 w-60 scale-75 rounded-xl bg-white p-1 shadow-md shadow-black/30'
+                            >
+                                <div className='grid h-full w-full place-content-center rounded-lg bg-white font-bold text-primary-100'>
+                                    ตรวจสอบสถานะการลงทะเบียน
                                 </div>
                             </Link>
                             <div className='absolute h-96 w-full'>
