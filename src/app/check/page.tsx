@@ -146,11 +146,11 @@ export default function Check() {
                                             <td className='px-3 py-4'>
                                                 {user.emailSent ? (
                                                     <span className='text-green-500'>
-                                                        สำเร็จ
+                                                        ส่งใบเสร็จแล้วทางอีเมล
                                                     </span>
                                                 ) : (
                                                     <span className='text-yellow-500'>
-                                                        กำลังตรวจสอบ
+                                                        รอรับใบเสร็จ
                                                     </span>
                                                 )}
                                             </td>
