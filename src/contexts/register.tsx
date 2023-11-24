@@ -16,6 +16,8 @@ import { userSchema } from '@/utils/validator';
 
 interface ContextProps {
     registerBody: TRegisterBodyState[];
+    error: string | null;
+    setError: (error: string | null) => void;
     currentRegistrantIndex: number;
     setCurrentRegistrantIndex: (index: number) => void;
     setRegisterBodyState: (index: number, key: string, value: string) => void;
@@ -48,6 +50,8 @@ const Context = createContext<ContextProps>({
             selectedPackage: '',
         },
     ],
+    error: null,
+    setError: () => {},
     currentRegistrantIndex: 0,
     setCurrentRegistrantIndex: () => {},
     setRegisterBodyState: () => {},
@@ -90,6 +94,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         useState<number>(0);
 
     const [registered, setRegistered] = useState(false);
+
+    const [error, setError] = useState<string | null>(null);
 
     const setRegisterBodyState = (
         index: number,
@@ -278,6 +284,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
         <Context.Provider
             value={{
                 registerBody,
+                error,
+                setError,
                 currentRegistrantIndex,
                 setCurrentRegistrantIndex,
                 setRegisterBodyState,
