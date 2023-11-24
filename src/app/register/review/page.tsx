@@ -71,7 +71,11 @@ export default function Review() {
                     setExistedUsers(res.data);
                 })
                 .catch((err) => {
-                    console.error(err.response.data);
+                    if (err.response) {
+                        console.error(err.response.data);
+                    } else {
+                        console.error(err);
+                    }
                 });
         };
 
