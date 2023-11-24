@@ -49,4 +49,4 @@ export type TRegisterRunnerType =
     | 'CHULA'
     | 'PUBLIC';
 
-export type TRegisterPackageType = 'F' | 'T';
+export type TRegisterPackageType = '3.711' | '10.111';
