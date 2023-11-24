@@ -59,7 +59,7 @@ export default function Home() {
                 </div>
             </div>
             <div className='absolute z-10 h-full w-full backdrop-blur-sm'></div>
-            <div className='absolute h-full w-full'>
+            <div className='absolute h-full w-full select-none'>
                 <Image
                     src='/landing/bg.png'
                     alt='background'
