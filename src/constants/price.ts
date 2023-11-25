@@ -4,4 +4,5 @@ export const prices = {
     ALUMNI: 700,
     CHULA: 700,
     PUBLIC: 700,
+    ACQUAINTANCE: 700,
 };
