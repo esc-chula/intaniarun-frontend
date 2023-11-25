@@ -149,8 +149,8 @@ export default function Check() {
                                                         ส่งใบเสร็จแล้วทางอีเมล
                                                     </span>
                                                 ) : (
-                                                    <span className='text-yellow-500'>
-                                                        รอรับใบเสร็จ
+                                                    <span className='text-green-500'>
+                                                        การสมัครเสร็จเรียบร้อย
                                                     </span>
                                                 )}
                                             </td>
