@@ -31,11 +31,15 @@ export default function PersonalInformationPage() {
     const validateForm = useCallback(() => {
         const error = validateRegisterBody();
 
-        if (error) {
+        if (!error) {
+            setErrorFields([]);
+        } else {
             const errorFields = new Set<string>();
             error.details.forEach((error) => {
                 const path = error.path[0] as string;
                 const message = error.message;
+
+                console.log(message);
 
                 const pageFields = fields[page as keyof typeof fields].map(
                     (field) => field.name
@@ -136,16 +140,15 @@ export default function PersonalInformationPage() {
                                                 setRegisterBodyState(
                                                     currentRegistrantIndex,
                                                     name,
-                                                    value.toLowerCase()
+                                                    value.trim().toLowerCase()
                                                 );
                                             } else {
                                                 setRegisterBodyState(
                                                     currentRegistrantIndex,
                                                     name,
-                                                    value
+                                                    value.trim().toLowerCase()
                                                 );
                                             }
-                                            validateForm();
                                         }}
                                         description={field.description}
                                     />

@@ -113,7 +113,7 @@ export default function Payment() {
                             joinedYear: registrant.joinedYear
                                 ? Number(registrant.joinedYear)
                                 : undefined,
-                            email: registrant.email.trim(),
+                            email: registrant.email.trim().toLowerCase(),
                         }),
                     }
                 );
