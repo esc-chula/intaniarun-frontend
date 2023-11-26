@@ -146,7 +146,7 @@ export default function PersonalInformationPage() {
                                                 setRegisterBodyState(
                                                     currentRegistrantIndex,
                                                     name,
-                                                    value.trim().toLowerCase()
+                                                    value
                                                 );
                                             }
                                         }}
