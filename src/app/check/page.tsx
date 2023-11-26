@@ -36,7 +36,7 @@ export default function Check() {
         setUsers(null);
         e.preventDefault();
 
-        const email = e.currentTarget.email.value;
+        const email = e.currentTarget.email.value.trim().toLowerCase();
 
         if (!email) {
             setLoading(false);

@@ -132,11 +132,19 @@ export default function PersonalInformationPage() {
                                         type={field.type}
                                         onChange={(e) => {
                                             const { name, value } = e.target;
-                                            setRegisterBodyState(
-                                                currentRegistrantIndex,
-                                                name,
-                                                value
-                                            );
+                                            if (name === 'email') {
+                                                setRegisterBodyState(
+                                                    currentRegistrantIndex,
+                                                    name,
+                                                    value.toLowerCase()
+                                                );
+                                            } else {
+                                                setRegisterBodyState(
+                                                    currentRegistrantIndex,
+                                                    name,
+                                                    value
+                                                );
+                                            }
                                             validateForm();
                                         }}
                                         description={field.description}
