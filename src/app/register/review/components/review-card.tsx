@@ -49,7 +49,7 @@ export default function ReviewCard({
                 showDialog={showDialog}
                 setShowDialog={setShowDialog}
             />
-            <div className='relative flex h-56 w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg'>
+            <div className='relative flex h-64 w-full flex-col justify-between overflow-hidden rounded-[12px] bg-white p-6 shadow-lg sm:h-56'>
                 <div className='flex-1'>
                     <div className='mb-2 text-xl font-bold text-[#941214]'>
                         {registrant.firstName + ' ' + registrant.lastName}
@@ -110,7 +110,7 @@ export default function ReviewCard({
                         <HiTrash />
                     </button>
                 </div>
-                <div className='absolute bottom-5 left-5 right-5 flex items-end justify-between'>
+                <div className='absolute bottom-5 left-5 right-5 flex flex-col items-end sm:flex-row sm:justify-between'>
                     {!validated ? (
                         <div className='text-lg font-semibold text-red-500 underline'>
                             ยังกรอกข้อมูลไม่สำเร็จ
