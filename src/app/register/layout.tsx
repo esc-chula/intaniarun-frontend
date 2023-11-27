@@ -3,11 +3,12 @@
 import moment from 'moment';
 import { usePathname } from 'next/navigation';
 
-import Dialog from '@/components/dialog';
 import Header from '@/components/header';
 import { END_DATE, OPEN_DATE } from '@/configs/register';
 import { RegisterProvider } from '@/contexts/register';
 import { determineStatus } from '@/utils/status';
+
+import Closed from './closed/page';
 
 export default function RootLayout({
     children,
@@ -21,7 +22,7 @@ export default function RootLayout({
     const IS_OPEN = moment().isBetween(OPEN_DATE, END_DATE, 'day', '[]');
 
     if (!IS_OPEN && process.env.NODE_ENV === 'production') {
-        return null; // TODO: add close page
+        return <Closed />;
     }
 
     return (
