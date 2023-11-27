@@ -19,7 +19,7 @@ export default function RootLayout({
 
     const currentStatus = determineStatus(pathname);
 
-    const IS_OPEN = moment().isBetween(OPEN_DATE, END_DATE, 'day', '[]');
+    const IS_OPEN = moment().isBetween(OPEN_DATE, END_DATE);
 
     if (!IS_OPEN && process.env.NODE_ENV === 'production') {
         return <Closed />;
