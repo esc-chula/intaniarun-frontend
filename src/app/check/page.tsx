@@ -166,7 +166,7 @@ export default function Check() {
                                                     ? 'นิสิตปัจจุบัน'
                                                     : user.type === 'CHULA'
                                                     ? 'ประชาคมจุฬาฯ'
-                                                    : 'นิสิตปัจจุบัน'}
+                                                    : 'ประชาชนทั่วไป'}
                                             </td>
                                             <td className='px-3 py-4'>
                                                 {user.selectedPackage} KM
