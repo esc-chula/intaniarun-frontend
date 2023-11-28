@@ -1,7 +1,7 @@
 'use client';
 
 import moment from 'moment';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import Header from '@/components/header';
 import { END_DATE, OPEN_DATE } from '@/configs/register';
@@ -16,12 +16,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     const currentStatus = determineStatus(pathname);
 
     const IS_OPEN = moment().isBetween(OPEN_DATE, END_DATE);
 
-    if (!IS_OPEN && process.env.NODE_ENV === 'production') {
+    const late = searchParams.get('late');
+
+    if (!IS_OPEN && process.env.NODE_ENV === 'production' && late !== 'true') {
         return <Closed />;
     }
 
