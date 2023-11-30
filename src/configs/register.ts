@@ -1,4 +1,4 @@
 import moment from 'moment';
 
-export const OPEN_DATE = moment('2023-11-16');
-export const END_DATE = moment('2023-11-28T01:00');
+export const OPEN_DATE = moment('2023-12-03');
+export const END_DATE = moment('2023-12-04T01:00');
