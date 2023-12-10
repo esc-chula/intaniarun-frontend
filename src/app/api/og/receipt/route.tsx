@@ -70,6 +70,7 @@ export async function GET(req: Request) {
         ) as TRunPackage;
         const RunDistance = searchParams.get('run_distance');
         const amount = Number(searchParams.get('amount')) ?? 0;
+        const PaymentDate = searchParams.get('payment_date');
 
         const [price, beforeVAT, VAT] = getRunPrice(RunPackage);
 
@@ -244,6 +245,21 @@ export async function GET(req: Request) {
                         tw='font-bold'
                     >
                         {convert(price * amount)}
+                    </p>
+
+                    {/* date */}
+
+                    <p
+                        style={{
+                            fontSize: '16px',
+                            position: 'absolute',
+                            top: '863px',
+                            left: '245px',
+                            textAlign: 'center',
+                        }}
+                        tw='font-bold'
+                    >
+                        {PaymentDate}
                     </p>
                 </div>
             ),
