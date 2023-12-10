@@ -8,6 +8,9 @@ dependencies:
   axios:
     specifier: ^1.6.2
     version: 1.6.2
+  baht:
+    specifier: ^0.7.1
+    version: 0.7.1
   browser-image-compression:
     specifier: ^2.0.2
     version: 2.0.2
@@ -633,6 +636,11 @@ packages:
 
   /b4a@1.6.4:
     resolution: {integrity: sha512-fpWrvyVHEKyeEvbKZTVOeZF3VSKKWtJxFIxX/jaVPf+cLbGUSitjb49pHLqPV2BUNNZ0LcoeEGfE/YCpyDYHIw==}
+    dev: false
+
+  /baht@0.7.1:
+    resolution: {integrity: sha512-76Cykiw55N/GJB/5lYeRVq4YcyBwDy2Z4rTzJa496FicFFBVb2fDaRbm/MoKbrBa8zVo9dLWPrf7ctIVP96KeA==}
+    engines: {node: '>=10'}
     dev: false
 
   /balanced-match@1.0.2:
