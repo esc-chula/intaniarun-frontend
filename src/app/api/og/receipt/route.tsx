@@ -167,7 +167,7 @@ export async function GET(req: Request) {
                                 }}
                                 tw='font-bold'
                             >
-                                {pkg.totalPrice}
+                                {pkg.totalPriceBeforeVAT}
                             </p>
                         </div>
                     ))}

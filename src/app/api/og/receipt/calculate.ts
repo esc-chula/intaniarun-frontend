@@ -38,6 +38,7 @@ interface PackagePrice {
     packageText: string;
     amount: number;
     distance: string;
+    totalPriceBeforeVAT: number;
 }
 
 export function convertStatements(
@@ -91,6 +92,7 @@ export function getRunPrice({
             packageText: '',
             amount: 0,
             distance: '',
+            totalPriceBeforeVAT: 0,
         };
     }
 
@@ -113,7 +115,8 @@ export function getRunPrice({
     const [price, beforeVAT, VAT] = getVAT(packageType);
     const packageText = PackageText[packageType];
 
-    const totalPrice = roundToTwo(price * +amount);
+    const totalPrice = roundToTwo(price * amount);
+    const totalPriceBeforeVAT = roundToTwo(beforeVAT * amount);
 
     return {
         valid: true,
@@ -123,6 +126,7 @@ export function getRunPrice({
         packageText,
         amount: +amount,
         distance,
+        totalPriceBeforeVAT,
         totalPrice,
     };
 }
