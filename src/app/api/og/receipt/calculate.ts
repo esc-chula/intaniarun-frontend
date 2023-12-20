@@ -40,21 +40,48 @@ interface PackagePrice {
     distance: string;
 }
 
+export function convertStatements(
+    statements: {
+        amount: number | null;
+        package: TRunPackage;
+        distance: string | null;
+    }[]
+) {
+    // check whether statements is valid
+
+    const valid = statements.every((statement) => {
+        const { amount, package: packageType, distance } = statement;
+        return isValidPackage(packageType) && amount && distance;
+    });
+
+    if (!valid) {
+        return {
+            valid: false,
+            packages: [],
+        };
+    }
+
+    const packages = statements.map((statement) => {
+        const { amount, package: packageType, distance } = statement;
+        return getRunPrice({ amount, packageType, distance });
+    });
+
+    return {
+        valid: true,
+        packages,
+    };
+}
+
 export function getRunPrice({
     packageType,
     amount,
     distance,
 }: {
     packageType: TRunPackage;
-    amount: string | null;
+    amount: number | null;
     distance: string | null;
 }): PackagePrice {
-    if (
-        !amount ||
-        !distance ||
-        !amount.match(/^\d+$/) ||
-        !isValidPackage(packageType)
-    ) {
+    if (!amount || !distance || amount <= 0 || !isValidPackage(packageType)) {
         return {
             valid: false,
             price: 0,

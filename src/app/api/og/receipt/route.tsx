@@ -3,9 +3,7 @@ import { ImageResponse } from 'next/og';
 
 import {
     calculateTotalPrice,
-    getRunPrice,
-    PackageText,
-    roundToTwo,
+    convertStatements,
     TRunPackage,
 } from './calculate';
 // App router includes @vercel/og.
@@ -30,54 +28,22 @@ export async function GET(req: Request) {
         const Name = searchParams.get('name');
         const PaymentDate = searchParams.get('payment_date');
 
-        // package 1
-        const RunPackage1: TRunPackage = searchParams.get(
-            'run_package_1'
-        ) as TRunPackage;
-        const RunAmount1 = searchParams.get('run_amount_1');
-        const RunDistance1 = searchParams.get('run_distance_1');
+        // packages {packageType: string, amount: string, distance: string}[]
 
-        // package 2
-        const RunPackage2: TRunPackage = searchParams.get(
-            'run_package_2'
-        ) as TRunPackage;
-        const RunAmount2 = searchParams.get('run_amount_2');
-        const RunDistance2 = searchParams.get('run_distance_2');
+        const statements: {
+            amount: number;
+            package: TRunPackage;
+            distance: string;
+        }[] = JSON.parse(searchParams.get('statements') ?? '[]');
+        const Packages = convertStatements(statements);
 
-        // package 3
-        const RunPackage3: TRunPackage = searchParams.get(
-            'run_package_3'
-        ) as TRunPackage;
-        const RunAmount3 = searchParams.get('run_amount_3');
-        const RunDistance3 = searchParams.get('run_distance_3');
-
-        // CONVERT HERE
-
-        const Package1 = getRunPrice({
-            packageType: RunPackage1,
-            amount: RunAmount1,
-            distance: RunDistance1,
-        });
-
-        const Package2 = getRunPrice({
-            packageType: RunPackage2,
-            amount: RunAmount2,
-            distance: RunDistance2,
-        });
-
-        const Package3 = getRunPrice({
-            packageType: RunPackage3,
-            amount: RunAmount3,
-            distance: RunDistance3,
-        });
-
-        const TotalPrice = calculateTotalPrice([Package1, Package2, Package3]);
+        const TotalPrice = calculateTotalPrice(Packages.packages);
 
         if (
             !HRNumber ||
             !AccountDate ||
             !Name ||
-            !Package1.valid ||
+            !Packages.valid ||
             !TotalPrice.valid
         ) {
             return new Response(`Missing required parameters`, {
@@ -138,82 +104,17 @@ export async function GET(req: Request) {
                         คุณ{Name}
                     </p>
 
-                    {/* START Statement Row 1 */}
-                    <div
-                        tw='flex'
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '605px',
-                            left: '110px',
-                        }}
-                    >
-                        <div
-                            style={{
-                                fontSize: '18px',
-                                position: 'relative',
-                                left: '0px',
-                                whiteSpace: 'pre-wrap',
-                                lineHeight: '-0.5',
-                            }}
-                            tw='flex flex-col font-bold'
-                        >
-                            <p>
-                                ค่าสมัครงานวิ่ง อินทาเนียรัน 2024 วันที่
-                                21.01.2024
-                            </p>
-                            <p>
-                                ประเภท {Package1.packageText} ระยะวิ่ง{' '}
-                                {Package1.distance} km
-                            </p>
-                        </div>
-
-                        {/* price amount */}
-                        <p
-                            style={{
-                                fontSize: '18px',
-                                position: 'relative',
-                                left: '105px',
-                            }}
-                            tw='font-bold'
-                        >
-                            {Package1.beforeVAT}
-                        </p>
-
-                        <p
-                            style={{
-                                fontSize: '18px',
-                                position: 'relative',
-                                left: '215px',
-                            }}
-                            tw='font-bold'
-                        >
-                            {Package1.amount}
-                        </p>
-
-                        <p
-                            style={{
-                                fontSize: '18px',
-                                position: 'relative',
-                                left: '325px',
-                            }}
-                            tw='font-bold'
-                        >
-                            {Package1.totalPrice}
-                        </p>
-                    </div>
-                    {/* END Statement Row 1 */}
-
-                    {/* START Statement Row 2 */}
-                    {Package2.valid && (
+                    {/* START Statement Row */}
+                    {Packages.packages.map((pkg, i) => (
                         <div
                             tw='flex'
                             style={{
                                 fontSize: '18px',
                                 position: 'absolute',
-                                top: '690px',
+                                top: `${605 + 80 * i}px`,
                                 left: '110px',
                             }}
+                            key={i}
                         >
                             <div
                                 style={{
@@ -230,8 +131,8 @@ export async function GET(req: Request) {
                                     21.01.2024
                                 </p>
                                 <p>
-                                    ประเภท {Package2.packageText} ระยะวิ่ง{' '}
-                                    {Package2.distance} km
+                                    ประเภท {pkg.packageText} ระยะวิ่ง{' '}
+                                    {pkg.distance} km
                                 </p>
                             </div>
 
@@ -244,7 +145,7 @@ export async function GET(req: Request) {
                                 }}
                                 tw='font-bold'
                             >
-                                {Package2.beforeVAT}
+                                {pkg.beforeVAT}
                             </p>
 
                             <p
@@ -255,7 +156,7 @@ export async function GET(req: Request) {
                                 }}
                                 tw='font-bold'
                             >
-                                {Package2.amount}
+                                {pkg.amount}
                             </p>
 
                             <p
@@ -266,79 +167,11 @@ export async function GET(req: Request) {
                                 }}
                                 tw='font-bold'
                             >
-                                {Package2.totalPrice}
+                                {pkg.totalPrice}
                             </p>
                         </div>
-                    )}
-                    {/* END Statement Row 2 */}
-
-                    {/* START Statement Row 3 */}
-                    {Package3.valid && (
-                        <div
-                            tw='flex'
-                            style={{
-                                fontSize: '18px',
-                                position: 'absolute',
-                                top: '770px',
-                                left: '110px',
-                            }}
-                        >
-                            <div
-                                style={{
-                                    fontSize: '18px',
-                                    position: 'relative',
-                                    left: '0px',
-                                    whiteSpace: 'pre-wrap',
-                                    lineHeight: '-0.5',
-                                }}
-                                tw='flex flex-col font-bold'
-                            >
-                                <p>
-                                    ค่าสมัครงานวิ่ง อินทาเนียรัน 2024 วันที่
-                                    21.01.2024
-                                </p>
-                                <p>
-                                    ประเภท {Package3.packageText} ระยะวิ่ง{' '}
-                                    {Package3.distance} km
-                                </p>
-                            </div>
-
-                            {/* price amount */}
-                            <p
-                                style={{
-                                    fontSize: '18px',
-                                    position: 'relative',
-                                    left: '105px',
-                                }}
-                                tw='font-bold'
-                            >
-                                {Package3.beforeVAT}
-                            </p>
-
-                            <p
-                                style={{
-                                    fontSize: '18px',
-                                    position: 'relative',
-                                    left: '215px',
-                                }}
-                                tw='font-bold'
-                            >
-                                {Package3.amount}
-                            </p>
-
-                            <p
-                                style={{
-                                    fontSize: '18px',
-                                    position: 'relative',
-                                    left: '325px',
-                                }}
-                                tw='font-bold'
-                            >
-                                {Package3.totalPrice}
-                            </p>
-                        </div>
-                    )}
-                    {/* END Statement Row 3 */}
+                    ))}
+                    {/* END Statement Row */}
 
                     {/* START Total */}
                     <p
@@ -391,7 +224,7 @@ export async function GET(req: Request) {
                         }}
                         tw='font-bold'
                     >
-                        {convert(Package1.price ?? 0 * (Package1.amount ?? 0))}
+                        {convert(TotalPrice.totalPrice)}
                     </p>
 
                     {/* date */}
