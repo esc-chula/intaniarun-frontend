@@ -1,58 +1,18 @@
 import { convert } from 'baht';
 import { ImageResponse } from 'next/og';
+
+import {
+    calculateTotalPrice,
+    convertStatements,
+    TRunPackage,
+} from './calculate';
 // App router includes @vercel/og.
 // No need to install it.
 
 export const runtime = 'edge';
 
-type TRunPackage =
-    | 'ALUMNI'
-    | 'STUDENT'
-    | 'PUBLIC'
-    | 'VIP'
-    | 'CHULA'
-    | 'AQUAINTANCE';
-
-const PackageText = {
-    ALUMNI: 'ศิษย์เก่า',
-    STUDENT: 'นิสิตวิศวฯ จุฬาฯ',
-    PUBLIC: 'ประชาชนทั่วไป',
-    VIP: 'VIP',
-    CHULA: 'ประชาคมจุฬาฯ',
-    AQUAINTANCE: 'ผู้ติดตาม',
-};
-
-function calculateVAT(price: number) {
-    const beforeVAT = roundToTwo(price / 1.07);
-    const VAT = roundToTwo(price - beforeVAT);
-    return [price, beforeVAT, VAT];
-}
-
-function roundToTwo(num: number) {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-}
-
-function getRunPrice(type: TRunPackage) {
-    switch (type) {
-        case 'STUDENT':
-            return calculateVAT(300);
-        case 'VIP':
-            return calculateVAT(11100);
-        case 'ALUMNI':
-        case 'PUBLIC':
-        case 'CHULA':
-        case 'AQUAINTANCE':
-            return calculateVAT(700);
-        default:
-            return calculateVAT(0);
-    }
-}
-
 export async function GET(req: Request) {
     try {
-        const image = await fetch(
-            new URL('./receipt.png', import.meta.url)
-        ).then((res) => res.arrayBuffer());
         const fontData = await fetch(
             new URL('./Sarabun-Regular.ttf', import.meta.url)
         ).then((res) => res.arrayBuffer());
@@ -62,19 +22,30 @@ export async function GET(req: Request) {
         // info
         const { searchParams } = new URL(req.url);
 
+        // basic info
         const HRNumber = searchParams.get('hr_number');
         const AccountDate = searchParams.get('account_date');
         const Name = searchParams.get('name');
-        const RunPackage: TRunPackage = searchParams.get(
-            'run_package'
-        ) as TRunPackage;
-        const RunDistance = searchParams.get('run_distance');
-        const amount = Number(searchParams.get('amount')) ?? 0;
         const PaymentDate = searchParams.get('payment_date');
 
-        const [price, beforeVAT, VAT] = getRunPrice(RunPackage);
+        // packages {packageType: string, amount: string, distance: string}[]
 
-        if (!HRNumber || !AccountDate || !Name || !RunPackage || !amount) {
+        const statements: {
+            amount: number;
+            package: TRunPackage;
+            distance: string;
+        }[] = JSON.parse(searchParams.get('statements') ?? '[]');
+        const Packages = convertStatements(statements);
+
+        const TotalPrice = calculateTotalPrice(Packages.packages);
+
+        if (
+            !HRNumber ||
+            !AccountDate ||
+            !Name ||
+            !Packages.valid ||
+            !TotalPrice.valid
+        ) {
             return new Response(`Missing required parameters`, {
                 status: 400,
             });
@@ -133,69 +104,76 @@ export async function GET(req: Request) {
                         คุณ{Name}
                     </p>
 
-                    {/* statement */}
-                    <p
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '600px',
-                            left: '110px',
-                        }}
-                        tw='font-bold'
-                    >
-                        ค่าสมัครงานวิ่ง อินทาเนียรัน 2024 วันที่ 21.01.2024
-                    </p>
-                    <p
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '630px',
-                            left: '110px',
-                        }}
-                        tw='font-bold'
-                    >
-                        ประเภท {PackageText[RunPackage]} ระยะวิ่ง {RunDistance}{' '}
-                        km
-                    </p>
+                    {/* START Statement Row */}
+                    {Packages.packages.map((pkg, i) => (
+                        <div
+                            tw='flex'
+                            style={{
+                                fontSize: '18px',
+                                position: 'absolute',
+                                top: `${605 + 80 * i}px`,
+                                left: '110px',
+                            }}
+                            key={i}
+                        >
+                            <div
+                                style={{
+                                    fontSize: '18px',
+                                    position: 'relative',
+                                    left: '0px',
+                                    whiteSpace: 'pre-wrap',
+                                    lineHeight: '-0.5',
+                                }}
+                                tw='flex flex-col font-bold'
+                            >
+                                <p>
+                                    ค่าสมัครงานวิ่ง อินทาเนียรัน 2024 วันที่
+                                    21.01.2024
+                                </p>
+                                <p>
+                                    ประเภท {pkg.packageText} ระยะวิ่ง{' '}
+                                    {pkg.distance} km
+                                </p>
+                            </div>
 
-                    <p
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '600px',
-                            left: '595px',
-                        }}
-                        tw='font-bold'
-                    >
-                        {beforeVAT}
-                    </p>
+                            {/* price amount */}
+                            <p
+                                style={{
+                                    fontSize: '18px',
+                                    position: 'relative',
+                                    left: '105px',
+                                }}
+                                tw='font-bold'
+                            >
+                                {pkg.beforeVAT}
+                            </p>
 
-                    <p
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '600px',
-                            left: '755px',
-                        }}
-                        tw='font-bold'
-                    >
-                        {amount}
-                    </p>
+                            <p
+                                style={{
+                                    fontSize: '18px',
+                                    position: 'relative',
+                                    left: '215px',
+                                }}
+                                tw='font-bold'
+                            >
+                                {pkg.amount}
+                            </p>
 
-                    {/* amount */}
-                    <p
-                        style={{
-                            fontSize: '18px',
-                            position: 'absolute',
-                            top: '600px',
-                            left: '885px',
-                        }}
-                        tw='font-bold'
-                    >
-                        {roundToTwo(beforeVAT * amount)}
-                    </p>
+                            <p
+                                style={{
+                                    fontSize: '18px',
+                                    position: 'relative',
+                                    left: '325px',
+                                }}
+                                tw='font-bold'
+                            >
+                                {pkg.totalPriceBeforeVAT}
+                            </p>
+                        </div>
+                    ))}
+                    {/* END Statement Row */}
 
-                    {/* total */}
+                    {/* START Total */}
                     <p
                         style={{
                             fontSize: '16px',
@@ -206,7 +184,7 @@ export async function GET(req: Request) {
                         }}
                         tw='font-bold'
                     >
-                        {roundToTwo(beforeVAT * amount)}
+                        {TotalPrice.beforeVAT}
                     </p>
                     <p
                         style={{
@@ -218,7 +196,7 @@ export async function GET(req: Request) {
                         }}
                         tw='font-bold'
                     >
-                        {roundToTwo(VAT * amount)}
+                        {TotalPrice.VAT}
                     </p>
                     <p
                         style={{
@@ -230,10 +208,12 @@ export async function GET(req: Request) {
                         }}
                         tw='font-bold'
                     >
-                        {price * amount}
+                        {TotalPrice.totalPrice}
                     </p>
 
-                    {/* text */}
+                    {/* END Total */}
+
+                    {/* FOOTER text */}
                     <p
                         style={{
                             fontSize: '16px',
@@ -244,7 +224,7 @@ export async function GET(req: Request) {
                         }}
                         tw='font-bold'
                     >
-                        {convert(price * amount)}
+                        {convert(TotalPrice.totalPrice)}
                     </p>
 
                     {/* date */}
