@@ -22,6 +22,7 @@ export default function Check() {
               type: TRegisterRunnerType;
               selectedPackage: TRegisterPackageType;
               shirtSize: TRegisterShirtSize;
+              runnerNo: string;
               createdAt: string;
               emailSent: boolean;
           }[]
@@ -121,6 +122,9 @@ export default function Check() {
                                             สถานะ
                                         </th>
                                         <th scope='col' className='px-3 py-3'>
+                                            เลข BIB
+                                        </th>
+                                        <th scope='col' className='px-3 py-3'>
                                             ประเภท
                                         </th>
                                         <th scope='col' className='px-3 py-3'>
@@ -146,13 +150,16 @@ export default function Check() {
                                             <td className='px-3 py-4'>
                                                 {user.emailSent ? (
                                                     <span className='text-green-500'>
-                                                        ส่งใบเสร็จแล้วทางอีเมล
+                                                        ส่งอีเมลยืนยันการสมัครแล้ว
                                                     </span>
                                                 ) : (
                                                     <span className='text-green-500'>
                                                         การสมัครเสร็จเรียบร้อย
                                                     </span>
                                                 )}
+                                            </td>
+                                            <td className='px-3 py-4'>
+                                                {user.runnerNo}
                                             </td>
                                             <td className='px-3 py-4'>
                                                 {user.type === 'VIP'
