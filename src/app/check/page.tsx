@@ -158,7 +158,7 @@ export default function Check() {
                                                     </span>
                                                 )}
                                             </td>
-                                            <td className='px-3 py-4'>
+                                            <td className='px-3 py-4 font-medium text-gray-900'>
                                                 {user.runnerNo}
                                             </td>
                                             <td className='px-3 py-4'>
