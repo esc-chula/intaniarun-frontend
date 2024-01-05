@@ -14,7 +14,6 @@ export async function GET(req: Request) {
 
         // basic info
         const bibNumber = searchParams.get('bib_number');
-        const name = searchParams.get('name');
 
         return new ImageResponse(
             (
@@ -36,7 +35,7 @@ export async function GET(req: Request) {
                         tw='flex flex-col items-center'
                         style={{
                             position: 'absolute',
-                            top: 220,
+                            top: 270,
                             right: 200,
                         }}
                     >
@@ -51,7 +50,7 @@ export async function GET(req: Request) {
                             {bibNumber}
                         </h1>
 
-                        <h1
+                        {/* <h1
                             style={{
                                 color: 'black',
                                 fontSize: 60,
@@ -62,7 +61,7 @@ export async function GET(req: Request) {
                             tw='uppercase'
                         >
                             {name}
-                        </h1>
+                        </h1> */}
                     </div>
                 </div>
             ),
