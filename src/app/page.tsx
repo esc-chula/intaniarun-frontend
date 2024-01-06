@@ -43,7 +43,7 @@ export default function Home() {
                                 className='absolute z-10 mt-56 h-14 w-60 scale-75 rounded-xl bg-white p-1 shadow-md shadow-black/30'
                             >
                                 <div className='grid h-full w-full place-content-center rounded-lg bg-white font-bold text-primary-100'>
-                                    ตรวจสอบสถานะการลงทะเบียน
+                                    ตรวจสอบข้อมูลและเลข BIB ประจำตัว
                                 </div>
                             </Link>
                             <div className='absolute h-96 w-full'>
