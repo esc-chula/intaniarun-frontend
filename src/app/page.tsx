@@ -40,7 +40,7 @@ export default function Home() {
                             </Link>
                             <Link
                                 href='/check'
-                                className='absolute z-10 mt-56 h-14 w-60 scale-75 rounded-xl bg-white p-1 shadow-md shadow-black/30'
+                                className='absolute z-10 mt-56 h-14 w-72 scale-75 rounded-xl bg-white p-1 shadow-md shadow-black/30'
                             >
                                 <div className='grid h-full w-full place-content-center rounded-lg bg-white font-bold text-primary-100'>
                                     ตรวจสอบข้อมูลและเลข BIB ประจำตัว
