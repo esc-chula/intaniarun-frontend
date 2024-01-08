@@ -119,10 +119,10 @@ export default function Check() {
                                             ชื่อ
                                         </th>
                                         <th scope='col' className='px-3 py-3'>
-                                            สถานะ
+                                            เลข BIB
                                         </th>
                                         <th scope='col' className='px-3 py-3'>
-                                            เลข BIB
+                                            สถานะ
                                         </th>
                                         <th scope='col' className='px-3 py-3'>
                                             ประเภท
@@ -147,6 +147,9 @@ export default function Check() {
                                             >
                                                 {user.firstName} {user.lastName}
                                             </th>
+                                            <td className='px-3 py-4 font-medium text-gray-900'>
+                                                {user.runnerNo}
+                                            </td>
                                             <td className='px-3 py-4'>
                                                 {user.emailSent ? (
                                                     <span className='text-green-500'>
@@ -157,9 +160,6 @@ export default function Check() {
                                                         การสมัครเสร็จเรียบร้อย
                                                     </span>
                                                 )}
-                                            </td>
-                                            <td className='px-3 py-4 font-medium text-gray-900'>
-                                                {user.runnerNo}
                                             </td>
                                             <td className='px-3 py-4'>
                                                 {user.type === 'VIP'
